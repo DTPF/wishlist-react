@@ -8,9 +8,9 @@ import WishlistItem from './WishListItem';
 import BottomList from './BottomList';
 import './WishlistComponent.scss';
 
-export default function WishlistComponent({ status }) {
-  const { wishlist, setWishlist } = useWishlistContext();
-  const wishlistIdb = useGetWishlistByUserId(EMAIL, status);
+export default function WishlistComponent({ status }: any) {
+  const { wishlist, setWishlist }: any = useWishlistContext();
+  const wishlistIdb: any = useGetWishlistByUserId(EMAIL, status);
 
   useEffect(() => {
     setWishlist(wishlistIdb)
@@ -29,7 +29,7 @@ export default function WishlistComponent({ status }) {
         {wishlist.length === 0 && <div>Lista vacía...</div>}
       </div>
       <div className='wishlist-component__list'>
-        {wishlist && wishlist.map((wishlistItem, index) => (
+        {wishlist && wishlist.map((wishlistItem: any, index: any) => (
           <WishlistItem
             key={index}
             wishlistItem={wishlistItem}

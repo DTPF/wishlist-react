@@ -4,7 +4,7 @@ import { useWishlistContext } from '../../../../providers/WishlistProvider';
 import './HeaderWishlist.scss';
 
 export default function HeaderWishlist() {
-  const { wishlist } = useWishlistContext();
+  const { wishlist }: any = useWishlistContext();
 
   return (
     <div className='header-wishlist'>

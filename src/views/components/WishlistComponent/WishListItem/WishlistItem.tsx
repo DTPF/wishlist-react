@@ -7,7 +7,7 @@ import { FiExternalLink, FiTrash2 } from 'react-icons/fi';
 import { EMAIL } from '../../../../providers/WishlistProvider';
 import './WishlistItem.scss'
 
-export default function WishlistItem({ wishlistItem, status }) {
+export default function WishlistItem({ wishlistItem, status }: any) {
   const { wishlist, setWishlist } = useWishlistContext();
   const [isChecked, setIsChecked] = useState(false);
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);
@@ -50,7 +50,7 @@ export default function WishlistItem({ wishlistItem, status }) {
   )
 }
 
-const removeDOMItem = (status, wishlist, setWishlist, wishlistItem) => {
+const removeDOMItem = (status: any, wishlist: any, setWishlist: any, wishlistItem: any) => {
   if (status !== '') {
     let list = [...wishlist];
     list.forEach((item, key) => {
@@ -62,7 +62,7 @@ const removeDOMItem = (status, wishlist, setWishlist, wishlistItem) => {
   }
 }
 
-const handleDeleteItem = (id, wishlist, wishlistItem, setWishlist) => {
+const handleDeleteItem = (id: any, wishlist: any, wishlistItem: any, setWishlist: any) => {
   deleteWishItemById(id).then(() => {
     let list = [...wishlist];
     list.forEach((item, key) => {
@@ -74,10 +74,10 @@ const handleDeleteItem = (id, wishlist, wishlistItem, setWishlist) => {
   });
 }
 
-const handleOnChangeCheckbox = (wishlistItem, setWishlist, status, wishlist, isChecked, setIsChecked) => {
+const handleOnChangeCheckbox = (wishlistItem: any, setWishlist: any, status: any, wishlist: any, isChecked: any, setIsChecked: any) => {
   let openRequest = indexedDB.open(DB_NAME_AMAZEN, DB_VERSION);
 
-  openRequest.onsuccess = function (e) {
+  openRequest.onsuccess = function (e: any) {
     let db = e.target.result;
     let transaction = db.transaction([WISHLIST], "readwrite");
     let listItem = transaction.objectStore(WISHLIST);
@@ -85,21 +85,21 @@ const handleOnChangeCheckbox = (wishlistItem, setWishlist, status, wishlist, isC
 
     request.onsuccess = function () {
       let result = request.result;
-      let newResult = [];
+      let newResult: any = [];
 
-      result.forEach((item) => {
+      result.forEach((item: any) => {
         if (item.userId === EMAIL) {
           newResult.push(item);
         }
       });
 
       if (newResult) {
-        newResult.forEach((item) => {
+        newResult.forEach((item: any) => {
           if (item.id === wishlistItem.id) {
             if (item.status === 'completed') {
               item.status = 'active';
               listItem.put(item);
-              newResult && newResult.forEach((item, key) => {
+              newResult && newResult.forEach((item: any, key: number) => {
                 if (item.id === wishlistItem.id) {
                   newResult[key].status = 'active';
                   setWishlist(newResult);
@@ -113,7 +113,7 @@ const handleOnChangeCheckbox = (wishlistItem, setWishlist, status, wishlist, isC
             if (item.status === 'active') {
               item.status = 'completed';
               listItem.put(item);
-              newResult && newResult.forEach((item, key) => {
+              newResult && newResult.forEach((item: any, key: any) => {
                 if (item.id === wishlistItem.id) {
                   newResult[key].status = 'completed';
                   setWishlist(newResult);
@@ -139,35 +139,39 @@ const handleOnChangeCheckbox = (wishlistItem, setWishlist, status, wishlist, isC
 
 };
 
-const handleOnChangeTitle = (e, setTiltleInput) => {
+const handleOnChangeTitle = (e: any, setTiltleInput: any) => {
   setTiltleInput(e.target.value);
 }
 
-const handleOnBlurTitle = (ev, wishlistItem, setWishlist) => {
+const handleOnBlurTitle = (
+  ev: any,
+  wishlistItem: { id: string; },
+  setWishlist: any
+) => {
   let openRequest = indexedDB.open(DB_NAME_AMAZEN, DB_VERSION);
 
-  openRequest.onsuccess = function (e) {
+  openRequest.onsuccess = function (e: any) {
     let db = e.target.result;
     let transaction = db.transaction([WISHLIST], "readwrite");
     let listItem = transaction.objectStore(WISHLIST);
     let request = listItem.getAll();
 
-    request.onsuccess = function (e) {
+    request.onsuccess = function (e: any) {
       let result = e.target.result;
-      let newResult = [];
+      let newResult: any = [];
 
-      result.forEach((item) => {
+      result.forEach((item: any) => {
         if (item.userId === EMAIL) {
           newResult.push(item);
         }
       });
 
       if (newResult) {
-        newResult.forEach((item) => {
+        newResult.forEach((item: any) => {
           if (item.id === ev.target.parentElement.parentElement.id) {
             item.title = ev.target.value;
             listItem.put(item);
-            newResult && newResult.forEach((item, key) => {
+            newResult && newResult.forEach((item: { id: string }, key: number) => {
               if (item.id === wishlistItem.id) {
                 newResult[key].status = 'active';
                 setWishlist(newResult);

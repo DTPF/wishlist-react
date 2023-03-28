@@ -1,4 +1,3 @@
-import React from 'react';
 import './TitleWishlist.scss';
 
 export default function TitleWishlist() {

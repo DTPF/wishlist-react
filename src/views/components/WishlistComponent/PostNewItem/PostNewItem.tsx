@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DB_NAME_AMAZEN, DB_VERSION, WISHLIST } from '../../../../indexedDB/config';
 import { EMAIL } from '../../../../providers/WishlistProvider';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import './PostNewItem.scss';
 
-export default function PostNewItem({ wishlist, setWishlist }) {
-  const form = useRef();
+export default function PostNewItem({ wishlist, setWishlist }: any) {
+  const form: any = useRef();
   const [inputs, setInputs] = useState({
     id: uuidv4(),
     userId: EMAIL,
@@ -16,7 +16,7 @@ export default function PostNewItem({ wishlist, setWishlist }) {
     createdAt: Date.now()
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     if (!inputs.title) {
@@ -24,7 +24,7 @@ export default function PostNewItem({ wishlist, setWishlist }) {
     }
     const openRequest = indexedDB.open(DB_NAME_AMAZEN, DB_VERSION);
 
-    openRequest.onsuccess = async function (e) {
+    openRequest.onsuccess = async function (e: any) {
       const db = e.target.result;
       let transaction = db.transaction([WISHLIST], "readwrite");
       let list = transaction.objectStore(WISHLIST);
@@ -49,7 +49,7 @@ export default function PostNewItem({ wishlist, setWishlist }) {
     }
   }
 
-  const handleChangeForm = (e) => {
+  const handleChangeForm = (e: any) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
