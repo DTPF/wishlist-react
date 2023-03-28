@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { EMAIL } from '../../../../providers/WishlistProvider';
+import { EMAIL } from 'providers/WishlistProvider';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import './PostNewItem.scss';
 

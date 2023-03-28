@@ -1,4 +1,4 @@
-import WishlistComponent from '../../components/WishlistComponent';
+import WishlistComponent from 'views/components/WishlistComponent';
 
 export default function HomePage() {
   return <WishlistComponent status={''} />;

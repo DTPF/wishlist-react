@@ -1,4 +1,4 @@
-import { useWishlistContext } from '../../../providers/WishlistProvider';
+import { useWishlistContext } from 'providers/WishlistProvider';
 import HeaderWishlist from './HeaderWishlist';
 import PostNewItem from './PostNewItem';
 import WishlistItem from './WishListItem';
