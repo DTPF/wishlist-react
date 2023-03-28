@@ -1,7 +1,4 @@
-import React, { useEffect } from 'react';
 import { useWishlistContext } from '../../../providers/WishlistProvider';
-import useGetWishlistByUserId from '../../../indexedDB/api/wishlist/useGetWishlistByUserId';
-import { EMAIL } from '../../../providers/WishlistProvider';
 import HeaderWishlist from './HeaderWishlist';
 import PostNewItem from './PostNewItem';
 import WishlistItem from './WishListItem';
@@ -10,11 +7,6 @@ import './WishlistComponent.scss';
 
 export default function WishlistComponent({ status }: any) {
   const { wishlist, setWishlist }: any = useWishlistContext();
-  const wishlistIdb: any = useGetWishlistByUserId(EMAIL, status);
-
-  useEffect(() => {
-    setWishlist(wishlistIdb)
-  }, [setWishlist, wishlistIdb]);
 
   return (
     <div className='wishlist-component'>

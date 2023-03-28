@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useState
-} from 'react';
-import useGetWishlistByUserId from '../indexedDB/api/wishlist/useGetWishlistByUserId';
+import { createContext, useContext, useState } from 'react';
 
 export let EMAIL = 'd@mail.com';
 
@@ -12,11 +6,6 @@ export const WishlistContext = createContext(null);
 
 export function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
-  const wishlistIdb = useGetWishlistByUserId(EMAIL, window.location.pathname.substring(1));
-
-  useEffect(() => {
-    setWishlist(wishlistIdb)
-  }, [wishlistIdb]);
 
   return (
     <WishlistContext.Provider value={{ wishlist, setWishlist }} >

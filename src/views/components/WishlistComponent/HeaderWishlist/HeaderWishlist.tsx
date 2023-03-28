@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useWishlistContext } from '../../../../providers/WishlistProvider';
 import './HeaderWishlist.scss';
