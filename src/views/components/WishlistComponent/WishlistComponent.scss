@@ -1,0 +1,23 @@
+@import '../../../scss/animations';
+
+.wishlist-component {
+  width: 100vw;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.200);
+  }
+
+  &__empty-list-msg {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    @include fadeIn(400ms);
+  }
+}

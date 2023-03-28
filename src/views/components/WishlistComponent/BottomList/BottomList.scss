@@ -1,0 +1,17 @@
+.bottom-list {
+  display: flex;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+
+  &__delete-completed {
+    padding: 5px 0px;
+    margin: 10px 0;
+    border-bottom-left-radius: 20px;
+    border-radius: 10px;
+    color: #b20000;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,147 @@
+@import '../../../../scss/animations';
+
+.wishlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  height: 50px;
+  margin: 0;
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #d4d4d4;
+  transition: all 0.3s ease;
+  @include fromMarginTopToMarginTop();
+
+  &__title {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+
+    &--link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h3 {
+        width: 365px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.15rem;
+        font-weight: 400;
+        color: #525252;
+      }
+
+      a {
+        text-decoration: none;
+
+        svg {
+          color: #2e85ff;
+          padding: 0 10px;
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    input {
+      color: #525252;
+      background-color: transparent;
+      font-size: 1.15rem;
+      font-weight: 400;
+      width: 385px;
+      border: 0;
+      font-family: 'Ubuntu';
+      outline: none;
+    }
+  }
+
+  &__check-delete {
+    display: flex;
+    align-items: center;
+
+    &--trash {
+      color: #B20000;
+      font-size: 1.4rem;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    &--checkbox {
+      padding: 10px;
+      padding-left: 15px;
+
+      input {
+        display: none;
+      }
+
+      span {
+        display: inline-block;
+        position: relative;
+        height: 1.6em;
+        width: 1.6em;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: all 0.4s;
+        border: 1px solid #a2a2a2;
+        font-size: 0.8rem;
+      }
+
+      label {
+        font-size: 1em;
+        cursor: pointer;
+      }
+
+      label input:checked~span {
+        box-shadow: 0px 0px 4px 0px #232F3E;
+      }
+
+      span:after {
+        content: "";
+        position: absolute;
+        border: solid #232F3E;
+        border-width: 0 0.250em 0.25em 0;
+        transform: rotate(45deg);
+        width: 0.40em;
+        height: 0.80em;
+        left: 0.5em;
+        top: 0.20em;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      label input:checked~span:after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover {
+    .wishlist-item__check-delete--trash {
+      opacity: 1;
+      @include fadeIn(400ms);
+    }
+  }
+
+  &:first-child {
+    border: 0;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+}
+
+.wishlist-item-checked {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.1s ease-in;
+
+  .wishlist-item__title {
+    span {
+      color: rgb(136, 136, 136)
+    }
+  }
+}

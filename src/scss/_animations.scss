@@ -1,0 +1,42 @@
+@mixin fadeIn($duration: 800ms) {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  animation: fadeIn $duration;
+}
+
+@mixin scale($from: 1, $to: 1.1, $duration: 800ms) {
+  @keyframes scale {
+    from {
+      transform: scale($from);
+    }
+
+    to {
+      transform: scale($to);
+    }
+  }
+
+  transform: scale($to);
+  animation: scale $duration;
+}
+
+@mixin fromMarginTopToMarginTop($from: 5px, $to: 0px, $duration: 400ms) {
+  @keyframes fromMarginTopToMarginTop {
+    0% {
+      margin-top: $from;
+    }
+
+    100% {
+      margin-top: $to;
+    }
+  }
+
+  animation: fromMarginTopToMarginTop $duration;
+}
