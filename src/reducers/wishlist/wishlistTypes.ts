@@ -1,0 +1,2 @@
+export const INIT_WISHLIST = "INIT_WISHLIST";
+export const ADD_WISHLIST = "ADD_WISHLIST";
