@@ -1,5 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
-import { WishlistProvider } from './providers/WishlistProvider';
+import WishlistProvider from 'context/wishlist/WishlistProvider';
 import router from './routes/router';
 
 export default function App() {
