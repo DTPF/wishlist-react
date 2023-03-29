@@ -1,9 +1,10 @@
+import WishlistContext from 'context/wishlist/WishlistContext';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useWishlistContext } from 'providers/WishlistProvider';
 import './HeaderWishlist.scss';
 
 export default function HeaderWishlist() {
-  const { wishlist }: any = useWishlistContext();
+  const { wishlist } = useContext(WishlistContext);
 
   return (
     <div className='header-wishlist'>
@@ -13,24 +14,30 @@ export default function HeaderWishlist() {
 
       <div className='header-wishlist__nav'>
         <NavLink to={'/'}>
-          <button className='header-wishlist__nav--button'>
-            Todo
-          </button>
-          <div className='header-wishlist__nav--items-count'>{wishlist.length}</div>
+          <RenderButton title='Todo' />
+          <GetWishlistLength wishlist={wishlist} />
         </NavLink>
         <NavLink to={'/active'}>
-          <button className='header-wishlist__nav--button'>
-            Activo
-          </button>
-          <div className='header-wishlist__nav--items-count'>{wishlist.length}</div>
+          <RenderButton title='Activo' />
+          <GetWishlistLength wishlist={wishlist} />
         </NavLink>
         <NavLink to={'/completed'}>
-          <button className='header-wishlist__nav--button'>
-            Completado
-          </button>
-          <div className='header-wishlist__nav--items-count'>{wishlist.length}</div>
+          <RenderButton title='Completado' />
+          <GetWishlistLength wishlist={wishlist} />
         </NavLink>
       </div>
     </div>
   )
+}
+
+function RenderButton({ title }: any) {
+  return (
+    <button className='header-wishlist__nav--button'>
+      {title}
+    </button>
+  )
+}
+
+function GetWishlistLength({ wishlist }: any) {
+  return <div className='header-wishlist__nav--items-count'>{wishlist.length}</div>
 }

@@ -1,31 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiExternalLink, FiTrash2 } from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi';
 import './WishlistItem.scss'
 
-export default function WishlistItem({ wishlistItem, status }: any) {
+export default function WishlistItem({ status, wishlistItem }: any) {
   const [isChecked, setIsChecked] = useState(false);
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);
 
   useEffect(() => {
-    setIsChecked(wishlistItem.status === 'completed' ? true : false)
-  }, [wishlistItem]);
+    let isMounted = true;
+    if (wishlistItem.status === 'complete') {
+      isMounted && wishlistItem.status === 'complete' ? setIsChecked(true) : setIsChecked(false);
+    }
+    return () => { isMounted = false }
+  }, [wishlistItem])
 
   return (
-    <div className={`wishlist-item ${isChecked ? 'wishlist-item-checked' : ''}`} id={wishlistItem.id}>
+    <div className={`wishlist-item ${isChecked ? 'wishlist-item-checked' : ''}`}>
       <div className='wishlist-item__title'>
-        {wishlistItem.link ? (
-          <div className='wishlist-item__title--link'>
-            <Link to={wishlistItem.link}><FiExternalLink /></Link>
-            <h3>{wishlistItem.title}</h3>
-          </div>
-        ) : (
-          <input
-            value={titleInput}
-            onChange={(e) => handleOnChangeTitle(e, setTiltleInput)}
-            onBlur={(e) => handleOnBlurTitle()}
-          />
-        )}
+        <input
+          value={titleInput}
+          onChange={(e) => handleOnChangeTitle(e, setTiltleInput)}
+          onBlur={(e) => handleOnBlurTitle()}
+        />
       </div>
       <div className='wishlist-item__check-delete'>
         <span
@@ -36,7 +32,7 @@ export default function WishlistItem({ wishlistItem, status }: any) {
         </span>
         <div className='wishlist-item__check-delete--checkbox'>
           <label>
-            <input type="checkbox" onChange={() => handleOnChangeCheckbox()} checked={wishlistItem.status === 'completed' ? true : false} />
+            <input type="checkbox" onChange={() => handleOnChangeCheckbox()} checked={isChecked} />
             <span></span>
           </label>
         </div>
@@ -45,12 +41,18 @@ export default function WishlistItem({ wishlistItem, status }: any) {
   )
 }
 
-const handleDeleteItem = () => { }
+const handleDeleteItem = () => {
+  console.log('delete item');  
+}
 
-const handleOnChangeCheckbox = () => { };
+const handleOnChangeCheckbox = () => {
+  console.log('handle checkbox'); 
+};
 
 const handleOnChangeTitle = (e: any, setTiltleInput: any) => {
   setTiltleInput(e.target.value);
 }
 
-const handleOnBlurTitle = () => { }
+const handleOnBlurTitle = () => {
+  console.log('on blur input'); 
+}
