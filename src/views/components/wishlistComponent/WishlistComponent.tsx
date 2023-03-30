@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import WishlistContext from 'context/wishlist/WishlistContext';
-import HeaderWishlist from './headerWishlist';
+import HeaderWishlist from '../layout/headerWishlist';
 import PostNewItem from './postNewItem';
 import WishlistItem from './wishListItem';
 import FooterWishlist from '../layout/footerWishlist';
