@@ -1,21 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import './WishlistItem.scss'
 
 export default function WishlistItem({ status, wishlistItem }: any) {
-  const [isChecked, setIsChecked] = useState(false);
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);
 
-  useEffect(() => {
-    let isMounted = true;
-    if (wishlistItem.status === 'complete') {
-      isMounted && wishlistItem.status === 'complete' ? setIsChecked(true) : setIsChecked(false);
-    }
-    return () => { isMounted = false }
-  }, [wishlistItem])
-
   return (
-    <div className={`wishlist-item ${isChecked ? 'wishlist-item-checked' : ''}`}>
+    <article className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}>
       <div className='wishlist-item__title'>
         <input
           value={titleInput}
@@ -32,12 +23,12 @@ export default function WishlistItem({ status, wishlistItem }: any) {
         </span>
         <div className='wishlist-item__check-delete--checkbox'>
           <label>
-            <input type="checkbox" onChange={() => handleOnChangeCheckbox()} checked={isChecked} />
+            <input type="checkbox" onChange={() => handleOnChangeCheckbox()} checked={wishlistItem.isCompleted} />
             <span></span>
           </label>
         </div>
       </div>
-    </div>
+    </article>
   )
 }
 
