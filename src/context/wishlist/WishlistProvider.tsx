@@ -1,18 +1,21 @@
 import { useReducer } from "react";
+import {
+	addWishlistAction,
+	initWishlistAction
+} from "reducers/wishlist/wishlistActions";
 import WishlistContext from "./WishlistContext";
 import wishlistReducer from "reducers/wishlist/wishlistReducer";
 import initialTracklistState from "./initialWishlistState";
-import * as WishlistTypes from "reducers/wishlist/wishlistTypes";
 
 export default function WishlistProvider({ children }: any) {
 	const [tracklistState, dispatch] = useReducer(wishlistReducer, initialTracklistState);
 
-	const initWishlist = function () {}
+	const initWishlist = function () {
+		initWishlistAction(dispatch);
+	}
 
 	function addWishlist(item: any) {
-		let newObj = [...tracklistState.wishlist];
-		newObj.push(item);
-		dispatch({ type: WishlistTypes.ADD_WISHLIST, payload: newObj });
+		addWishlistAction(dispatch, item, tracklistState);
 	}
 
 	return (
