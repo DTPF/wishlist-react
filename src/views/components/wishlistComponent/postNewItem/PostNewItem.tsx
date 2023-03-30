@@ -1,7 +1,7 @@
 import { useState, useRef, useContext } from 'react';
-import { RiSendPlaneFill } from 'react-icons/ri';
-import './PostNewItem.scss';
 import WishlistContext from 'context/wishlist/WishlistContext';
+import { RiSendPlaneFill } from 'react-icons/ri';
+import './postNewItem.scss';
 
 export default function PostNewItem() {
   const { addWishlist } = useContext(WishlistContext)

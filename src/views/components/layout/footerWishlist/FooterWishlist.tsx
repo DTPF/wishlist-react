@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import WishlistContext from 'context/wishlist/WishlistContext';
-import RemoveWishlist from 'views/components/WishlistComponent/RemoveWishlist'
+import RemoveWishlist from 'views/components/wishlistComponent/removeWishlist'
 import './footerWishlist.scss'
 
 export default function FooterWishlist() {

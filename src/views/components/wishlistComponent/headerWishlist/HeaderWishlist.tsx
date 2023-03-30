@@ -1,7 +1,7 @@
 import WishlistContext from 'context/wishlist/WishlistContext';
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import './HeaderWishlist.scss';
+import './headerWishlist.scss';
 
 export default function HeaderWishlist() {
   const { wishlist } = useContext(WishlistContext);

@@ -1,4 +1,4 @@
-import './RemoveWishlist.scss';
+import './removeWishlist.scss';
 
 export default function BottomList() {
 

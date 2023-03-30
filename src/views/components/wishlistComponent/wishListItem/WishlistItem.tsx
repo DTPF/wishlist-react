@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import './WishlistItem.scss'
+import './wishlistItem.scss'
 
 export default function WishlistItem({ status, wishlistItem }: any) {
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);

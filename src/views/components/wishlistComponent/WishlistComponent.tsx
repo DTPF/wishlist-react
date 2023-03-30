@@ -1,21 +1,19 @@
 import { useContext } from 'react';
 import WishlistContext from 'context/wishlist/WishlistContext';
-import HeaderWishlist from './HeaderWishlist';
-import PostNewItem from './PostNewItem';
-import WishlistItem from './WishListItem';
+import HeaderWishlist from './headerWishlist';
+import PostNewItem from './postNewItem';
+import WishlistItem from './wishListItem';
 import FooterWishlist from '../layout/footerWishlist';
-import './WishlistComponent.scss';
+import './wishlistComponent.scss';
 
 export default function WishlistComponent({ params }: any) {
   const { wishlist } = useContext(WishlistContext);
 
-  const completedItems = wishlist.filter((item: any) => {
-    return item.isCompleted === true
-  })
+  const completedItems =
+    wishlist.filter((item: any) => item.isCompleted === true)
 
-  const activeItems = wishlist.filter((item: any) => {
-    return item.isCompleted === false
-  })
+  const activeItems =
+    wishlist.filter((item: any) => item.isCompleted === false)
 
   function getStatus() {
     if (!params.isCompleted) {
@@ -43,7 +41,7 @@ export default function WishlistComponent({ params }: any) {
         ))}
       </div>
 
-      {params.isCompleted !== 'completed' && <PostNewItem/>}
+      {params.isCompleted !== 'completed' && <PostNewItem />}
       <FooterWishlist />
     </section>
   )
