@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import WishlistContext from 'context/wishlist/WishlistContext';
 import HeaderWishlist from './HeaderWishlist';
 import PostNewItem from './PostNewItem';
@@ -7,9 +6,8 @@ import WishlistItem from './WishListItem';
 import FooterWishlist from '../layout/footerWishlist';
 import './WishlistComponent.scss';
 
-export default function WishlistComponent() {
+export default function WishlistComponent({ params }: any) {
   const { wishlist } = useContext(WishlistContext);
-  const params = useParams();
 
   const completedItems = wishlist.filter((item: any) => {
     return item.isCompleted === true
