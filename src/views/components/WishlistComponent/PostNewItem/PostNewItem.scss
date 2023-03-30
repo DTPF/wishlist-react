@@ -6,6 +6,7 @@
   align-items: center;
   height: 60px;
   padding-top: 35px;
+  margin-bottom: 30vw;
   @include fadeIn(400ms);
 
   &__form {
