@@ -7,9 +7,6 @@ export default function PostNewItem() {
   const { addWishlist } = useContext(WishlistContext)
   const [inputs, setInputs] = useState({
     title: undefined,
-    status: 'complete',
-    createdAt: Date.now(),
-    updatedAt: Date.now()
   });
   const form: any = useRef();
 
