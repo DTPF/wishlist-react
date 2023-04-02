@@ -19,7 +19,7 @@ export const initWishlistsByUserIdAction =
 					const currentWishlist =
 						findCurrentWishlist ? findCurrentWishlist : response.wishlists[0]
 
-					dispatch({
+					return dispatch({
 						type: WishlistTypes.INIT_WISHLIST_BY_USER_ID,
 						payload: {
 							currentWishlist: currentWishlist,
@@ -53,14 +53,14 @@ export const addWishlistAction =
 					const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
 					newWishlist[findIndex] = res.wishlistStored;
 
-					dispatch({
+					toast.success(res.message);
+					return dispatch({
 						type: WishlistTypes.ADD_WISHLIST,
 						payload: {
 							newWishlistItems,
 							newWishlist
 						}
 					});
-					toast.success(res.message);
 				} else {
 					toast.error(res.message);
 				}
@@ -78,7 +78,7 @@ export const addWishlistAction =
 				wishlistItems: newWishlistItems
 			}]
 
-			dispatch({
+			return dispatch({
 				type: WishlistTypes.ADD_WISHLIST,
 				payload: {
 					newWishlistItems,
