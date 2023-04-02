@@ -2,16 +2,15 @@ import { useContext, useReducer } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UserContext from "context/user/UserContext";
 import {
+	initWishlistsByUserIdAction,
 	addWishlistAction,
-	initWishlistsByUserIdAction
+	removeWishlistItemAction
 } from "reducers/wishlist/wishlistActions";
 import WishlistContext from "./WishlistContext";
 import wishlistReducer from "reducers/wishlist/wishlistReducer";
 import initialWishlistState from "./initialWishlistState";
 
-type Props = {
-  children: React.ReactNode
-}
+type Props = { children: React.ReactNode }
 
 export default function WishlistProvider(props: Props) {
 	const { children } = props;
@@ -20,14 +19,20 @@ export default function WishlistProvider(props: Props) {
 	const { getIdTokenClaims, isAuthenticated } = useAuth0();	
 
 	const initWishlistsByUserId = function () {
-		getIdTokenClaims().then((token) => {
-			initWishlistsByUserIdAction(dispatch, isAuthenticated, token, dbUser);
+		getIdTokenClaims().then((auth0User) => {
+			initWishlistsByUserIdAction(dispatch, isAuthenticated, auth0User, dbUser);
 		})
 	}
 
 	function addNewWishlistItem(item: any) {
-		getIdTokenClaims().then((token) => {
-			addWishlistAction(dispatch, item, wishlistState, isAuthenticated, token);
+		getIdTokenClaims().then((auth0User) => {
+			addWishlistAction(dispatch, item, wishlistState, isAuthenticated, auth0User);
+		})
+	}
+
+	const removeWishlistItem = function (wishlistItem: any) {
+		getIdTokenClaims().then((auth0User) => {
+			removeWishlistItemAction(dispatch, isAuthenticated, wishlistState, wishlistState.currentWishlist._id, wishlistItem.id, auth0User);
 		})
 	}
 
@@ -35,7 +40,8 @@ export default function WishlistProvider(props: Props) {
 		<WishlistContext.Provider value={{
 			...wishlistState,
 			initWishlistsByUserId,
-			addNewWishlistItem
+			addNewWishlistItem,
+			removeWishlistItem
 		}}>
 			{children}
 		</WishlistContext.Provider>
