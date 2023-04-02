@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import WishlistContext from 'context/wishlist/WishlistContext';
 import { FiTrash2 } from 'react-icons/fi';
 import './wishlistItem.scss'
 
-export default function WishlistItem({ status, wishlistItem }: any) {
+export default function WishlistItem({ wishlistItem }: any) {
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);
+  const { removeWishlistItem } = useContext(WishlistContext)
 
   return (
     <article className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}>
@@ -17,7 +19,7 @@ export default function WishlistItem({ status, wishlistItem }: any) {
       <div className='wishlist-item__check-delete'>
         <span
           className='wishlist-item__check-delete--trash'
-          onClick={() => handleDeleteItem()}
+          onClick={() => removeWishlistItem(wishlistItem)}
         >
           <FiTrash2 />
         </span>
@@ -30,10 +32,6 @@ export default function WishlistItem({ status, wishlistItem }: any) {
       </div>
     </article>
   )
-}
-
-const handleDeleteItem = () => {
-  console.log('delete item');  
 }
 
 const handleOnChangeCheckbox = () => {
