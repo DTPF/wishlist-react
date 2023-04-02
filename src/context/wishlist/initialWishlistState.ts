@@ -10,6 +10,7 @@ const initialWishlistState = {
 	wishlists: [],
 	initWishlistsByUserId: () => { },
 	addNewWishlistItem: (data: any) => { },
+	removeWishlistItem: (data: any) => { },
 }
 
 export default initialWishlistState;
