@@ -26,3 +26,16 @@ export const postNewWishlistItemApi = async (wishlistId: string, item: object, t
 	const data = await response.json()
 	return data as WishList
 }
+
+export const removeWishlistItemApi = async (wishlistId: string, wishlistItemId: string, token: any): Promise<WishList> => {
+	const params = {
+		method: "DELETE",
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/json",
+		},
+	}
+	const response = await fetch(`${basePath}/${apiVersion}/remove-wishlist-item/${wishlistId}/${wishlistItemId}`, params)
+	const data = await response.json()
+	return data
+}
