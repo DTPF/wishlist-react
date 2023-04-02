@@ -34,9 +34,9 @@ export default function WishlistComponent({ params }: any) {
       </div>
 
       <div className='wishlist-component__list'>
-        {getStatus()?.map((wishlistItem: WishList, index: number) => (
+        {getStatus()?.map((wishlistItem: any) => (
           <WishlistItem
-            key={index}
+            key={wishlistItem.id}
             wishlistItem={wishlistItem}
           />
         ))}
