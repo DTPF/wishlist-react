@@ -17,6 +17,12 @@ export default function wishlistReducer(state: any, action: any) {
 				wishlists: payload.newWishlist
 			}
 
+		case WishlistTypes.REMOVE_WISHLIST_ITEM:
+			return {
+				currentWishlist: payload.newWishlistItems,
+				wishlists: payload.newWishlist
+			}
+
 		default:
 			return state;
 	}
