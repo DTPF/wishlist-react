@@ -3,7 +3,7 @@
 # Wishlist MSD-22
 
 ### Requriments
-- [ReactJS]: <https://es.reactjs.org/>
+- [ReactJS]
 
 ### Instructions
 ```
@@ -13,4 +13,7 @@ $ npm start
 ```
 
 ### Author
+[David T. Pizarro Frick]
+
+[ReactJS]: <https://es.reactjs.org/>
 [David T. Pizarro Frick]: <https://www.linkedin.com/in/david-tomas-pizarro-frick/>
