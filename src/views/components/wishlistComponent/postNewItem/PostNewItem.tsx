@@ -2,13 +2,11 @@ import { useState, useContext } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import './postNewItem.scss'
-import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-hot-toast'
 
 export default function PostNewItem() {
   const { addNewWishlistItem } = useContext(WishlistContext)
   const [inputs, setInputs] = useState({
-    wishlistItemId: uuidv4(),
     title: '',
   })
 
