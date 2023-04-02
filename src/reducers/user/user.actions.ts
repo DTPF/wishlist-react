@@ -1,5 +1,5 @@
-import * as UserTypes from "reducers/user/userTypes";
-import { initGetUserAPI } from "api/user";
+import * as UserTypes from "reducers/user/user.types";
+import { initGetUserAPI } from "api/user.api";
 
 export const initGetUserAction =
 	async function (

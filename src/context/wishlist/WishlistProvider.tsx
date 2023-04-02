@@ -5,9 +5,9 @@ import {
 	initWishlistsByUserIdAction,
 	addWishlistAction,
 	removeWishlistItemAction
-} from "reducers/wishlist/wishlistActions";
+} from "reducers/wishlist/wishlist.actions";
 import WishlistContext from "./WishlistContext";
-import wishlistReducer from "reducers/wishlist/wishlistReducer";
+import wishlistReducer from "reducers/wishlist/wishlist.reducer";
 import initialWishlistState from "./initialWishlistState";
 
 type Props = { children: React.ReactNode }

@@ -1,5 +1,5 @@
-import { getWishlistsByUserIdApi, postNewWishlistItemApi, removeWishlistItemApi } from "api/wishlist";
-import * as WishlistTypes from "reducers/wishlist/wishlistTypes";
+import { getWishlistsByUserIdApi, postNewWishlistItemApi, removeWishlistItemApi } from "api/wishlist.api";
+import * as WishlistTypes from "reducers/wishlist/wishlist.types";
 import toast from 'react-hot-toast';
 
 export const initWishlistsByUserIdAction =

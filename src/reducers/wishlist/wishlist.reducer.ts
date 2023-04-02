@@ -1,4 +1,4 @@
-import * as WishlistTypes from './wishlistTypes';
+import * as WishlistTypes from './wishlist.types';
 
 export default function wishlistReducer(state: any, action: any) {
 	const { type, payload } = action;

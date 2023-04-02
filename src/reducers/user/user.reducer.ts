@@ -1,4 +1,4 @@
-import * as UserTypes from './userTypes';
+import * as UserTypes from './user.types';
 
 export default function userReducer(state: any, action: any) {
 	const { type, payload } = action;

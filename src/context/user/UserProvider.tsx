@@ -1,9 +1,9 @@
 import { useReducer } from "react";
 import {
 	initGetUserAction
-} from "reducers/user/userActions";
+} from "reducers/user/user.actions";
 import UserContext from "./UserContext";
-import userReducer from "reducers/user/userReducer";
+import userReducer from "reducers/user/user.reducer";
 import initialUserState from "./initialUserState";
 import { useAuth0 } from "@auth0/auth0-react";
 
