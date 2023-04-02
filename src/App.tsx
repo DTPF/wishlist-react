@@ -4,6 +4,7 @@ import WishlistProvider from 'context/wishlist/WishlistProvider';
 import router from './routes/router';
 import { isLocalhost } from 'utils/isLocalhost';
 import { Toaster } from 'react-hot-toast';
+import UserProvider from 'context/user/UserProvider';
 
 export default function App() {
   return (
@@ -16,13 +17,15 @@ export default function App() {
       }
       authorizationParams={{ redirect_uri: window.location.origin + '/' }}
     >
-      <WishlistProvider>
-        <Toaster />
-        <RouterProvider
-          router={router}
-          fallbackElement={<></>}
-        />
-      </WishlistProvider>
+      <UserProvider>
+        <WishlistProvider>
+          <Toaster />
+          <RouterProvider
+            router={router}
+            fallbackElement={<></>}
+          />
+        </WishlistProvider>
+      </UserProvider >
     </Auth0Provider>
   );
 }
