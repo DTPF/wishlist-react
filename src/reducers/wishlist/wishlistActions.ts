@@ -1,4 +1,4 @@
-import { getWishlistsByUserIdApi, postNewWishlistItemApi } from "api/wishlist";
+import { getWishlistsByUserIdApi, postNewWishlistItemApi, removeWishlistItemApi } from "api/wishlist";
 import * as WishlistTypes from "reducers/wishlist/wishlistTypes";
 import toast from 'react-hot-toast';
 
@@ -87,3 +87,34 @@ export const addWishlistAction =
 			});
 		}
 	}
+
+export async function removeWishlistItemAction(
+	dispatch: any,
+	isAuthenticated: any,
+	wishlistState: any,
+	wishlistId: any,
+	wishlistItemId: any,
+	auth0User: any
+) {
+	try {
+		if (isAuthenticated) {
+			const newItem: any = await removeWishlistItemApi(wishlistId, wishlistItemId, auth0User.__raw)
+
+			let newWishlist = wishlistState.wishlists;
+			const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+			newWishlist[findIndex] = newItem.newWishlist;
+
+			dispatch({
+				type: WishlistTypes.REMOVE_WISHLIST_ITEM,
+				payload: {
+					newWishlistItems: newItem.newWishlist,
+					newWishlist
+				}
+			});
+			
+			return toast.success(`${newItem.message}`);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
