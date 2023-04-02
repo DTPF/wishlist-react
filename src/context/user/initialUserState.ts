@@ -1,6 +1,13 @@
 const initialUserState = {
 	auth0User: {},
-	dbUser: {},
+	dbUser: {
+		_id: '',
+		userId: '',
+		wishlistsInfo: {
+			currentWishlist: ''
+		},
+		language: '',
+	},
 	initGetUser: () => { },
 }
 
