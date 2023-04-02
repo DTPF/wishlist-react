@@ -10,7 +10,7 @@ export const initGetUserAction =
 		if (isAuthenticated && auth0User.sub) {
 			try {
 				const response = await initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
-				dispatch({
+				return dispatch({
 					type: UserTypes.INIT_GET_USER,
 					payload: {
 						auth0User: auth0User,
