@@ -3,14 +3,17 @@
 # Wishlist MSD-22
 
 ### Requriments
-- [Node] NodeJS
+- [React] ReactJS
 
 ### Instructions
 ```
-$ git clone https://github.com/DTPF/amazen-ecommerce.git
+$ git clone git@github.com:DTPF/wishlist-react.git
 $ npm install
 $ npm start
 ```
 
-[Node]: <https://nodejs.org/es/>
-[David Thomas Pizarro Frick]: <https://www.linkedin.com/in/david-tomas-pizarro-frick/>
+### Author
+[linkedin] David T. Pizarro Frick
+
+[React]: <https://es.reactjs.org/>
+[linkedin]: <https://www.linkedin.com/in/david-tomas-pizarro-frick/>
