@@ -4,16 +4,17 @@ export default function wishlistReducer(state: any, action: any) {
 	const { type, payload } = action;
 
 	switch (type) {
-		case WishlistTypes.INIT_WISHLIST:
+		case WishlistTypes.INIT_WISHLIST_BY_USER_ID:
 			return {
 				...state,
-				wishlist: payload.wishlistItems
+				currentWishlist: payload.currentWishlist,
+				wishlists: payload.wishlists,
 			}
 
 		case WishlistTypes.ADD_WISHLIST:
 			return {
-				...state,
-				wishlist: payload
+				currentWishlist: { ...state.currentWishlist, wishlistItems: payload.newWishlistItems },
+				wishlists: payload.newWishlist
 			}
 
 		default:
