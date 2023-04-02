@@ -1,7 +1,8 @@
 export interface WishList {
 	id: string,
 	title: string,
-	completed: boolean,
+	description: string,
+	isCompleted: boolean,
 	createdAt: string,
 	updatedAt: string
 }
