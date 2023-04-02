@@ -5,13 +5,13 @@ import toast from 'react-hot-toast';
 export const initWishlistsByUserIdAction =
 	async function (
 		dispatch: any,
-		isAuthenticated: any,
-		token: any,
-		dbUser: any
+		isAuthenticated: boolean,
+		auth0User: any,
+		dbUser: { _id: string; }
 	) {
 		if (isAuthenticated && dbUser._id) {
 			try {
-				const response: any = await getWishlistsByUserIdApi(token.__raw, dbUser._id)
+				const response: any = await getWishlistsByUserIdApi(auth0User.__raw, dbUser._id)
 
 				if (response.status === 200) {
 					const findCurrentWishlist =
@@ -38,13 +38,13 @@ export const initWishlistsByUserIdAction =
 export const addWishlistAction =
 	function (
 		dispatch: any,
-		item: any,
+		item: object,
 		wishlistState: any,
-		isAuthenticated: any,
-		token: any
+		isAuthenticated: boolean,
+		auth0User: any
 	) {
 		if (isAuthenticated && wishlistState.currentWishlist._id) {
-			postNewWishlistItemApi(wishlistState.currentWishlist._id, item, token.__raw).then((res: any) => {
+			postNewWishlistItemApi(wishlistState.currentWishlist._id, item, auth0User.__raw).then((res: any) => {
 				if (res.status === 200) {
 					let newWishlistItems = wishlistState.currentWishlist.wishlistItems;
 					newWishlistItems.push(res.newWishlistItem);
@@ -90,10 +90,10 @@ export const addWishlistAction =
 
 export async function removeWishlistItemAction(
 	dispatch: any,
-	isAuthenticated: any,
+	isAuthenticated: boolean,
 	wishlistState: any,
-	wishlistId: any,
-	wishlistItemId: any,
+	wishlistId: string,
+	wishlistItemId: string,
 	auth0User: any
 ) {
 	try {
@@ -111,7 +111,7 @@ export async function removeWishlistItemAction(
 					newWishlist
 				}
 			});
-			
+
 			return toast.success(`${newItem.message}`);
 		}
 	} catch (err) {
