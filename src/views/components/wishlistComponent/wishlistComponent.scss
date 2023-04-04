@@ -18,4 +18,12 @@
     font-weight: 500;
     @include fadeIn(400ms);
   }
+
+  &__spinner {
+    width: 100vw;
+    height: 50vh;
+    display: grid;
+    place-content: center;
+    
+  }
 }
