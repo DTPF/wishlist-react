@@ -1,0 +1,62 @@
+@import '/src/scss/animations';
+
+.add-new-wishlist {
+	&__add-new-list {
+		width: 200px;
+		min-height: 230px;
+		max-height: 300px;
+		margin: 15px;
+		border-radius: 6px;
+		@include fadeIn(250ms);
+	}
+
+	&__add-new-list {
+		@include fadeIn();
+
+		&__textarea {
+			display: block;
+			width: 100%;
+			max-width: 200px;
+			min-width: 200px;
+			min-height: 20px;
+			max-height: 150px;
+			overflow: hidden;
+			resize: both;
+			line-height: 20px;
+			padding: 5px 0;
+			text-align: center;
+			outline: none;
+			color: #fff;
+			background-color: #232F3E;
+			border-radius: 6px;
+			cursor: text;
+		}
+
+		&__textarea[contenteditable]:empty::before {
+			content: "Nueva lista";
+			color: #c9c9c9;
+		}
+
+		&__color-select {
+			display: grid;
+			place-content: center;
+			padding: 25px 0;
+		}
+
+		&__add-button {
+			position: relative;
+			bottom: 0px !important;
+			display: flex;
+			justify-content: center;
+			margin: 0 auto;
+
+			svg {
+				width: 40px;
+				height: 40px;
+				color: #5b5b5b;
+				font-weight: 500;
+				cursor: crosshair;
+			}
+		}
+	}
+}
