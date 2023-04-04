@@ -1,0 +1,23 @@
+	.color-select {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 10px 0;
+		padding-top: 0;
+
+		&__color {
+			width: 20px;
+			height: 20px;
+			box-shadow: 0px 0px 10px 1px #9a9a9a5b;
+			border: none;
+			border-radius: 50%;
+			padding: 5px;
+			margin: 5px;
+			cursor: pointer;
+
+			&:active,
+			&:focus {
+				box-shadow: 0px 0px 5px 1px #9a9a9a;
+			}
+		}
+	}
