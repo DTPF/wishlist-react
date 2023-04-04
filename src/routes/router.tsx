@@ -1,22 +1,35 @@
 import { createBrowserRouter } from "react-router-dom";
+// Layouts
+import MainLayout from "views/layout/mainLayout";
 // Pages
-import HomePage from '../views/pages/homePage/HomePage';
+import WishlistPage from '../views/pages/wishlistPage/WishlistPage';
+import HomePage from "views/pages/wishlistPage/homePage/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <MainLayout />,
     children: [
       {
-        path: ":isCompleted",
+        path: "/",
         element: <HomePage />,
       },
+      {
+        path: "/wishlist",
+        element: <WishlistPage />,
+        children: [
+          {
+            path: ":isCompleted",
+            element: <WishlistPage />,
+          },
+        ]
+      },
+      {
+        path: "*",
+        element: <div>Not found</div>
+      },
     ]
-  },
-  {
-    path: "*",
-    element: <HomePage />
-  },
+  }
 ]);
 
 export default router;
