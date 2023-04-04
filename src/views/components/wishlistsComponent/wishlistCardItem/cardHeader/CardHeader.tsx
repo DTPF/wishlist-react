@@ -1,15 +1,11 @@
 import { useContext } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
-import { toast } from 'react-hot-toast'
 import './cardHeader.scss'
 
 export default function CardHeader({ wishlistItem }: any) {
 	const { updateWishlist } = useContext(WishlistContext)
 	const handleUpdateTitle = (e: any) => {
-		if (!e.target.innerText) {
-			e.target.innerText = wishlistItem.wishlistName
-			return toast.error(`El título no puede estar vacío`);
-		}
+		if (!e.target.innerText) return e.target.innerText = wishlistItem.wishlistName
 		return updateWishlist(wishlistItem._id, { wishlistName: e.target.innerText })
 	}
 

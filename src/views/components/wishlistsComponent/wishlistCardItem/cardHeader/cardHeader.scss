@@ -20,7 +20,7 @@
 		}
 
 		&__textarea[contenteditable]:empty::before {
-			content: "Placeholder still possible";
-			color: gray;
+			content: "Nombre de la lista";
+			color: rgb(218, 218, 218);
 		}
 	}
