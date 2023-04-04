@@ -1,0 +1,33 @@
+	.wishlist-card-body {
+		height: 100%;
+		cursor: pointer;
+
+		&__item {
+			display: flex;
+			align-items: center;
+			margin: 5px 8px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-size: 0.8rem;
+			color: #383838;
+
+			span {
+				padding: 3px;
+			}
+		}
+
+		&__items-completed {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100px;
+			margin: 10px auto;
+			padding: 2px 4px;
+			background-color: rgb(222, 222, 222);
+			font-size: 0.7rem;
+			border-radius: 10px;
+			color: #3e3e3e;
+			font-weight: 500;
+		}
+	}

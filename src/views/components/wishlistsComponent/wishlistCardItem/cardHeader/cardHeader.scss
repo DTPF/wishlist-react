@@ -1,0 +1,26 @@
+	.wishlist-card-header {
+		background-color: #232f3e93;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+
+		&__textarea {
+			display: block;
+			width: 100%;
+			max-width: 200px;
+			min-width: 200px;
+			overflow: hidden;
+			resize: both;
+			min-height: 20px;
+			max-height: 200px;
+			line-height: 20px;
+			padding: 5px 0;
+			text-align: center;
+			outline: none;
+			color: #fff;
+		}
+
+		&__textarea[contenteditable]:empty::before {
+			content: "Placeholder still possible";
+			color: gray;
+		}
+	}
