@@ -1,0 +1,16 @@
+@import '/src/scss/animations';
+
+.wishlists-component {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 20px;
+	padding: 10px;
+	margin-bottom: 100px;
+
+	&__spinner {
+		display: grid;
+		place-content: center;
+		height: 50vh;
+	}
+}
