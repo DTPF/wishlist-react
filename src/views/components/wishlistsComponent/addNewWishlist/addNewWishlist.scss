@@ -1,35 +1,16 @@
 @import '/src/scss/animations';
+@import '/src/scss/mixins';
 
 .add-new-wishlist {
 	&__add-new-list {
-		width: 200px;
-		min-height: 230px;
-		max-height: 300px;
-		margin: 15px;
-		border-radius: 6px;
-		@include fadeIn(250ms);
-	}
-
-	&__add-new-list {
+		@include wishlistCardItem();
 		@include fadeIn();
 
 		&__textarea {
-			display: block;
-			width: 100%;
-			max-width: 200px;
-			min-width: 200px;
-			min-height: 20px;
-			max-height: 150px;
-			overflow: hidden;
-			resize: both;
-			line-height: 20px;
+			@include wishlistCardItemTextArea();
 			padding: 5px 0;
-			text-align: center;
-			outline: none;
-			color: #fff;
 			background-color: #232F3E;
 			border-radius: 6px;
-			cursor: text;
 		}
 
 		&__textarea[contenteditable]:empty::before {

@@ -1,12 +1,10 @@
 @import '/src/scss/animations';
+@import '/src/scss/mixins';
 
 .wishlist-card-item {
-	width: 200px;
-	min-height: 230px;
-	max-height: 300px;
-	margin: 15px;
-	border-radius: 6px;
+	@include wishlistCardItem();
+	@include fadeIn(250ms);
 	overflow: hidden;
 	box-shadow: 0px -1px 14px 0px #232f3e65;
-	@include fadeIn(250ms);
+	background-color: rgb(244, 247, 255);
 }
