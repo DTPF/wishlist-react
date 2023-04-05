@@ -1,6 +1,6 @@
-import * as api from "api/wishlist.api";
-import * as WishlistTypes from "reducers/wishlist/wishlist.types";
-import toast from 'react-hot-toast';
+import * as api from "api/wishlist.api"
+import * as WishlistTypes from "reducers/wishlist/wishlist.types"
+import toast from 'react-hot-toast'
 
 export async function initWishlistsByUserIdAction(
 	dispatch: any,
@@ -13,9 +13,22 @@ export async function initWishlistsByUserIdAction(
 		try {
 			const response: any = await api.getWishlistsByUserIdApi(token, dbUser._id)
 
+			let totalWishlistsNotes = 0
+			let lastModified = "2023-04-05T12:25:50.606Z"
+			response.wishlists.forEach((item: any) => {
+				totalWishlistsNotes += item.wishlistItems.length
+				if (item.updatedAt > lastModified) lastModified = item.updatedAt
+			})
+
+			const wishlistsInfo = {
+				totalWishlists: response.wishlists.length,
+				totalWishlistsNotes,
+				lastModified
+			}
+
 			if (response.status === 200) {
 				const findCurrentWishlist =
-					response.wishlists.find((item: any) => item._id === dbUser.wishlistsInfo.currentWishlist);
+					response.wishlists.find((item: any) => item._id === dbUser.wishlistsInfo.currentWishlist)
 				const currentWishlist =
 					findCurrentWishlist ? findCurrentWishlist : response.wishlists[0]
 
@@ -23,16 +36,17 @@ export async function initWishlistsByUserIdAction(
 					type: WishlistTypes.INIT_WISHLIST_BY_USER_ID,
 					payload: {
 						currentWishlist: currentWishlist,
-						wishlists: response.wishlists
+						wishlists: response.wishlists,
+						wishlistsInfo
 					}
-				});
+				})
 				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			} else {
-				console.log(response.message);
+				console.log(response.message)
 				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			}
 		} catch (err: any) {
-			toast.error(err);
+			toast.error(err)
 		}
 	}
 }
@@ -51,14 +65,14 @@ export async function postWishlistAction(
 				dispatch({
 					type: WishlistTypes.ADD_WISHLIST,
 					payload: response.wishlist
-				});
+				})
 				localStorage.removeItem('color')
-				return toast.success(response.message);
+				return toast.success(response.message)
 			} else {
-				toast.error(response.message);
+				toast.error(response.message)
 			}
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 		}
 	}
 }
@@ -75,34 +89,34 @@ export async function addWishlistItemAction(
 			const response: any = await api.postNewWishlistItemApi(wishlistState.currentWishlist._id, item, token)
 
 			if (response.status === 200) {
-				let newWishlistItems = wishlistState.currentWishlist.wishlistItems;
-				newWishlistItems.push(response.newWishlistItem);
+				let newWishlistItems = wishlistState.currentWishlist.wishlistItems
+				newWishlistItems.push(response.newWishlistItem)
 
-				let newWishlist = wishlistState.wishlists;
+				let newWishlist = wishlistState.wishlists
 				const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
-				newWishlist[findIndex] = response.wishlistStored;
+				newWishlist[findIndex] = response.wishlistStored
 
-				toast.success(response.message);
+				toast.success(response.message)
 				return dispatch({
 					type: WishlistTypes.ADD_WISHLIST_ITEM,
 					payload: {
 						newWishlistItems,
 						newWishlist
 					}
-				});
+				})
 			} else {
-				toast.error(response.message);
+				toast.error(response.message)
 			}
 		} catch (error: any) {
-			toast.error(error);
+			toast.error(error)
 		}
 	} else {
-		let newWishlistItems = wishlistState.currentWishlist.wishlistItems;
-		newWishlistItems.push(item);
+		let newWishlistItems = wishlistState.currentWishlist.wishlistItems
+		newWishlistItems.push(item)
 
-		let newWishlist = wishlistState.wishlists;
+		let newWishlist = wishlistState.wishlists
 		const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
-		newWishlist[findIndex] = newWishlistItems;
+		newWishlist[findIndex] = newWishlistItems
 
 		const wishlistTemporary = [{
 			wishlistName: 'Temporary list',
@@ -115,7 +129,7 @@ export async function addWishlistItemAction(
 				newWishlistItems,
 				newWishlist: wishlistTemporary
 			}
-		});
+		})
 	}
 }
 
@@ -131,9 +145,9 @@ export async function removeWishlistItemAction(
 		if (isAuthenticated) {
 			const newItem: any = await api.removeWishlistItemApi(wishlistId, wishlistItemId, token)
 
-			let newWishlist = wishlistState.wishlists;
+			let newWishlist = wishlistState.wishlists
 			const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
-			newWishlist[findIndex] = newItem.newWishlist;
+			newWishlist[findIndex] = newItem.newWishlist
 
 			dispatch({
 				type: WishlistTypes.REMOVE_WISHLIST_ITEM,
@@ -141,12 +155,12 @@ export async function removeWishlistItemAction(
 					newWishlistItems: newItem.newWishlist,
 					newWishlist
 				}
-			});
+			})
 
-			return toast.success(`${newItem.message}`);
+			return toast.success(`${newItem.message}`)
 		}
 	} catch (err) {
-		console.log(err);
+		console.log(err)
 	}
 }
 
@@ -167,14 +181,14 @@ export async function setCurrentWishlistAction(
 					payload: {
 						currentWishlist: response.wishlist,
 					}
-				});
+				})
 				return setTimeout(() => {
 					dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
-				}, 50);
+				}, 50)
 			}
 		}
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 
 	}
 }
@@ -200,15 +214,15 @@ export async function removeWishlistAction(
 					payload: {
 						newWishlist: filteredWishlist
 					}
-				});
-				return toast.success(`${response.message}`);
+				})
+				return toast.success(`${response.message}`)
 			} else {
-				return toast.error(`${response.message}`);
+				return toast.error(`${response.message}`)
 			}
 
 		}
 	} catch (err) {
-		console.log(err);
+		console.log(err)
 	}
 }
 
@@ -225,21 +239,21 @@ export async function updateWishlistAction(
 			const response: any = await api.updateWishlistApi(wishlistId, data, token)
 
 			if (response.status === 200) {
-				let newWishlist = wishlistState.wishlists;
+				let newWishlist = wishlistState.wishlists
 				const findIndex = newWishlist.findIndex((item: any) => item._id === response.wishlist._id)
-				newWishlist[findIndex] = response.wishlist;
+				newWishlist[findIndex] = response.wishlist
 
 				dispatch({
 					type: WishlistTypes.UPDATE_WISHLIST,
 					payload: {
 						newWishlist
 					}
-				});
+				})
 			} else {
-				return toast.error(`${response.message}`);
+				return toast.error(`${response.message}`)
 			}
 		}
 	} catch (err) {
-		console.log(err);
+		console.log(err)
 	}
 }
