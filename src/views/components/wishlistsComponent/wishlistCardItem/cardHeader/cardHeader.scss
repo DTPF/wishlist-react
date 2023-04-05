@@ -8,8 +8,9 @@
 		&__textarea {
 			display: flex;
 			align-items: center;
-			@include wishlistCardItemTextArea();
 			padding: 5px 0;
+			padding-bottom: 6px;
+			@include wishlistCardItemTextArea();
 		}
 
 		&__textarea[contenteditable]:empty::before {
