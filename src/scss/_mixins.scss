@@ -1,0 +1,22 @@
+@mixin wishlistCardItem {
+	width: 200px;
+	height: 280px;
+	max-height: 300px;
+	margin: 20px;
+	border-radius: 6px;
+}
+
+@mixin wishlistCardItemTextArea {
+	display: block;
+	color: #fff;
+	max-width: 200px;
+	min-width: 200px;
+	min-height: 20px;
+	max-height: 120px;
+	overflow: hidden;
+	resize: both;
+	line-height: 20px;
+	text-align: center;
+	outline: none;
+	cursor: text;
+}
