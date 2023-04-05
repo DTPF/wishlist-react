@@ -7,6 +7,11 @@ const initialWishlistState = {
 		createdAt: '',
 		updatedAt: ''
 	},
+	wishlistsInfo: {
+		totalWishlists: 0,
+		totalWishlistsNotes: 0,
+		lastModified: ''
+	},
 	wishlists: [],
 	isLoading: false,
 	initWishlistsByUserId: () => { },
