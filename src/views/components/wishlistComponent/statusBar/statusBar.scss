@@ -3,6 +3,9 @@
   	justify-content: center;
   	flex-direction: column;
   	align-items: center;
+		position: sticky;
+		top: 100px;
+		z-index: 2;
   	background-color: #232F3E;
   	height: 35px;
 

@@ -11,12 +11,13 @@
 	color: #fff;
 	max-width: 200px;
 	min-width: 200px;
-	min-height: 20px;
+	min-height: 25px;
 	max-height: 120px;
 	overflow: hidden;
 	resize: both;
 	line-height: 20px;
 	text-align: center;
 	outline: none;
+	padding-top: 10px !important;
 	cursor: text;
 }
