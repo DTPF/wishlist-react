@@ -4,8 +4,11 @@ import './cardHeader.scss'
 
 export default function CardHeader({ wishlistItem }: any) {
 	const { updateWishlist } = useContext(WishlistContext)
+
 	const handleUpdateTitle = (e: any) => {
-		if (!e.target.innerText) return e.target.innerText = wishlistItem.wishlistName
+		if (!e.target.innerText || e.target.innerText === wishlistItem.wishlistName) {
+			return e.target.innerText = wishlistItem.wishlistName
+		}
 		return updateWishlist(wishlistItem._id, { wishlistName: e.target.innerText })
 	}
 
@@ -22,7 +25,9 @@ export default function CardHeader({ wishlistItem }: any) {
 				suppressContentEditableWarning={true}
 				onBlur={(e) => handleUpdateTitle(e)}
 			>
-				{wishlistItem.wishlistName}
+				<div className="wishlist-card-header__textarea--content">
+					{wishlistItem.wishlistName}
+				</div>
 			</span>
 		</header>
 	)
