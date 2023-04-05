@@ -17,7 +17,7 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 		>
 			{showPopover && (
 				<span className='wishlist-card-footer__popover'>
-					<div className='wishlist-card-footer__popover--settings'>
+					<div className='wishlist-card-footer__popover--color-select'>
 						<ColorSelect wishlistItem={wishlistItem} />
 					</div>
 					<div onClick={() => removeWishlist(wishlistItem._id)} className='wishlist-card-footer__popover--remove-list'>
