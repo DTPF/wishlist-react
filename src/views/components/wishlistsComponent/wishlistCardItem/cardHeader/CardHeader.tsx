@@ -25,9 +25,7 @@ export default function CardHeader({ wishlistItem }: any) {
 				suppressContentEditableWarning={true}
 				onBlur={(e) => handleUpdateTitle(e)}
 			>
-				<div className="wishlist-card-header__textarea--content">
-					{wishlistItem.wishlistName}
-				</div>
+				{wishlistItem.wishlistName}
 			</span>
 		</header>
 	)
