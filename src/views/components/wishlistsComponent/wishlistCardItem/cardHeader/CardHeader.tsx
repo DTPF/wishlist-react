@@ -1,15 +1,17 @@
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import './cardHeader.scss'
 
 export default function CardHeader({ wishlistItem }: any) {
 	const { updateWishlist } = useContext(WishlistContext)
+	const cardTitle: any = useRef(null);
 
 	const handleUpdateTitle = (e: any) => {
-		if (!e.target.innerText || e.target.innerText === wishlistItem.wishlistName) {
-			return e.target.innerText = wishlistItem.wishlistName
+		let { innerText } = e.target;
+		if (!innerText || innerText === wishlistItem.wishlistName) {			
+			return cardTitle.current.innerText = wishlistItem.wishlistName
 		}
-		return updateWishlist(wishlistItem._id, { wishlistName: e.target.innerText })
+		return updateWishlist(wishlistItem._id, { wishlistName: innerText })
 	}
 
 	return (
@@ -17,6 +19,7 @@ export default function CardHeader({ wishlistItem }: any) {
 			className='wishlist-card-header'
 			style={{ backgroundColor: `rgb(${wishlistItem.backgroundColor})`, color: wishlistItem.color }}>
 			<span
+				ref={cardTitle}
 				key={wishlistItem._id}
 				className="wishlist-card-header__textarea"
 				style={{ color: wishlistItem.color }}
