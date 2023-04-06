@@ -1,4 +1,4 @@
-import { useContext, useReducer } from "react";
+import { useCallback, useContext, useEffect, useMemo, useReducer } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UserContext from "context/user/UserContext";
 import {
@@ -8,7 +8,8 @@ import {
 	removeWishlistItemAction,
 	setCurrentWishlistAction,
 	removeWishlistAction,
-	updateWishlistAction
+	updateWishlistAction,
+	reorderWishlistAction
 } from "reducers/wishlist/wishlist.actions";
 import WishlistContext from "./WishlistContext";
 import wishlistReducer from "reducers/wishlist/wishlist.reducer";
@@ -23,7 +24,12 @@ export default function WishlistProvider(props: Props) {
 	const [wishlistState, dispatch] = useReducer(wishlistReducer, initialWishlistState);
 	const { getIdTokenClaims, isAuthenticated, isLoading: isLoadingAuth0 } = useAuth0();
 
-	const initWishlistsByUserId = async function () {
+	useEffect(() => {
+		initWishlistsByUserId()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dbUser._id])
+
+	const initWishlistsByUserId = useCallback(async () => {
 		dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
 		const user: any = await getIdTokenClaims()
 		initWishlistsByUserIdAction(
@@ -33,9 +39,9 @@ export default function WishlistProvider(props: Props) {
 			user?.__raw,
 			dbUser
 		);
-	}
+	}, [getIdTokenClaims, isAuthenticated, isLoadingAuth0, dbUser]);
 
-	const postNewWishlist = async (dbUserId: any, wishlistTitle: any) => {
+	const postNewWishlist = useCallback(async (dbUserId: any, wishlistTitle: any) => {
 		const data = {
 			userId: dbUserId,
 			wishlistName: wishlistTitle,
@@ -43,44 +49,63 @@ export default function WishlistProvider(props: Props) {
 		}
 		const user: any = await getIdTokenClaims()
 		postWishlistAction(dispatch, data, isAuthenticated, user.__raw);
-	}
+	}, [getIdTokenClaims, isAuthenticated]);
 
-	const addNewWishlistItem = async (item: any) => {
+	const addNewWishlistItem = useCallback(async (item: any) => {
 		const user: any = await getIdTokenClaims()
 		addWishlistItemAction(dispatch, item, wishlistState, isAuthenticated, user.__raw);
-	}
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
-	const removeWishlistItem = async function (wishlistItem: any) {
+	const removeWishlistItem = useCallback(async (wishlistItem: any) => {
 		const user: any = await getIdTokenClaims()
 		removeWishlistItemAction(dispatch, isAuthenticated, wishlistState, wishlistState.currentWishlist._id, wishlistItem.id, user.__raw);
-	}
-	const setCurrentWishlist = async function (wishlist: any) {
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
+
+	const setCurrentWishlist = useCallback(async (wishlist: any) => {
 		dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
 		const user: any = await getIdTokenClaims()
 		setCurrentWishlistAction(dispatch, wishlist, isAuthenticated, user.__raw, dbUser)
-	}
+	}, [getIdTokenClaims, isAuthenticated, dbUser]);
 
-	const removeWishlist = async function (wishlistId: any) {
+	const removeWishlist = useCallback(async (wishlistId: any) => {
 		const user: any = await getIdTokenClaims()
 		removeWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw);
-	}
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
-	const updateWishlist = async function (wishlistId: string, data: any) {
+	const updateWishlist = useCallback(async (wishlistId: string, data: any) => {
 		const user: any = await getIdTokenClaims()
 		updateWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw, data);
-	}
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
+
+	const reorderWishlist = useCallback(async (wishlistId: string) => {
+		const user: any = await getIdTokenClaims()
+		reorderWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw);
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
+
+	const memoizedProvider = useMemo(() => ({
+		...wishlistState,
+		initWishlistsByUserId,
+		postNewWishlist,
+		addNewWishlistItem,
+		removeWishlistItem,
+		setCurrentWishlist,
+		removeWishlist,
+		updateWishlist,
+		reorderWishlist
+	}), [
+		wishlistState,
+		initWishlistsByUserId,
+		addNewWishlistItem,
+		postNewWishlist,
+		removeWishlist,
+		removeWishlistItem,
+		setCurrentWishlist,
+		updateWishlist,
+		reorderWishlist
+	])
 
 	return (
-		<WishlistContext.Provider value={{
-			...wishlistState,
-			initWishlistsByUserId,
-			postNewWishlist,
-			addNewWishlistItem,
-			removeWishlistItem,
-			setCurrentWishlist,
-			removeWishlist,
-			updateWishlist,
-		}}>
+		<WishlistContext.Provider value={memoizedProvider}>
 			{children}
 		</WishlistContext.Provider>
 	)
