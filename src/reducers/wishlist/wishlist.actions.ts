@@ -13,20 +13,20 @@ export async function initWishlistsByUserIdAction(
 		try {
 			const response: any = await api.getWishlistsByUserIdApi(token, dbUser._id)
 
-			let totalWishlistsNotes = 0
-			let lastModified = "2023-04-05T12:25:50.606Z"
-			response.wishlists.forEach((item: any) => {
-				totalWishlistsNotes += item.wishlistItems.length
-				if (item.updatedAt > lastModified) lastModified = item.updatedAt
-			})
-
-			const wishlistsInfo = {
-				totalWishlists: response.wishlists.length,
-				totalWishlistsNotes,
-				lastModified
-			}
-
 			if (response.status === 200) {
+				let totalWishlistsNotes = 0
+				let lastModified = "2023-04-05T12:25:50.606Z"
+				response.wishlists.forEach((item: any) => {
+					totalWishlistsNotes += item.wishlistItems.length
+					if (item.updatedAt > lastModified) lastModified = item.updatedAt
+				})
+
+				const wishlistsInfo = {
+					totalWishlists: response.wishlists.length,
+					totalWishlistsNotes,
+					lastModified
+				}
+
 				const findCurrentWishlist =
 					response.wishlists.find((item: any) => item._id === dbUser.wishlistsInfo.currentWishlist)
 				const currentWishlist =
@@ -193,7 +193,6 @@ export async function setCurrentWishlistAction(
 	}
 }
 
-
 export async function removeWishlistAction(
 	dispatch: any,
 	isAuthenticated: boolean,
@@ -252,6 +251,45 @@ export async function updateWishlistAction(
 			} else {
 				return toast.error(`${response.message}`)
 			}
+		}
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export async function reorderWishlistAction(
+	dispatch: any,
+	isAuthenticated: boolean,
+	wishlistState: any,
+	wishlistOrdered: any,
+	token: any,
+) {
+	try {
+		if (isAuthenticated) {
+			console.log(wishlistOrdered);
+			wishlistOrdered.forEach(async (item: any, index: number) => {
+				const response: any = await api.updateWishlistApi(item._id, { position: index }, token)
+
+				console.log(response);
+				if (response.status === 200) {
+					let newWishlist = wishlistState.wishlists
+					const findIndex = wishlistOrdered.findIndex((item: any) => item._id === response.wishlist._id)
+					newWishlist[findIndex] = response.wishlist
+					console.log(newWishlist);
+
+					// return
+
+					return dispatch({
+						type: WishlistTypes.UPDATE_WISHLIST,
+						payload: {
+							newWishlist
+						}
+					})
+				} else {
+					return toast.error(`${response.message}`)
+				}
+			});
+
 		}
 	} catch (err) {
 		console.log(err)
