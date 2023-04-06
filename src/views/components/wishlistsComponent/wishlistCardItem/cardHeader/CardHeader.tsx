@@ -9,7 +9,8 @@ export default function CardHeader({ wishlistItem }: any) {
 	const handleUpdateTitle = (e: any) => {
 		let { innerText } = e.target;
 		if (!innerText || innerText === wishlistItem.wishlistName) {			
-			return cardTitle.current.innerText = wishlistItem.wishlistName
+			cardTitle.current.innerText = wishlistItem.wishlistName
+			return 
 		}
 		return updateWishlist(wishlistItem._id, { wishlistName: innerText })
 	}
