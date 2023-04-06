@@ -42,7 +42,6 @@ export async function initWishlistsByUserIdAction(
 				})
 				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			} else {
-				console.log(response.message)
 				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			}
 		} catch (err: any) {
