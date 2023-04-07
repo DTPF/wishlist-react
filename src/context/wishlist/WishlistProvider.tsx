@@ -9,7 +9,7 @@ import {
 	setCurrentWishlistAction,
 	removeWishlistAction,
 	updateWishlistAction,
-	reorderWishlistAction
+	updateWishlistItemAction
 } from "reducers/wishlist/wishlist.actions";
 import WishlistContext from "./WishlistContext";
 import wishlistReducer from "reducers/wishlist/wishlist.reducer";
@@ -77,9 +77,9 @@ export default function WishlistProvider(props: Props) {
 		updateWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
-	const reorderWishlist = useCallback(async (wishlistId: string) => {
+		const updateWishlistItem = useCallback(async (wishlistId: string, wishlistItemId: string, data: any) => {
 		const user: any = await getIdTokenClaims()
-		reorderWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw);
+		updateWishlistItemAction(dispatch, isAuthenticated, wishlistState, wishlistId, wishlistItemId, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
 	const memoizedProvider = useMemo(() => ({
@@ -91,7 +91,7 @@ export default function WishlistProvider(props: Props) {
 		setCurrentWishlist,
 		removeWishlist,
 		updateWishlist,
-		reorderWishlist
+		updateWishlistItem
 	}), [
 		wishlistState,
 		initWishlistsByUserId,
@@ -101,7 +101,7 @@ export default function WishlistProvider(props: Props) {
 		removeWishlistItem,
 		setCurrentWishlist,
 		updateWishlist,
-		reorderWishlist
+		updateWishlistItem
 	])
 
 	return (
