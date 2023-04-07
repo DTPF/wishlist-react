@@ -26,7 +26,7 @@ export default function wishlistReducer(state: any, action: any) {
 		case WishlistTypes.REMOVE_WISHLIST:
 			return {
 				...state,
-				wishlists: payload.newWishlist,
+				wishlists: payload.wishlists,
 				wishlistsInfo: {
 					...state.wishlistsInfo,
 					totalWishlists: --state.wishlistsInfo.totalWishlists,
@@ -37,7 +37,19 @@ export default function wishlistReducer(state: any, action: any) {
 		case WishlistTypes.UPDATE_WISHLIST:
 			return {
 				...state,
-				wishlists: payload.newWishlist,
+				wishlists: payload.wishlists,
+				currentWishlist: payload.currentWishlist,
+				wishlistsInfo: {
+					...state.wishlistsInfo,
+					lastModified: Date.now()
+				}
+			}
+
+		case WishlistTypes.UPDATE_WISHLIST_ITEM:
+			return {
+				...state,
+				wishlists: payload.wishlists,
+				currentWishlist: payload.currentWishlist,
 				wishlistsInfo: {
 					...state.wishlistsInfo,
 					lastModified: Date.now()
@@ -48,7 +60,7 @@ export default function wishlistReducer(state: any, action: any) {
 			return {
 				...state,
 				currentWishlist: { ...state.currentWishlist, wishlistItems: payload.newWishlistItems },
-				wishlists: payload.newWishlist,
+				wishlists: payload.wishlists,
 				wishlistsInfo: {
 					...state.wishlistsInfo,
 					totalWishlistsNotes: ++state.wishlistsInfo.totalWishlistsNotes,
@@ -59,8 +71,8 @@ export default function wishlistReducer(state: any, action: any) {
 		case WishlistTypes.REMOVE_WISHLIST_ITEM:
 			return {
 				...state,
-				currentWishlist: payload.newWishlistItems,
-				wishlists: payload.newWishlist,
+				wishlists: payload.wishlists,
+				currentWishlist: payload.currentWishlist,
 				wishlistsInfo: {
 					...state.wishlistsInfo,
 					totalWishlistsNotes: --state.wishlistsInfo.totalWishlistsNotes,
