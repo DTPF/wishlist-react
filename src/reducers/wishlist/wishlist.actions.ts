@@ -159,7 +159,6 @@ export async function removeWishlistItemAction(
 			try {
 				const response: any = await api.updateWishlistApi(wishlistId, { wishlistItems: orderedList }, token)
 
-				toast.success(`${response.message}`)
 				return dispatch({
 					type: WishlistTypes.REMOVE_WISHLIST_ITEM,
 					payload: {
