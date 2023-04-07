@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import WishlistContext from 'context/wishlist/WishlistContext';
 import PostNewItem from './postNewItem';
 import WishlistItem from './wishListItem';
@@ -8,7 +9,7 @@ import { WishList } from 'interfaces/wishlist';
 import './wishlistComponent.scss';
 
 export default function WishlistComponent({ params }: any) {
-  const { isLoading, currentWishlist } = useContext(WishlistContext);
+  const { isLoading, currentWishlist, updateWishlist } = useContext(WishlistContext);
 
   const completedItems =
     currentWishlist.wishlistItems.filter((item: WishList) => item.isCompleted === true)
@@ -22,32 +23,73 @@ export default function WishlistComponent({ params }: any) {
     return completedItems
   }
 
+  const reorder = (list: any, startIndex: any, endIndex: any) => {
+    const result = [...list]
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+    return result
+  }
+
+  const handleOnDragEng = (result: any) => {
+    const { source, destination } = result
+    if (!destination) return
+    if (source.index === destination.index && source.droppableId === destination.droppableId) return
+
+    const reorderList = reorder(currentWishlist.wishlistItems, source.index, destination.index)
+    let orderedList: any = []
+    reorderList.forEach((item, index) => {
+      item.position = index
+      orderedList.push(item)
+    });
+    updateWishlist(currentWishlist._id, { wishlistItems: orderedList })
+  }
+
   return (
-    <section className='wishlist-component'>
-      <StatusBar />
-      {isLoading ? (
-        <div className='wishlist-component__spinner'>
-          <Spinner />
-        </div>
-      ) : (
-        <>
-          <div className='wishlist-component__empty-list-msg'>
-            {currentWishlist.wishlistItems.length === 0 && <div>Lista vacía...</div>}
+    <DragDropContext onDragEnd={(result: any) => handleOnDragEng(result)}>
+      <section className='wishlist-component'>
+        <StatusBar />
+        {isLoading ? (
+          <div className='wishlist-component__spinner'>
+            <Spinner />
           </div>
+        ) : (
+          <>
+            <div className='wishlist-component__empty-list-msg'>
+              {getStatus().length === 0 && <div>Lista vacía...</div>}
+            </div>
+            <Droppable droppableId='wishlist-cards' direction='vertical'>
+              {(droppableProvided) => (
+                <div
+                  ref={droppableProvided.innerRef}
+                  {...droppableProvided.droppableProps}
+                  className='wishlist-component__list'>
+                  {getStatus().map((wishlistItem: any) => (
+                    <Draggable key={wishlistItem.position} draggableId={wishlistItem.position.toString()} index={wishlistItem.position}>
+                      {(draggableProvided) => (
+                        <span
+                          {...draggableProvided.draggableProps}
+                          ref={draggableProvided.innerRef}
+                          {...draggableProvided.dragHandleProps}
 
-          <div className='wishlist-component__list'>
-            {getStatus()?.map((wishlistItem: any) => (
-              <WishlistItem
-                key={wishlistItem.id}
-                wishlistItem={wishlistItem}
-              />
-            ))}
-          </div>
+                        >
+                          <WishlistItem
+                            key={wishlistItem.id}
+                            wishlistItem={wishlistItem}
+                          />
+                        </span>
+                      )}
+                    </Draggable>
+                  ))}
+                  {droppableProvided.placeholder}
+                </div>
+              )}
+            </Droppable>
 
-          {params.isCompleted !== 'completed' && <PostNewItem />}
-        </>
+            {params.isCompleted !== 'completed' && <PostNewItem />}
+          </>
 
-      )}
-    </section>
+        )}
+      </section>
+    </DragDropContext>
   )
 }
