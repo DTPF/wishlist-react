@@ -32,10 +32,12 @@ export async function initWishlistsByUserIdAction(
 				const currentWishlist =
 					findCurrentWishlist ? findCurrentWishlist : response.wishlists[0]
 
+				currentWishlist.wishlistItems.sort((a: any, b: any) => a.position - b.position)
+
 				dispatch({
 					type: WishlistTypes.INIT_WISHLIST_BY_USER_ID,
 					payload: {
-						currentWishlist: currentWishlist,
+						currentWishlist,
 						wishlists: response.wishlists,
 						wishlistsInfo
 					}
@@ -45,7 +47,7 @@ export async function initWishlistsByUserIdAction(
 				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			}
 		} catch (err: any) {
-			toast.error(err)
+			return toast.error('Ha ocurrido un problema')
 		}
 	}
 }
@@ -61,17 +63,17 @@ export async function postWishlistAction(
 			const response: any = await api.postNewWishlistApi(data, token)
 
 			if (response.status === 200) {
-				dispatch({
+				localStorage.removeItem('color')
+				toast.success(response.message)
+				return dispatch({
 					type: WishlistTypes.ADD_WISHLIST,
 					payload: response.wishlist
 				})
-				localStorage.removeItem('color')
-				return toast.success(response.message)
 			} else {
 				toast.error(response.message)
 			}
 		} catch (error) {
-			console.log(error)
+			return toast.error('No se ha podido crear')
 		}
 	}
 }
@@ -91,23 +93,23 @@ export async function addWishlistItemAction(
 				let newWishlistItems = wishlistState.currentWishlist.wishlistItems
 				newWishlistItems.push(response.newWishlistItem)
 
-				let newWishlist = wishlistState.wishlists
-				const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
-				newWishlist[findIndex] = response.wishlistStored
+				let wishlists = wishlistState.wishlists
+				const findIndex = wishlists.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+				wishlists[findIndex] = response.wishlistStored
 
 				toast.success(response.message)
 				return dispatch({
 					type: WishlistTypes.ADD_WISHLIST_ITEM,
 					payload: {
 						newWishlistItems,
-						newWishlist
+						wishlists
 					}
 				})
 			} else {
-				toast.error(response.message)
+				toast.error('No se ha podido crear la nota')
 			}
 		} catch (error: any) {
-			toast.error(error)
+			toast.error('No se ha podido crear la nota')
 		}
 	} else {
 		let newWishlistItems = wishlistState.currentWishlist.wishlistItems
@@ -142,24 +144,35 @@ export async function removeWishlistItemAction(
 ) {
 	try {
 		if (isAuthenticated) {
-			const newItem: any = await api.removeWishlistItemApi(wishlistId, wishlistItemId, token)
+			const response: any = await api.removeWishlistItemApi(wishlistId, wishlistItemId, token)
 
-			let newWishlist = wishlistState.wishlists
-			const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
-			newWishlist[findIndex] = newItem.newWishlist
+			let wishlists = wishlistState.wishlists
+			const findIndex = wishlists.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+			wishlists[findIndex] = response.wishlist
 
-			dispatch({
-				type: WishlistTypes.REMOVE_WISHLIST_ITEM,
-				payload: {
-					newWishlistItems: newItem.newWishlist,
-					newWishlist
-				}
-			})
+			let orderedList: any = []
+			response.wishlist.wishlistItems.forEach((item: any, index: any) => {
+				item.position = index
+				orderedList.push(item)
+			});
 
-			return toast.success(`${newItem.message}`)
+			try {
+				const response: any = await api.updateWishlistApi(wishlistId, { wishlistItems: orderedList }, token)
+
+				toast.success(`${response.message}`)
+				return dispatch({
+					type: WishlistTypes.REMOVE_WISHLIST_ITEM,
+					payload: {
+						wishlists,
+						currentWishlist: response.wishlist
+					}
+				})
+			} catch (error) {
+				return toast.error('No se ha podido borrar la nota')
+			}
 		}
 	} catch (err) {
-		console.log(err)
+		return toast.error('No se ha podido borrar la nota')
 	}
 }
 
@@ -181,14 +194,11 @@ export async function setCurrentWishlistAction(
 						currentWishlist: response.wishlist,
 					}
 				})
-				return setTimeout(() => {
-					dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
-				}, 50)
+				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			}
 		}
 	} catch (error) {
-		console.log(error)
-
+		return toast.error('No se ha podido encontrar la lista')
 	}
 }
 
@@ -207,20 +217,20 @@ export async function removeWishlistAction(
 				const filteredWishlist =
 					wishlistState.wishlists.filter((item: any) => item._id !== response.wishlistItemIdDeleted)
 
-				dispatch({
+				toast.success(`${response.message}`)
+				return dispatch({
 					type: WishlistTypes.REMOVE_WISHLIST,
 					payload: {
-						newWishlist: filteredWishlist
+						wishlists: filteredWishlist
 					}
 				})
-				return toast.success(`${response.message}`)
 			} else {
-				return toast.error(`${response.message}`)
+				return toast.error('No se ha podido borrar')
 			}
 
 		}
 	} catch (err) {
-		console.log(err)
+		return toast.error('No se ha podido borrar')
 	}
 }
 
@@ -237,14 +247,15 @@ export async function updateWishlistAction(
 			const response: any = await api.updateWishlistApi(wishlistId, data, token)
 
 			if (response.status === 200) {
-				let newWishlist = wishlistState.wishlists
-				const findIndex = newWishlist.findIndex((item: any) => item._id === response.wishlist._id)
-				newWishlist[findIndex] = response.wishlist
+				let wishlists = wishlistState.wishlists
+				const findIndex = wishlists.findIndex((item: any) => item._id === response.wishlist._id)
+				wishlists[findIndex] = response.wishlist
 
-				dispatch({
+				return dispatch({
 					type: WishlistTypes.UPDATE_WISHLIST,
 					payload: {
-						newWishlist
+						wishlists,
+						currentWishlist: response.wishlist
 					}
 				})
 			} else {
@@ -252,45 +263,40 @@ export async function updateWishlistAction(
 			}
 		}
 	} catch (err) {
-		console.log(err)
+		return toast.error(`Error del servidor`)
 	}
 }
 
-export async function reorderWishlistAction(
+export async function updateWishlistItemAction(
 	dispatch: any,
 	isAuthenticated: boolean,
+	wishlistId: string,
+	wishlistItemId: any,
 	wishlistState: any,
-	wishlistOrdered: any,
 	token: any,
+	data: any
 ) {
 	try {
 		if (isAuthenticated) {
-			console.log(wishlistOrdered);
-			wishlistOrdered.forEach(async (item: any, index: number) => {
-				const response: any = await api.updateWishlistApi(item._id, { position: index }, token)
+			const response: any = await api.updateWishlistItemApi(wishlistId, wishlistItemId, data, token)
 
-				console.log(response);
-				if (response.status === 200) {
-					let newWishlist = wishlistState.wishlists
-					const findIndex = wishlistOrdered.findIndex((item: any) => item._id === response.wishlist._id)
-					newWishlist[findIndex] = response.wishlist
-					console.log(newWishlist);
+			if (response.status === 200) {
+				let wishlists = wishlistState.wishlists
+				const findIndex = wishlists.findIndex((item: any) => item._id === response.wishlist._id)
+				wishlists[findIndex] = response.wishlist
 
-					// return
-
-					return dispatch({
-						type: WishlistTypes.UPDATE_WISHLIST,
-						payload: {
-							newWishlist
-						}
-					})
-				} else {
-					return toast.error(`${response.message}`)
-				}
-			});
-
+				return dispatch({
+					type: WishlistTypes.UPDATE_WISHLIST_ITEM,
+					payload: {
+						wishlists,
+						currentWishlist: response.wishlist
+					}
+				})
+			} else {
+				return toast.error('No se ha podido actualizar')
+			}
 		}
 	} catch (err) {
-		console.log(err)
+		return toast.error('No se ha podido actualizar')
 	}
 }
