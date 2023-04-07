@@ -45,17 +45,6 @@ export default function wishlistReducer(state: any, action: any) {
 				}
 			}
 
-		case WishlistTypes.UPDATE_WISHLIST_ITEM:
-			return {
-				...state,
-				wishlists: payload.wishlists,
-				currentWishlist: payload.currentWishlist,
-				wishlistsInfo: {
-					...state.wishlistsInfo,
-					lastModified: Date.now()
-				}
-			}
-
 		case WishlistTypes.ADD_WISHLIST_ITEM:
 			return {
 				...state,

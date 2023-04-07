@@ -285,7 +285,7 @@ export async function updateWishlistItemAction(
 				wishlists[findIndex] = response.wishlist
 
 				return dispatch({
-					type: WishlistTypes.UPDATE_WISHLIST_ITEM,
+					type: WishlistTypes.UPDATE_WISHLIST,
 					payload: {
 						wishlists,
 						currentWishlist: response.wishlist
