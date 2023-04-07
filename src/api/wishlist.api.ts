@@ -92,3 +92,17 @@ export const updateWishlistApi = async (wishlistId: string, data: object, token:
 	const result = await response.json()
 	return result as WishList
 }
+
+export const updateWishlistItemApi = async (wishlistId: string, wishlistItemId: string, data: object, token: string): Promise<WishList> => {
+	const params = {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	}
+	const response = await fetch(`${basePath}/${apiVersion}/update-wishlist-item/${wishlistId}/${wishlistItemId}`, params)
+	const result = await response.json()
+	return result as WishList
+}
