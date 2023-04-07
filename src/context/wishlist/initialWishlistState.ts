@@ -4,6 +4,8 @@ const initialWishlistState = {
 		wishlistItems: [],
 		userId: '',
 		wishlistName: '',
+		color: '',
+		backgroundColor: '',
 		createdAt: '',
 		updatedAt: ''
 	},
