@@ -2,6 +2,10 @@
   	--shadow-color: 0deg 0% 72%;
   }
 
+  $background-primary: #232F3E;
+  $background-primary-light: #232f3eca;
+  $color-primary: #232F3E;
+
   $shadow-elevation-low:
     0px 0.3px 0.5px hsl(var(--shadow-color) / 0),
     -0.1px 0.8px 1.2px hsl(var(--shadow-color) / 0.1),
