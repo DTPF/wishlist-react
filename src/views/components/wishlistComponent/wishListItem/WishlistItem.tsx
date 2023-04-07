@@ -5,15 +5,23 @@ import './wishlistItem.scss'
 
 export default function WishlistItem({ wishlistItem }: any) {
   const [titleInput, setTiltleInput] = useState(wishlistItem.title);
-  const { removeWishlistItem } = useContext(WishlistContext)
+  const { currentWishlist, removeWishlistItem, updateWishlistItem } = useContext(WishlistContext)
+
+  const handleUpdateWishlistItem = (e: any) => {
+    if (!e.target.value || e.target.value === wishlistItem.title) {
+      setTiltleInput(wishlistItem.title)
+      return
+    }
+    updateWishlistItem(currentWishlist._id, wishlistItem.id, { title: titleInput })
+  }
 
   return (
     <article className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}>
       <div className='wishlist-item__title'>
         <input
           value={titleInput}
-          onChange={(e) => handleOnChangeTitle(e, setTiltleInput)}
-          onBlur={(e) => handleOnBlurTitle()}
+          onChange={(e) => setTiltleInput(e.target.value)}
+          onBlur={handleUpdateWishlistItem}
         />
       </div>
       <div className='wishlist-item__check-delete'>
@@ -23,25 +31,18 @@ export default function WishlistItem({ wishlistItem }: any) {
         >
           <FiTrash2 />
         </span>
-        <div className='wishlist-item__check-delete--checkbox'>
-          <label>
-            <input type="checkbox" onChange={() => handleOnChangeCheckbox()} checked={wishlistItem.isCompleted} />
-            <span></span>
+        <div className='wishlist-item__check-delete--checkbox-container'>
+          <label className='wishlist-item__check-delete--checkbox-container__label'>
+            <input
+              className='wishlist-item__check-delete--checkbox-container__label--input'
+              type="checkbox"
+              value={titleInput}
+              onChange={() => updateWishlistItem(currentWishlist._id, wishlistItem.id, { isCompleted: !wishlistItem.isCompleted })} checked={wishlistItem.isCompleted}
+            />
+            <span className='wishlist-item__check-delete--checkbox-container__label--input__checkbox'></span>
           </label>
         </div>
       </div>
     </article>
   )
-}
-
-const handleOnChangeCheckbox = () => {
-  console.log('handle checkbox'); 
-};
-
-const handleOnChangeTitle = (e: any, setTiltleInput: any) => {
-  setTiltleInput(e.target.value);
-}
-
-const handleOnBlurTitle = () => {
-  console.log('on blur input'); 
 }
