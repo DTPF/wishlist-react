@@ -79,7 +79,7 @@ export default function WishlistProvider(props: Props) {
 
 		const updateWishlistItem = useCallback(async (wishlistId: string, wishlistItemId: string, data: any) => {
 		const user: any = await getIdTokenClaims()
-		updateWishlistItemAction(dispatch, isAuthenticated, wishlistState, wishlistId, wishlistItemId, user.__raw, data);
+		updateWishlistItemAction(dispatch, isAuthenticated, wishlistId, wishlistItemId, wishlistState, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
 	const memoizedProvider = useMemo(() => ({
