@@ -24,9 +24,12 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 				<div className='wishlist-card-body__empty-list'>Lista vacía</div>
 			) : (
 				wishlistItem.wishlistItems.map((item: any) => (
-					<p key={item.id} className='wishlist-card-body__item'>
-						{item.isCompleted ? <BsCheckCircleFill /> : <BsCheckCircle />} <span>{item.title}</span>
-					</p>
+					<article key={item.id} className='wishlist-card-body__item'>
+						<div style={{ backgroundColor: item.isCompleted && `rgba(${wishlistItem.backgroundColor}, 0.1)`}}>
+							{item.isCompleted ? <BsCheckCircleFill /> : <BsCheckCircle style={{ color: '#383838'}} />} 
+							<span style={{ color: item.isCompleted ? '#656565' : '#383838'}}>{item.title}</span>
+						</div>
+					</article>
 				))
 			)}
 		</div>
