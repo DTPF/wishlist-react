@@ -1,12 +1,52 @@
+@import '../../../scss/variables';
 @import '../../../scss/animations';
 
 .wishlist-component {
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__home-link {
+    position: sticky;
+    top: 166px;
+    left: 15px;
+    padding-left: 5px;
+
+    a {
+      svg {
+        color: $background-primary-light;
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      top: 145px
+    }
+  }
+
+  &__wishlist-title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: -20px;
+
+    h2 {
+      width: auto;
+      min-width: 250px;
+      max-width: 450px;
+      padding: 15px;
+      margin: 0 40px;
+      border-radius: 5rem !important;
+      font-size: 1.2rem;
+    }
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
     max-width: 500px;
     margin: 0 auto;
-    margin-top: 30px;
     border-radius: 8px;
   }
 
@@ -19,10 +59,9 @@
   }
 
   &__spinner {
-    width: 100vw;
     height: 50vh;
     display: grid;
     place-content: center;
-    
+
   }
 }

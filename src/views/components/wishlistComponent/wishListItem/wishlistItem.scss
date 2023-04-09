@@ -1,3 +1,4 @@
+@import '../../../../scss/variables';
 @import '../../../../scss/animations';
 
 .wishlist-item {
@@ -5,54 +6,34 @@
   justify-content: space-between;
   align-items: center;
   width: auto;
-  height: 50px;
-  margin: 0;
+  margin: 10px;
   padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #d4d4d4;
+  border-radius: 10px;
+  background-color: rgba(221, 221, 221, 0.244);
+  box-shadow: $shadow-elevation-medium;
   transition: all 0.3s ease;
-  @include fromMarginTopToMarginTop();
 
   &__title {
     display: flex;
     align-items: center;
     margin-top: 2px;
+    width: 100%;
 
-    &--link {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      h3 {
-        width: 365px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 1.15rem;
-        font-weight: 400;
-        color: #525252;
-      }
-
-      a {
-        text-decoration: none;
-
-        svg {
-          color: #2e85ff;
-          padding: 0 10px;
-          font-size: 1.4rem;
-        }
-      }
+    svg {
+      font-size: 1.5rem;
     }
 
     input {
       color: #525252;
       background-color: transparent;
-      font-size: 1.15rem;
+      font-size: 1.10rem;
       font-weight: 400;
-      width: 385px;
+      width: 95%;
       border: 0;
       font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
       outline: none;
+      text-overflow: ellipsis;
+      padding-left: 10px;
     }
   }
 
@@ -67,55 +48,55 @@
       opacity: 0;
     }
 
-    &--checkbox {
+    &--checkbox-container {
       padding: 10px;
       padding-left: 15px;
 
-      input {
-        display: none;
-      }
-
-      span {
-        display: inline-block;
-        position: relative;
-        height: 1.6em;
-        width: 1.6em;
-        background-color: #fff;
-        border-radius: 50%;
-        transition: all 0.4s;
-        border: 1px solid #a2a2a2;
-        font-size: 0.8rem;
-      }
-
-      label {
+      &__label {
         font-size: 1em;
         cursor: pointer;
-      }
 
-      label input:checked~span {
-        box-shadow: 0px 0px 4px 0px #232F3E;
-      }
+        &--input {
+          display: none;
 
-      span:after {
-        content: "";
-        position: absolute;
-        border: solid #232F3E;
-        border-width: 0 0.250em 0.25em 0;
-        transform: rotate(45deg);
-        width: 0.40em;
-        height: 0.80em;
-        left: 0.5em;
-        top: 0.20em;
-        opacity: 0;
-        transition: all 0.3s ease;
-      }
+          &:checked~span {
+            box-shadow: $shadow-elevation-medium;
+          }
 
-      label input:checked~span:after {
-        opacity: 1;
+          &:checked~span:after {
+            opacity: 1;
+          }
+
+          &__checkbox {
+            display: inline-block;
+            position: relative;
+            height: 1.6em;
+            width: 1.6em;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: all 0.4s;
+            border: 1px solid #a2a2a2;
+            font-size: 0.8rem;
+
+            &:after {
+              content: "";
+              position: absolute;
+              border: solid #232F3E;
+              border-width: 0 0.250em 0.25em 0;
+              transform: rotate(45deg);
+              width: 0.40em;
+              height: 0.80em;
+              left: 0.5em;
+              top: 0.20em;
+              opacity: 0;
+              transition: all 0.3s ease;
+            }
+          }
+        }
       }
     }
   }
-
+  
   &:hover {
     .wishlist-item__check-delete--trash {
       opacity: 1;
@@ -123,20 +104,10 @@
     }
   }
 
-  &:first-child {
-    border: 0;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-  }
 }
 
 .wishlist-item-checked {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: rgba(143, 143, 143, 0.1) !important;
   transition: all 0.1s ease-in;
 
   .wishlist-item__title {

@@ -1,3 +1,5 @@
+@import '/src/scss/variables';
+
 .footer-wish-list {
 	display: flex;
 	justify-content: space-between;
@@ -5,22 +7,28 @@
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #232F3E;
+	height: 55px;
 	color: #fff;
-	height: 50px;
+	background-color: $background-primary;
 	box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
 
-	&__info {
+	&__wishlists-info {
 		display: flex;
 		padding: 10px 15px;
+		font-size: 1rem;
 
 		div {
+			display: flex;
+			align-items: center;
 			padding-right: 10px;
 
 			span {
-				padding: 2px 5px;
-				padding-bottom: 3px;
-				padding-right: 6px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 25px;
+				height: 25px;
+				margin-right: 5px;
 				color: #000;
 				background-color: #fff;
 				border: 1px solid #000;
@@ -30,4 +38,92 @@
 			}
 		}
 	}
+
+	&__last-updated {
+		padding-left: 0;
+		font-size: 0.8rem;
+		padding-right: 130px;
+
+		@media (max-width: 600px) {
+			padding-right: 0;
+		}
+
+		div {
+			padding-right: 10px;
+		}
+	}
+
+	&__authentication {
+		right: 5px;
+		color: #fff;
+		background-color: transparent;
+		border: 0;
+		font-size: 1rem;
+		font-weight: 500;
+		padding-top: 5px;
+
+		&--profile-image {
+			img {
+				width: 40px;
+				border-radius: 50%;
+				cursor: pointer;
+			}
+		}
+
+		p {
+			margin: 5px;
+			padding: 0;
+			cursor: pointer;
+		}
+
+		&--popover {
+			position: absolute;
+			right: 14px;
+			bottom: 58px;
+			width: 160px;
+			height: 150px;
+			background-color: #fff;
+			color: #000;
+			border-radius: 6px;
+			box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.25);
+			padding: 10px;
+			padding-top: 10px;
+			padding-bottom: 3px;
+
+			&::before {
+				position: absolute;
+				z-index: 0;
+				content: "";
+				bottom: -18px;
+				right: 3px;
+				border-style: solid;
+				border-width: 10px 10px 10px;
+				border-color: #fff transparent transparent transparent;
+				transition-duration: 0.3s;
+				transition-property: transform;
+			}
+
+			&__content {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				height: 100%;
+
+				&--logout {
+					border-top: 1px solid #c7c7c7;
+
+					p {
+						padding: 0 5px;
+					}
+				}
+
+				svg {
+					font-size: 1.5rem;
+					padding-left: 5px;
+				}
+
+			}
+		}
+	}
+
 }

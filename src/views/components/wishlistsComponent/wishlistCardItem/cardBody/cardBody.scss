@@ -3,17 +3,29 @@
 		cursor: pointer;
 
 		&__item {
-			display: flex;
-			align-items: center;
 			margin: 5px 8px;
 			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
 			font-size: 0.8rem;
 			color: #383838;
+			padding: 2px 3px;
 
-			span {
-				padding: 3px;
+			div {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				border-radius: 5px;
+
+				svg {
+					font-size: 0.7rem;
+					color: #8b8b8b;
+				}
+
+				span {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					padding: 3px;
+					max-width: 89%;
+				}
 			}
 		}
 
@@ -29,7 +41,7 @@
 			top: 8px;
 			background-color: rgb(222, 222, 222);
 			font-size: 0.7rem;
-			border: 1px solid #c7c7c7;
+			border: 1px solid #656565;
 			border-radius: 10px;
 			color: #3e3e3e;
 			font-weight: 500;
