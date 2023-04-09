@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import WishlistContext from 'context/wishlist/WishlistContext';
 import PostNewItem from './postNewItem';
@@ -6,6 +7,7 @@ import WishlistItem from './wishListItem';
 import StatusBar from './statusBar/StatusBar';
 import Spinner from 'views/UI/spinner';
 import { WishList } from 'interfaces/wishlist';
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 import './wishlistComponent.scss';
 
 export default function WishlistComponent({ params }: any) {
@@ -46,8 +48,19 @@ export default function WishlistComponent({ params }: any) {
 
   return (
     <DragDropContext onDragEnd={(result: any) => handleOnDragEng(result)}>
+      <StatusBar />
       <section className='wishlist-component'>
-        <StatusBar />
+        <div className='wishlist-component__home-link'>
+          <Link to={'/'}><FaArrowAltCircleLeft /></Link>
+        </div>
+        <div className='wishlist-component__wishlist-title'>
+          <h2
+            style={{
+              color: currentWishlist.color,
+              backgroundColor: `rgba(${currentWishlist.backgroundColor}, 1)`
+            }}
+          >{currentWishlist.wishlistName}</h2>
+        </div>
         {isLoading ? (
           <div className='wishlist-component__spinner'>
             <Spinner />
