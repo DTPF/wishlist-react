@@ -6,14 +6,13 @@ import { toast } from 'react-hot-toast'
 
 export default function PostNewItem() {
   const { addNewWishlistItem } = useContext(WishlistContext)
-  const [inputs, setInputs] = useState({
-    title: '',
-  })
+  const [inputs, setInputs] = useState({ title: '' })
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (!inputs.title) return toast.error('¡Escribe algo!')
-    addNewWishlistItem(inputs)    
+    addNewWishlistItem(inputs)  
+    window.scrollTo(0, document.body.scrollHeight)  
     setInputs({
       ...inputs,
       title: '',
