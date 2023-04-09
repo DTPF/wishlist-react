@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import WishlistContext from 'context/wishlist/WishlistContext';
 import { FiTrash2 } from 'react-icons/fi';
+import { MdOutlineDragIndicator } from 'react-icons/md';
 import './wishlistItem.scss'
 
 export default function WishlistItem({ wishlistItem }: any) {
@@ -16,8 +17,12 @@ export default function WishlistItem({ wishlistItem }: any) {
   }
 
   return (
-    <article className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}>
+    <article
+      className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}
+      style={{ backgroundColor: `rgba(${currentWishlist.backgroundColor}, 0.15)` }}
+    >
       <div className='wishlist-item__title'>
+        <MdOutlineDragIndicator />
         <input
           value={titleInput}
           onChange={(e) => setTiltleInput(e.target.value)}
