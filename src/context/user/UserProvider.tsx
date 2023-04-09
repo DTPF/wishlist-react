@@ -14,18 +14,18 @@ type Props = {
 export default function UserProvider(props: Props) {
 	const { children } = props;
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
-	const { getIdTokenClaims, isAuthenticated } = useAuth0();
-
+	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
 	useEffect(() => {
 		initGetUser()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAuthenticated])
 
-	const initGetUser = useCallback(() => {
-		getIdTokenClaims().then(auth0User => {
-			initGetUserAction(dispatch, isAuthenticated, auth0User);
-		});
-	}, [getIdTokenClaims, isAuthenticated]);
+	const initGetUser = useCallback(async () => {
+		const token = await getIdTokenClaims()
+		if (!isLoading && isAuthenticated) {
+			initGetUserAction(dispatch, isAuthenticated, token);
+		}
+	}, [getIdTokenClaims, isAuthenticated, isLoading]);
 
 	const memoProvider = useMemo(
 		() => ({
