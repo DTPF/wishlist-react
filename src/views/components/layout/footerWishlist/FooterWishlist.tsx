@@ -42,7 +42,7 @@ export default function FooterWishlist() {
 			<button onClick={user ? undefined : () => loginWithRedirect()} className='footer-wish-list__authentication'>
 				{user ? (
 					<div onClick={() => setShowPopover(!showPopover)} className='footer-wish-list__authentication--profile-image'>
-						<img onClick={() => setShowPopover(!showPopover)} src={user?.picture} alt={`Imagen de usuario de ${user?.nickname}`} />
+						<img onClick={() => setShowPopover(!showPopover)} src={user?.picture} alt={`Imagen de usuario de ${user?.nickname}`} width={40} height={40} />
 					</div>
 				) : (
 					<p>Identifícate</p>

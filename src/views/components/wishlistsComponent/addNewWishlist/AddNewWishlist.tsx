@@ -9,7 +9,7 @@ export default function AddNewWishlist() {
 	const { postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const title: any = useRef(null)
-	
+
 	return (
 		<div className='add-new-wishlist__add-new-list'>
 			<span
@@ -18,7 +18,11 @@ export default function AddNewWishlist() {
 				role="textbox"
 				contentEditable
 				suppressContentEditableWarning={true}
-			></span>
+				aria-placeholder="Nueva lista"
+				aria-labelledby='label-new-list'
+			>
+				<div id='label-new-list'>Nueva lista</div>
+			</span>
 			<div className="add-new-wishlist__add-new-list__color-select">
 				<ColorSelect />
 			</div>

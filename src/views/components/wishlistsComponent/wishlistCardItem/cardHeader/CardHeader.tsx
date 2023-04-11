@@ -8,9 +8,9 @@ export default function CardHeader({ wishlistItem }: any) {
 
 	const handleUpdateTitle = (e: any) => {
 		let { innerText } = e.target;
-		if (!innerText || innerText === wishlistItem.wishlistName) {			
+		if (!innerText || innerText === wishlistItem.wishlistName) {
 			cardTitle.current.innerText = wishlistItem.wishlistName
-			return 
+			return
 		}
 		return updateWishlist(wishlistItem._id, { wishlistName: innerText })
 	}
@@ -28,8 +28,12 @@ export default function CardHeader({ wishlistItem }: any) {
 				contentEditable
 				suppressContentEditableWarning={true}
 				onBlur={(e) => handleUpdateTitle(e)}
+				aria-placeholder="Nombre de la lista"
+				aria-labelledby={`label-${wishlistItem._id}`}
 			>
-				{wishlistItem.wishlistName}
+				<div id={`label-${wishlistItem._id}`}>
+					{wishlistItem.wishlistName}
+				</div>
 			</span>
 		</header>
 	)
