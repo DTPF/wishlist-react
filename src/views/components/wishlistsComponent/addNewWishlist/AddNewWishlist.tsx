@@ -8,8 +8,8 @@ import './addNewWishlist.scss'
 export default function AddNewWishlist() {
 	const { postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
-
 	const title: any = useRef(null)
+	
 	return (
 		<div className='add-new-wishlist__add-new-list'>
 			<span
@@ -26,6 +26,7 @@ export default function AddNewWishlist() {
 				<BsPlusCircleDotted onClick={() => {
 					postNewWishlist(dbUser._id, title.current.innerText)
 					title.current.innerText = ''
+					window.scrollTo({ top: 0, behavior: 'smooth' });
 				}} />
 			</div>
 		</div>
