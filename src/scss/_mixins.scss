@@ -1,9 +1,19 @@
+@import '/src/scss/variables';
+
 @mixin wishlistCardItem {
 	width: 200px;
 	height: 280px;
 	max-height: 300px;
 	margin: 20px;
 	border-radius: 6px;
+
+	@media (max-width: $media-breakpoint-down-xs) {
+		margin: 10px;
+	}
+
+	@media (max-width: $media-breakpoint-down-sm) {
+		margin: 15px;
+	}
 }
 
 @mixin wishlistCardItemTextArea {
