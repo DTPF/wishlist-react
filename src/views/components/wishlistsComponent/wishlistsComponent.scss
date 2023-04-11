@@ -18,6 +18,7 @@
 	&__filters {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		padding: 0 40px;
 		margin: 10px 0;
 
@@ -34,40 +35,57 @@
 			padding: 0 15px;
 		}
 
-		&--select {
-			padding: 10px;
+		&--left-side {
+			display: flex;
+			align-items: center;
 
-			@media (max-width: $media-breakpoint-down-sm) {
-				padding: 0;
+			&__select {
+				padding: 10px;
+
+				@media (max-width: $media-breakpoint-down-sm) {
+					padding-left: 0;
+				}
+
+				select {
+					height: auto;
+					font-size: .95rem;
+					padding: 6px;
+					background-color: $background-primary-light;
+					color: #fff;
+					box-shadow: $shadow-elevation-medium;
+					border: 1px solid transparent;
+					border-radius: 5px;
+					outline-color: transparent;
+					cursor: pointer;
+					appearance: none;
+
+					&::after {
+						border-radius: 10px;
+					}
+				}
+
+				select::-ms-expand {
+					display: none !important;
+				}
 			}
 
-			select {
-				height: auto;
-				font-size: .95rem;
-				padding: 4px 2px;
-				background-color: $background-primary-light;
-				color: #fff;
-				box-shadow: $shadow-elevation-medium;
-				border: 1px solid transparent;
-				border-radius: 5px;
-				outline-color: transparent;
+			&__view-direction {
+				padding-top: 5px;
 
-				&::after {
-					border-radius: 10px;
+				svg {
+					color: $color-primary-light;
+					font-size: 1.4rem;
+					cursor: pointer;
 				}
 			}
 		}
 
-		&--view-direction {
-			padding: 5px;
-
-			@media (max-width: $media-breakpoint-down-sm) {
-				padding: 0;
-			}
-
+		&--right-side {
 			svg {
 				color: $color-primary-light;
-				font-size: 2rem;
+				font-size: 1.8rem;
+				margin-right: 10px;
+				cursor: pointer;
 			}
 		}
 	}
@@ -86,8 +104,13 @@
 		svg {
 			font-size: 3rem;
 			color: #FFC271;
+			background-color: #fff;
 			box-shadow: $shadow-elevation-high;
 			border-radius: 50%;
+			outline: none;
+			padding: 0px !important;
+			margin: 0;
+			border: 2px solid #FFC271;
 		}
 
 		@media (min-width: $media-breakpoint-down-md) {
