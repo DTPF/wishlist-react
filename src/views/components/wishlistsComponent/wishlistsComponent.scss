@@ -1,12 +1,105 @@
 @import '/src/scss/animations';
+@import '/src/scss/variables';
+@import '/src/scss/mixins';
 
 .wishlists-component {
 	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
+	flex-direction: column;
+	margin: 0 auto;
 	margin-top: 20px;
 	padding: 10px;
 	margin-bottom: 100px;
+	max-width: 1500px;
+
+	@media (max-width: $media-breakpoint-down-sm) {
+		padding: 0;
+	}
+
+	&__filters {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 40px;
+		margin: 10px 0;
+
+
+		@media (max-width: $media-breakpoint-down-xs) {
+			padding: 0;
+		}
+
+		@media (max-width: $media-breakpoint-down-sm) {
+			padding: 0 10px;
+		}
+
+		@media (max-width: $media-breakpoint-down-md) {
+			padding: 0 15px;
+		}
+
+		&--select {
+			padding: 10px;
+
+			@media (max-width: $media-breakpoint-down-sm) {
+				padding: 0;
+			}
+
+			select {
+				height: auto;
+				font-size: .95rem;
+				padding: 4px 2px;
+				background-color: $background-primary-light;
+				color: #fff;
+				box-shadow: $shadow-elevation-medium;
+				border: 1px solid transparent;
+				border-radius: 5px;
+				outline-color: transparent;
+
+				&::after {
+					border-radius: 10px;
+				}
+			}
+		}
+
+		&--view-direction {
+			padding: 5px;
+
+			@media (max-width: $media-breakpoint-down-sm) {
+				padding: 0;
+			}
+
+			svg {
+				color: $color-primary-light;
+				font-size: 2rem;
+			}
+		}
+	}
+
+	&__items {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	&__add-item-mobile {
+		position: fixed;
+		bottom: 70px;
+		right: 20px;
+
+		svg {
+			font-size: 3rem;
+			color: #FFC271;
+			box-shadow: $shadow-elevation-high;
+			border-radius: 50%;
+		}
+
+		@media (min-width: $media-breakpoint-down-md) {
+			display: none;
+		}
+	}
+
+	&__add-item-desktop {
+		@media (max-width: $media-breakpoint-down-md) {
+			display: none;
+		}
+	}
 
 	&__spinner {
 		display: grid;
