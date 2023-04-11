@@ -12,7 +12,7 @@ export default function PostNewItem() {
     e.preventDefault()
     if (!inputs.title) return toast.error('¡Escribe algo!')
     addNewWishlistItem(inputs)  
-    window.scrollTo(0, document.body.scrollHeight)  
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
     setInputs({
       ...inputs,
       title: '',
