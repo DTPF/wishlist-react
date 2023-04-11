@@ -40,3 +40,17 @@
 
   animation: fromMarginTopToMarginTop $duration;
 }
+
+@mixin rotate($from: 0deg, $to: 359deg, $duration: 400ms) {
+  @keyframes rotate {
+    from {
+      transform: rotate($from);
+    }
+
+    to {
+      transform: rotate($to);
+    }
+  }
+
+  animation: rotate $duration;
+}
