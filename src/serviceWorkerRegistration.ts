@@ -40,35 +40,34 @@ export function register(config?: Config) {
 }
 
 function registerValidSW(swUrl: string, config?: Config) {
+  const onSuccess = (registration: ServiceWorkerRegistration) => {
+    if (config && config.onSuccess) {
+      config.onSuccess(registration);
+    }
+  };
+
+  const onUpdate = (registration: ServiceWorkerRegistration) => {
+    if (config && config.onUpdate) {
+      config.onUpdate(registration);
+    }
+  };
+
+  const handleStateChange = (registration: ServiceWorkerRegistration) => {
+    const installingWorker = registration.installing;
+    if (installingWorker && installingWorker.state === "installed") {
+      if (navigator.serviceWorker.controller) {
+        onUpdate(registration);
+      } else {
+        onSuccess(registration);
+      }
+    }
+  };
+
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
       registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
-        if (installingWorker == null) {
-          return;
-        }
-        installingWorker.onstatechange = () => {
-          if (installingWorker.state === "installed") {
-            if (navigator.serviceWorker.controller) {
-              // At this point, the updated precached content has been fetched,
-              // but the previous service worker will still serve the older
-              // content until all client tabs are closed.
-
-              // Execute callback
-              if (config && config.onUpdate) {
-                config.onUpdate(registration);
-              }
-            } else {
-              // At this point, everything has been precached.
-
-              // Execute callback
-              if (config && config.onSuccess) {
-                config.onSuccess(registration);
-              }
-            }
-          }
-        };
+        handleStateChange(registration);
       };
     })
     .catch((error) => {
