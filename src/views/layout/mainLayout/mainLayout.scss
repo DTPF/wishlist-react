@@ -1,0 +1,47 @@
+@import '/src/scss/variables';
+
+.main-layout {
+	&__sider {
+		min-height: 100vh !important;
+		background-color: $background-primary !important;
+		z-index: 10 !important;
+		position: sticky !important;
+		top: 0 !important;
+
+		&--menu {
+			background-color: $background-primary !important;
+			z-index: 10 !important;
+			position: sticky !important;
+			top: 0 !important
+		}
+	}
+
+	&__container {
+
+		&--header {
+			padding: 0 !important;
+			background-color: $background-primary !important;
+			position: sticky !important;
+			top: 0 !important;
+
+			&__icon {
+				position: fixed;
+				top: 26px;
+				padding-left: 10px;
+				z-index: 1000 !important;
+				font-size: 2rem;
+				color: #fff;
+			}
+		}
+
+		&--content {
+			min-height: 600px;
+		}
+
+		&--footer {
+			position: sticky !important;
+			bottom: 0 !important;
+			padding: 0 !important;
+		}
+	}
+}
