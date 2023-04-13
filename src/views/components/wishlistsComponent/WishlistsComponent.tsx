@@ -43,12 +43,6 @@ export default function WishlistsComponent() {
 				return a.wishlistName.localeCompare(b.wishlistName)
 			})
 			break
-
-		default:
-			wishlists.sort((a: { wishlistName: string }, b: { wishlistName: string }) => {
-				if (wishlistsDirection === 'desc') return b.wishlistName.localeCompare(a.wishlistName)
-				return a.wishlistName.localeCompare(b.wishlistName)
-			})
 	}
 
 	return (
