@@ -1,18 +1,21 @@
 .wishlist-card-footer {
-	position: sticky;
-	bottom: 0;
+	position: absolute;
 	background-color: #c1c1c1;
+	width: 200px;
 	height: 25px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 10px;
 	box-shadow: 0px -3px 10px 5px #eeeeee;
+	z-index: 2 !important;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 
 	&__popover {
 		position: absolute;
 		bottom: 25px;
-		left: 5px;
+		left: 10px;
 		background-color: #ffffff;
 		color: #fff;
 		z-index: 10000 !important;

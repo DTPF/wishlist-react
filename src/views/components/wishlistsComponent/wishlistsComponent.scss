@@ -11,8 +11,8 @@
 	margin-bottom: 100px;
 	max-width: 1500px;
 
-	@media (max-width: $media-breakpoint-down-sm) {
-		padding: 0;
+	@media (max-width: $media-breakpoint-down-md) {
+		padding: 10px 0;
 	}
 
 	&__filters {
@@ -23,15 +23,15 @@
 		margin: 10px 0;
 
 
-		@media (max-width: $media-breakpoint-down-xs) {
+		@media (max-width: $media-breakpoint-down-sm) {
 			padding: 0;
 		}
 
-		@media (max-width: $media-breakpoint-down-sm) {
+		@media (max-width: $media-breakpoint-down-md) {
 			padding: 0 10px;
 		}
 
-		@media (max-width: $media-breakpoint-down-md) {
+		@media (max-width: $media-breakpoint-down-lg) {
 			padding: 0 15px;
 		}
 
@@ -40,41 +40,9 @@
 			align-items: center;
 
 			&__select {
-				padding: 10px;
-
-				@media (max-width: $media-breakpoint-down-sm) {
-					padding-left: 0;
-				}
-
-				select {
-					height: auto;
-					font-size: .95rem;
-					padding: 6px;
-					background-color: $background-primary-light;
-					color: #fff;
-					box-shadow: $shadow-elevation-medium;
-					border: 1px solid transparent;
-					border-radius: 5px;
-					outline-color: transparent;
-					cursor: pointer;
-					appearance: none;
-
-					&::after {
-						border-radius: 10px;
-					}
-				}
-
-				select::-ms-expand {
-					display: none !important;
-				}
-			}
-
-			&__view-direction {
-				padding-top: 5px;
-
 				svg {
 					color: $color-primary-light;
-					font-size: 1.4rem;
+					font-size: 2.1rem;
 					cursor: pointer;
 				}
 			}
@@ -84,7 +52,6 @@
 			svg {
 				color: $color-primary-light;
 				font-size: 1.8rem;
-				margin-right: 10px;
 				cursor: pointer;
 			}
 		}
