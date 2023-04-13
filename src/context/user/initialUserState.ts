@@ -3,12 +3,18 @@ const initialUserState = {
 	dbUser: {
 		_id: '',
 		userId: '',
-		wishlistsInfo: {
-			currentWishlist: ''
-		},
+		email: '',
+		name: '',
+		lastname: '',
 		language: '',
+		wishlistsInfo: {
+			currentWishlist: '',
+			wishlistsOrder: '',
+			wishlistsDirection: ''
+		},
 	},
 	initGetUser: () => { },
+	updateUser: (data: any) => { },
 }
 
 export default initialUserState;
