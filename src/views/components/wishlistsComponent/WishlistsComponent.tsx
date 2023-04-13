@@ -15,12 +15,12 @@ export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const { isLoading: isLoadingAuth0, isAuthenticated } = useAuth0()
-
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
+	type updatedAt = (string | number | Date)
 
 	switch (wishlistsOrder) {
 		case 'updatedAt':
-			wishlists.sort(function (a: { updatedAt: string | number | Date }, b: { updatedAt: string | number | Date }) {
+			wishlists.sort(function (a: { updatedAt: updatedAt }, b: { updatedAt: updatedAt }) {
 				const c: any = new Date(a.updatedAt)
 				const d: any = new Date(b.updatedAt)
 				if (wishlistsDirection === 'desc') return d - c
@@ -29,7 +29,7 @@ export default function WishlistsComponent() {
 			break
 
 		case 'createdAt':
-			wishlists.sort(function (a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) {
+			wishlists.sort(function (a: { createdAt: updatedAt }, b: { createdAt: updatedAt }) {
 				const c: any = new Date(a.createdAt)
 				const d: any = new Date(b.createdAt)
 				if (wishlistsDirection === 'desc') return d - c
