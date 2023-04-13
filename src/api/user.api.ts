@@ -13,3 +13,17 @@ export const initGetUserAPI = async (token: string, auth0Id: object): Promise<an
 	const data = await response.json()
 	return data
 }
+
+export const updateUserApi = async (userId: string, data: object, token: string): Promise<any> => {
+	const params = {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	}
+	const response = await fetch(`${basePath}/${apiVersion}/update-user/${userId}`, params)
+	const result = await response.json()
+	return result
+}
