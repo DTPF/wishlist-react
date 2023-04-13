@@ -10,6 +10,12 @@ export default function userReducer(state: any, action: any) {
 				dbUser: payload.dbUser
 			}
 
+		case UserTypes.UPDATE_USER:
+			return {
+				...state,
+				dbUser: payload
+			}
+
 		default:
 			return state;
 	}

@@ -1,11 +1,12 @@
 import * as UserTypes from "reducers/user/user.types";
-import { initGetUserAPI } from "api/user.api";
+import { initGetUserAPI, updateUserApi } from "api/user.api";
 
 export const initGetUserAction =
 	async function (
 		dispatch: any,
 		isAuthenticated: boolean,
-		auth0User: any
+		auth0User: any,
+		loginWithRedirect: any
 	) {
 		if (isAuthenticated && auth0User.sub) {
 			try {
@@ -23,7 +24,30 @@ export const initGetUserAction =
 					throw new Error()
 				}
 			} catch (err) {
+				loginWithRedirect()
+			}
+		}
+	}
+
+export const updateUserAction =
+	async function (
+		dispatch: any,
+		userId: string,
+		data: any,
+		token: any
+	) {
+		try {
+			const response = await updateUserApi(userId, data, token.__raw);
+
+			if (response.status === 200) {
+				return dispatch({
+					type: UserTypes.UPDATE_USER,
+					payload: response.user
+				});
+			} else {
 				throw new Error()
 			}
+		} catch (err) {
+			throw new Error()
 		}
 	}

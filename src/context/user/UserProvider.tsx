@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
-	initGetUserAction
+	initGetUserAction,
+	updateUserAction
 } from "reducers/user/user.actions";
 import UserContext from "./UserContext";
 import userReducer from "reducers/user/user.reducer";
@@ -14,7 +15,8 @@ type Props = {
 export default function UserProvider(props: Props) {
 	const { children } = props;
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
-	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
+	const { getIdTokenClaims, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+	
 	useEffect(() => {
 		initGetUser()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,16 +25,24 @@ export default function UserProvider(props: Props) {
 	const initGetUser = useCallback(async () => {
 		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
-			initGetUserAction(dispatch, isAuthenticated, token);
+			initGetUserAction(dispatch, isAuthenticated, token, loginWithRedirect);
 		}
-	}, [getIdTokenClaims, isAuthenticated, isLoading]);
+	}, [getIdTokenClaims, isAuthenticated, isLoading, loginWithRedirect]);
+
+	const updateUser = useCallback(async (data: any) => {
+		const token = await getIdTokenClaims()
+		if (!isLoading && isAuthenticated) {
+			updateUserAction(dispatch, userState.dbUser._id, data, token);
+		}
+	}, [getIdTokenClaims, isAuthenticated, userState, isLoading]);
 
 	const memoProvider = useMemo(
 		() => ({
 			...userState,
-			initGetUser
+			initGetUser,
+			updateUser
 		}),
-		[userState, initGetUser]
+		[userState, initGetUser, updateUser]
 	);
 
 	return (
