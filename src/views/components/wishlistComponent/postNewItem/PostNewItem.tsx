@@ -1,17 +1,19 @@
 import { useState, useContext } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
-import { RiSendPlaneFill } from 'react-icons/ri'
-import './postNewItem.scss'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
+import { Button, Input, Space } from 'antd'
+import './postNewItem.scss'
 
 export default function PostNewItem() {
   const { addNewWishlistItem } = useContext(WishlistContext)
   const [inputs, setInputs] = useState({ title: '' })
+  const { t: translate } = useTranslation();
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (!inputs.title) return toast.error('¡Escribe algo!')
-    addNewWishlistItem(inputs)  
+    addNewWishlistItem(inputs)
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
     setInputs({
       ...inputs,
@@ -25,16 +27,25 @@ export default function PostNewItem() {
 
   return (
     <article className='post-new-item-form'>
-      <form className='post-new-item-form__form' onSubmit={(e) => handleSubmit(e)}>
-        <input
+      <Space.Compact style={{ width: 500, height: 45 }}>
+        <Input
+          size="large"
           name='title'
-          type='text'
-          placeholder='Añade algo nuevo'
+          placeholder={translate('postNotePlaceholder') || ''}
           value={inputs.title}
           onChange={(e) => handleChangeForm(e)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSubmit(e)
+          }}
         />
-        <button type='submit'><RiSendPlaneFill /></button>
-      </form>
+        <Button
+          onClick={(e) => handleSubmit(e)}
+          style={{ height: 43, fontWeight: 600 }}
+          type="primary"
+        >
+          {translate('postNoteButton')}
+        </Button>
+      </Space.Compact>
     </article>
   )
 }
