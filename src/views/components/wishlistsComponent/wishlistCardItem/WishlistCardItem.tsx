@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import CardHeader from './cardHeader'
 import CardBody from './cardBody'
-import { CardFooter } from './cardFooter'
-import './wishlistCardItem.scss'
+import CardFooter from './cardFooter'
 import OutsideClickHandler from 'react-outside-click-handler';
+import './wishlistCardItem.scss'
 
 export default function WishlistCardItem({ wishlistItem }: any) {
 	const [showPopover, setShowPopover] = useState(false)
