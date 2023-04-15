@@ -9,10 +9,34 @@
 		top: 0 !important;
 
 		&--menu {
-			background-color: $background-primary !important;
-			z-index: 10 !important;
-			position: sticky !important;
-			top: 0 !important;
+			padding: 0 10px;
+			
+			li {
+				display: flex;
+				align-items: center;
+				padding: 7px;
+				margin: 5px 0;
+				color: #fff;
+				font-size: 1rem;
+				list-style-type: none;
+				cursor: pointer;
+
+				span  {
+					font-size: 1.2rem;
+					padding-right: 8px;
+				}
+
+				&:hover {
+					color: #000;
+					background-color: #fff;
+				}
+			}
+
+			&__language {
+				display: flex;
+				justify-content: center;
+				margin: 10px 0 !important;
+			}
 		}
 	}
 
