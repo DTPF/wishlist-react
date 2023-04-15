@@ -1,10 +1,10 @@
 import { RouterProvider } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import WishlistProvider from 'context/wishlist/WishlistProvider';
+import UserProvider from 'context/user/UserProvider';
 import router from './routes/router';
 import { isLocalhost } from 'utils/isLocalhost';
 import { Toaster } from 'react-hot-toast';
-import UserProvider from 'context/user/UserProvider';
 
 export default function App() {
   return (
