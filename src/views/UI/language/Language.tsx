@@ -27,7 +27,7 @@ const Language = () => {
     <div className="language">
       {lngs.map((lng, i) => {
         const { code, native } = lng;
-        return <div className={dbUser.language === code ? 'active' : ''} key={i} onClick={() => handleTrans(code)}>{native}</div>;
+        return <div className={dbUser.language === code ? 'active' : ''} key={code} onClick={() => handleTrans(code)}>{native}</div>;
       })}
     </div>
   )
