@@ -67,10 +67,6 @@
 				display: none;
 			}
 		}
-
-		&--empty-msg {
-			@include fadeIn(1.5s)
-		}
 	}
 
 	&__add-item-mobile {
