@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
@@ -18,7 +18,18 @@ export default function WishlistsComponent() {
 	const { isLoading: isLoadingAuth0, isAuthenticated } = useAuth0()
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
 	const { t: translate } = useTranslation();
+	const [showEmptyMessage, setShowEmptyMessage] = useState(false)
 	type updatedAt = (string | number | Date)
+
+	useEffect(() => {
+		let isMounted = true
+		if (!isLoading) {
+			setTimeout(() => {
+				isMounted && setShowEmptyMessage(true)
+			}, 50);
+		}
+		return () => { isMounted = false }
+	}, [isLoading])
 
 	switch (wishlistsOrder) {
 		case 'updatedAt':
@@ -49,14 +60,12 @@ export default function WishlistsComponent() {
 
 	return (
 		<>
-			{(isLoadingAuth0 && isLoading && !isAuthenticated) ? (
+			{(isLoadingAuth0 && isLoading && !isAuthenticated && !showEmptyMessage) ? (
 				<Space className='wishlists-component__skeleton'>
 					{[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
 						<Skeleton.Node key={item} active>
 							<Spinner />
-							{/* <DotChartOutlined style={{ fontSize: 80, color: '#bfbfbf' }} /> */}
 						</Skeleton.Node>
-
 					))}
 				</Space>
 			) : (
@@ -77,7 +86,7 @@ export default function WishlistsComponent() {
 					</div>
 
 					<div className='wishlists-component__items'>
-						{(wishlists.length === 0 && !isLoadingAuth0) ? (
+						{(wishlists.length === 0 && !isLoadingAuth0 && showEmptyMessage) ? (
 							<Empty
 								image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
 								imageStyle={{ width: 400, height: 200 }}
@@ -100,11 +109,12 @@ export default function WishlistsComponent() {
 										wishlistItem={item}
 									/>
 								))}
-								<div className='wishlists-component__items--add-item-desktop'>
-									<AddNewWishlist />
-								</div>
+								{wishlists.length > 0 && (
+									<div className='wishlists-component__items--add-item-desktop'>
+										<AddNewWishlist />
+									</div>
+								)}
 							</>
-
 						)}
 					</div>
 					<div className='wishlists-component__add-item-mobile'>
