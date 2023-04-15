@@ -106,8 +106,8 @@ export default function WishlistComponent({ params }: any) {
                 <Badge style={{
                   position: 'absolute',
                   top: 6,
-                  right: -40,
-                  backgroundColor: '#232F3E'
+                  right: 7,
+                  backgroundColor: '#232F3E',
                 }} count={itemsLength} />
               </>
             )}
@@ -152,7 +152,6 @@ export default function WishlistComponent({ params }: any) {
 
             {params.isCompleted !== 'completed' && <PostNewItem />}
           </>
-
         )}
       </section>
     </DragDropContext>
