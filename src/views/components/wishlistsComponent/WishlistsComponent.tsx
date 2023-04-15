@@ -23,13 +23,13 @@ export default function WishlistsComponent() {
 
 	useEffect(() => {
 		let isMounted = true
-		if (!isLoading) {
+		if (!isLoadingAuth0) {
 			setTimeout(() => {
 				isMounted && setShowEmptyMessage(true)
 			}, 50);
 		}
 		return () => { isMounted = false }
-	}, [isLoading])
+	}, [isLoadingAuth0])	
 
 	switch (wishlistsOrder) {
 		case 'updatedAt':
