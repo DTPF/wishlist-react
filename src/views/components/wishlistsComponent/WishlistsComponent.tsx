@@ -6,16 +6,18 @@ import AddNewWishlist from './addNewWishlist'
 import WishlistCardItem from './wishlistCardItem'
 import FilterDropdown from './filterDropdown/FilterDropdown'
 import Spinner from 'views/UI/spinner'
+import { useTranslation } from 'react-i18next'
+import { Button, Empty, Skeleton, Space } from 'antd'
 import { FaPlusCircle } from 'react-icons/fa'
-import { FolderViewOutlined } from '@ant-design/icons'
+import { AppstoreOutlined } from '@ant-design/icons'
 import './wishlistsComponent.scss'
-import { Button, Empty } from 'antd'
 
 export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const { isLoading: isLoadingAuth0, isAuthenticated } = useAuth0()
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
+	const { t: translate } = useTranslation();
 	type updatedAt = (string | number | Date)
 
 	switch (wishlistsOrder) {
@@ -47,10 +49,16 @@ export default function WishlistsComponent() {
 
 	return (
 		<>
-			{(isLoading && isLoadingAuth0 && !isAuthenticated) ? (
-				<span className='wishlists-component__spinner'>
-					<Spinner />
-				</span>
+			{(isLoadingAuth0 && isLoading && !isAuthenticated) ? (
+				<Space className='wishlists-component__skeleton'>
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((e, index) => (
+						<Skeleton.Node key={index} active>
+							<Spinner />
+							{/* <DotChartOutlined style={{ fontSize: 80, color: '#bfbfbf' }} /> */}
+						</Skeleton.Node>
+
+					))}
+				</Space>
 			) : (
 				<section className='wishlists-component'>
 					<div className='wishlists-component__filters'>
@@ -62,24 +70,27 @@ export default function WishlistsComponent() {
 									</div>
 								</div>
 								<div className='wishlists-component__filters--right-side'>
-									<FolderViewOutlined />
+									<AppstoreOutlined />
 								</div>
 							</>
 						)}
 					</div>
 
 					<div className='wishlists-component__items'>
-						{wishlists.length === 0 ? (
+						{(wishlists.length === 0 && !isLoadingAuth0) ? (
 							<Empty
 								image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-								imageStyle={{ height: 200 }}
+								imageStyle={{ width: 400, height: 200 }}
 								description={
 									<span>
-										No hay nada que mostrar
+										{translate('emptyWishlists')}
 									</span>
 								}
+								className='wishlists-component__items--empty-msg'
 							>
-								<Button onClick={() => postNewWishlist(dbUser._id, null)} type="primary">Crear lista</Button>
+								<Button onClick={() => postNewWishlist(dbUser._id, null)} type="primary">
+									{translate('createWishlist')}
+								</Button>
 							</Empty>
 						) : (
 							<>
@@ -89,10 +100,11 @@ export default function WishlistsComponent() {
 										wishlistItem={item}
 									/>
 								))}
-								<div className='wishlists-component__add-item-desktop'>
+								<div className='wishlists-component__items--add-item-desktop'>
 									<AddNewWishlist />
 								</div>
 							</>
+
 						)}
 					</div>
 					<div className='wishlists-component__add-item-mobile'>
