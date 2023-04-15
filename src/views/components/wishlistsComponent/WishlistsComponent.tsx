@@ -51,8 +51,8 @@ export default function WishlistsComponent() {
 		<>
 			{(isLoadingAuth0 && isLoading && !isAuthenticated) ? (
 				<Space className='wishlists-component__skeleton'>
-					{[1, 2, 3, 4, 5, 6, 7, 8].map((e, index) => (
-						<Skeleton.Node key={index} active>
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+						<Skeleton.Node key={item} active>
 							<Spinner />
 							{/* <DotChartOutlined style={{ fontSize: 80, color: '#bfbfbf' }} /> */}
 						</Skeleton.Node>
