@@ -1,0 +1,23 @@
+@import '/src/scss/variables';
+
+.language {
+	padding: 0 !important;
+
+	div {
+		display: flex;
+		align-items: center;
+		font-size: 1.3rem;
+		padding: 2px 4px !important;
+		height: 22px;
+
+		&:first-child {
+			margin-right: 7px;
+		}
+
+		&.active {
+			background-color: rgb(214, 214, 214);
+			border-radius: 5px;
+			box-shadow: $shadow-elevation-medium;
+		}
+	}
+}
