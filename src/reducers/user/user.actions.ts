@@ -12,7 +12,7 @@ export const initGetUserAction =
 			try {
 				const response = await initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
 
-				if (response.status === 200) {
+				if (response.status === 200 || response.status === 201) {
 					i18n.changeLanguage(response.user.language)
 					return dispatch({
 						type: UserTypes.INIT_GET_USER,
@@ -25,7 +25,7 @@ export const initGetUserAction =
 					throw new Error()
 				}
 			} catch (err) {
-				throw new Error()
+				throw new Error()				
 			}
 		}
 	}
