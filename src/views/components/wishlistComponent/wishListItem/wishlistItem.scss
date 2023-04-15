@@ -6,6 +6,7 @@
   justify-content: space-between;
   align-items: center;
   width: auto;
+  height: 60px;
   margin: 10px;
   border-radius: 10px;
   background-color: rgba(221, 221, 221, 0.244);
@@ -20,10 +21,10 @@
 
     svg {
       font-size: 1.5rem;
-      padding: 20px;
-      padding-left: 10px;
-      padding-right: 10px;
-      border-radius: 5px;
+      width: 50px;
+      height: 60px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
 
     input {

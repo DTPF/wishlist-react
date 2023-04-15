@@ -12,7 +12,7 @@
 			background-color: $background-primary !important;
 			z-index: 10 !important;
 			position: sticky !important;
-			top: 0 !important
+			top: 0 !important;
 		}
 	}
 
@@ -23,6 +23,7 @@
 			background-color: $background-primary !important;
 			position: sticky !important;
 			top: 0 !important;
+			z-index: 10;
 
 			&__icon {
 				position: fixed;
@@ -42,6 +43,7 @@
 			position: sticky !important;
 			bottom: 0 !important;
 			padding: 0 !important;
+			z-index: 10;
 		}
 	}
 }
