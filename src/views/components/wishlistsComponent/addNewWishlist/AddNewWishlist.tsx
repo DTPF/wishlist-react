@@ -2,6 +2,7 @@ import { useContext, useRef } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import UserContext from 'context/user/UserContext'
 import ColorSelect from 'views/UI/colorSelect'
+import { useTranslation } from 'react-i18next'
 import { BsPlusCircleDotted } from 'react-icons/bs'
 import './addNewWishlist.scss'
 
@@ -9,6 +10,7 @@ export default function AddNewWishlist() {
 	const { postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const title: any = useRef(null)
+	const { t: translate } = useTranslation();
 
 	return (
 		<div className='add-new-wishlist__add-new-list'>
@@ -18,10 +20,10 @@ export default function AddNewWishlist() {
 				role="textbox"
 				contentEditable
 				suppressContentEditableWarning={true}
-				aria-placeholder="Nueva lista"
+				aria-placeholder={translate('createWishlistPlaceholder') || ''}
 				aria-labelledby='label-new-list'
 			>
-				<div id='label-new-list'>Nueva lista</div>
+				<div id='label-new-list'>{translate('createWishlistPlaceholder')}</div>
 			</span>
 			<div className="add-new-wishlist__add-new-list__color-select">
 				<ColorSelect />

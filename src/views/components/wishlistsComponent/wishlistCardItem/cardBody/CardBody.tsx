@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import { BsCheckCircle, BsCheckCircleFill } from 'react-icons/bs'
 import './cardBody.scss'
+import { useTranslation } from 'react-i18next'
 
 export default function CardBody({ wishlistItem, setShowPopover }: any) {
 	const { setCurrentWishlist } = useContext(WishlistContext)
+	const { t: translate } = useTranslation();
 	const wishlistItemsCompleted =
 		wishlistItem.wishlistItems.filter((item: any) => item.isCompleted === true)
 
@@ -26,11 +28,11 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 						style={{ backgroundColor: `rgba(${wishlistItem.backgroundColor}, 0.3)` }}
 					>
 						{wishlistItemsCompleted.length}/
-						{wishlistItem.wishlistItems.length} completado
+						{wishlistItem.wishlistItems.length} {translate('completedItems')}
 					</span>
 				)}
 				{wishlistItem.wishlistItems.length === 0 ? (
-					<div className='wishlist-card-body__empty-list'>Lista vacía</div>
+					<div className='wishlist-card-body__empty-list'>{translate('emptyMessage')}</div>
 				) : (
 					wishlistItem.wishlistItems.map((item: any) => (
 						<article key={item.id} className='wishlist-card-body__item'>

@@ -7,6 +7,7 @@ import {
 import UserContext from "./UserContext";
 import userReducer from "reducers/user/user.reducer";
 import initialUserState from "./initialUserState";
+import { useTranslation } from "react-i18next";
 
 type Props = {
 	children: React.ReactNode
@@ -15,7 +16,8 @@ type Props = {
 export default function UserProvider(props: Props) {
 	const { children } = props;
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
-	const { getIdTokenClaims, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
+	const { i18n } = useTranslation();
 	
 	useEffect(() => {
 		initGetUser()
@@ -25,9 +27,9 @@ export default function UserProvider(props: Props) {
 	const initGetUser = useCallback(async () => {
 		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
-			initGetUserAction(dispatch, isAuthenticated, token, loginWithRedirect);
+			initGetUserAction(dispatch, isAuthenticated, token, i18n);
 		}
-	}, [getIdTokenClaims, isAuthenticated, isLoading, loginWithRedirect]);
+	}, [getIdTokenClaims, isAuthenticated, isLoading, i18n]);
 
 	const updateUser = useCallback(async (data: any) => {
 		const token = await getIdTokenClaims()

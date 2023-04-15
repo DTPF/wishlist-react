@@ -1,20 +1,19 @@
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom'
+import WishlistContext from 'context/wishlist/WishlistContext';
 import WishlistComponent from 'views/components/wishlistComponent'
+import { useTranslation } from 'react-i18next';
 import HelmetSEO from 'utils/helmetSEO'
 
 export default function WishlistPage() {
   const params = useParams()
-
-  const setTitle = () => {
-    if (!params.isCompleted) return 'Todo'
-    if (params.isCompleted === 'active') return 'Activo'
-    return 'Completado'
-  }
+  const { currentWishlist } = useContext(WishlistContext)
+  const { t: translate } = useTranslation();
 
   return (
     <HelmetSEO
-      title={`Wishlist | ${setTitle()}`}
-      description='Wishlist Page'
+      title={`Dalist | ${currentWishlist.wishlistName}`}
+      description={translate('htmlDescriptionWishlist')}
     >
       <WishlistComponent params={params} />
     </HelmetSEO>

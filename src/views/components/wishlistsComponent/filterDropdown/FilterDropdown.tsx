@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import UserContext from 'context/user/UserContext'
+import { useTranslation } from 'react-i18next'
 import { Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
 import { SlidersOutlined } from '@ant-design/icons'
@@ -8,6 +9,7 @@ import './filterDropdown.scss'
 export default function FilterDropdown() {
 	const { dbUser, updateUser } = useContext(UserContext)
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
+	const { t: translate } = useTranslation();
 
 	const handleUpdateOrder = (type: string) => {
 		const wishlistsInfo = { ...dbUser.wishlistsInfo, wishlistsOrder: type }
@@ -30,7 +32,7 @@ export default function FilterDropdown() {
 				<div
 					className={wishlistsOrder === 'updatedAt' ? 'filter-dropdown-active' : ''}
 					onClick={() => handleUpdateOrder('updatedAt')}>
-					Última actualización
+					{translate('filterUpdatedAt')}
 				</div>
 			),
 		},
@@ -40,7 +42,7 @@ export default function FilterDropdown() {
 				<div
 					className={wishlistsOrder === 'name' ? 'filter-dropdown-active' : ''}
 					onClick={() => handleUpdateOrder('name')}>
-					Nombre
+					{translate('filterName')}
 				</div>
 			),
 		},
@@ -50,7 +52,7 @@ export default function FilterDropdown() {
 				<div
 					className={wishlistsOrder === 'createdAt' ? 'filter-dropdown-active' : ''}
 					onClick={() => handleUpdateOrder('createdAt')}>
-					Fecha de creación
+					{translate('filterCreatedAt')}
 				</div>
 			),
 		},
@@ -61,7 +63,7 @@ export default function FilterDropdown() {
 					className='filter-dropdown-order'
 					onClick={() => handleUpdateDirection()}
 				>
-					Orden: <small>{wishlistsDirection === 'desc' ? 'Descendente' : 'Ascendente'}</small>
+					{translate('filterOrder')} <small>{wishlistsDirection === 'desc' ? translate('filterOrderDesc') : translate('filterOrderAsc')}</small>
 				</div>
 			),
 		},

@@ -1,6 +1,8 @@
 import { Form, Input, Select } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function WishlistsSettingsForm({ userData, setUserData }: any) {
+	const { t: translate } = useTranslation();
 	return (
 		<Form
 			labelCol={{ span: 5 }}
@@ -9,30 +11,30 @@ export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 			size='large'
 			style={{ maxWidth: 600, paddingTop: '20px', paddingBottom: '1px' }}
 		>
-			<Form.Item label="Nombre">
+			<Form.Item label={translate('nameInput')}>
 				<Input
 					name='name'
 					onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-					placeholder="Nombre"
+					placeholder={translate('nameInput') || ''}
 					value={userData.name}
 				/>
 			</Form.Item>
 
-			<Form.Item label="Apellidos">
+			<Form.Item label={translate('lastnameInput')}>
 				<Input
 					name='lastname'
 					onChange={(e) => setUserData({ ...userData, lastname: e.target.value })}
-					placeholder="Apellidos"
+					placeholder={translate('lastnameInput') || ''}
 					value={userData.lastname} />
 			</Form.Item>
 
-			<Form.Item label="Idioma">
+			<Form.Item label={translate('languageInput')}>
 				<Select
 					value={userData.language}
 					onChange={(e) => setUserData({ ...userData, language: e })}
 					options={[
-						{ value: 'en', label: 'Inglés' },
-						{ value: 'es', label: 'Español' },
+						{ value: 'en', label: translate('languageEnglish') },
+						{ value: 'es', label: translate('languageSpanish') },
 					]}
 				/>
 			</Form.Item>

@@ -6,9 +6,13 @@ import Moment from 'react-moment'
 import { IoEnterOutline, IoTrash } from 'react-icons/io5'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import './cardFooter.scss'
+import { useTranslation } from 'react-i18next'
+import UserContext from 'context/user/UserContext'
 
 export default function CardFooter({ wishlistItem, showPopover, setShowPopover }: any) {
 	const { setCurrentWishlist, removeWishlist } = useContext(WishlistContext)
+	const { dbUser } = useContext(UserContext)
+	const { t: translate } = useTranslation();
 
 	return (
 		<footer
@@ -21,7 +25,7 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 						<ColorSelect wishlistItem={wishlistItem} />
 					</div>
 					<div onClick={() => removeWishlist(wishlistItem._id)} className='wishlist-card-footer__popover--remove-list'>
-						<IoTrash /> <span>Eliminar lista</span>
+						<IoTrash /> <span>{translate('deleteList')}</span>
 					</div>
 				</span>
 			)}
@@ -30,7 +34,7 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 				<HiDotsHorizontal />
 			</div>
 			<p onClick={() => setShowPopover(false)} className='wishlist-card-footer__last-modified'>
-				Editado: <Moment locale="es" fromNow>{wishlistItem.updatedAt}</Moment>
+				{translate('lastModified')} <Moment locale={dbUser.language} fromNow>{wishlistItem.updatedAt}</Moment>
 			</p>
 			<Link
 				className='wishlist-card-footer__go-to-list'

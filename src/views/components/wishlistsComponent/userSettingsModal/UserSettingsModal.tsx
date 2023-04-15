@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import UserContext from 'context/user/UserContext'
 import UserForm from './userForm/UserForm'
+import { useTranslation } from "react-i18next";
 import { Modal, Tag, Button, Popconfirm } from 'antd'
 
 export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 	const { dbUser, updateUser } = useContext(UserContext)
 	const [confirmLoading, setConfirmLoading] = useState(false)
+	const { i18n, t: translate } = useTranslation();
 	const [userData, setUserData] = useState({
 		name: '',
 		lastname: '',
@@ -26,6 +28,7 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 		setConfirmLoading(true)
 		setTimeout(() => {
 			updateUser(userData)
+			i18n.changeLanguage(userData.language);
 			setOpenModal(false)
 			setConfirmLoading(false)
 		}, 0)
@@ -44,7 +47,7 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 		console.log('Cuenta eliminada');
 	}
 
-	const title = <div>Configuración de <Tag color="geekblue">{dbUser.email}</Tag></div>
+	const title = <div>{translate('titleProfileModal')} <Tag color="geekblue">{dbUser.email}</Tag></div>
 
 	return (
 		<Modal
@@ -56,18 +59,16 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 			footer={[
 				<Popconfirm
 					key="delete-account"
-					title="Eliminar cuenta de usuario"
-					description="Se eliminarán todos los datos, incluídas las listas."
+					title={translate('titlePopConfirm')}
+					description={translate('contentPopConfirm')}
 					onConfirm={handleDeleteAccount}
-					okText='Borrar'
-					cancelText='Cancelar'
-					// onOpenChange={() => console.log('open change')}
-					style={{ maxWidth: '200px' }}
+					okText={translate('delete')}
+					cancelText={translate('cancel')}
 				>
-					<Button danger>Eliminar cuenta</Button>
+					<Button danger>{translate('deleteAccount')}</Button>
 				</Popconfirm>,
 				<Button key="back" onClick={handleCancel}>
-					Cancelar
+					{translate('cancel')}
 				</Button>,
 				<Button
 					key="save"
@@ -75,7 +76,7 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 					loading={confirmLoading}
 					onClick={handleOk}
 				>
-					Guardar
+					{translate('save')}
 				</Button>,
 			]}
 		>

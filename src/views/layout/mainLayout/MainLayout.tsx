@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import FooterWishlist from 'views/components/layout/footerWishlist'
 import HeaderWishlist from 'views/components/layout/headerWishlist'
+import { useTranslation } from 'react-i18next';
 import { ConfigProvider, Layout, Menu } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import './mainLayout.scss'
@@ -10,6 +11,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 export default function MainLayout() {
 	const [collapsed, setCollapsed] = useState(true)
+	const { t: translate } = useTranslation();
 
 	const openSettings = () => {
 		console.log('open settings');
@@ -19,7 +21,7 @@ export default function MainLayout() {
 		{
 			key: 'settings',
 			icon: React.createElement(SettingOutlined),
-			label: 'Ajustes',
+			label: translate('settings'),
 			onClick: openSettings
 		}
 	]
@@ -38,9 +40,6 @@ export default function MainLayout() {
 					trigger={null}
 					breakpoint="lg"
 					collapsedWidth="0"
-					onBreakpoint={(broken) => {
-						setCollapsed(broken)
-					}}
 					collapsed={collapsed}
 					className='main-layout__sider'
 				>
@@ -68,7 +67,10 @@ export default function MainLayout() {
 						)}
 						<HeaderWishlist />
 					</Header>
-					<Content onClick={() => setCollapsed(true)} className='main-layout__container--content'>
+					<Content
+						onClick={() => setCollapsed(true)}
+						className='main-layout__container--content'
+					>
 						<Outlet />
 					</Content>
 					<Footer className='main-layout__container--footer'>

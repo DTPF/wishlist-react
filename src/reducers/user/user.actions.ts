@@ -6,13 +6,14 @@ export const initGetUserAction =
 		dispatch: any,
 		isAuthenticated: boolean,
 		auth0User: any,
-		loginWithRedirect: any
+		i18n: any
 	) {
 		if (isAuthenticated && auth0User.sub) {
 			try {
 				const response = await initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
 
 				if (response.status === 200) {
+					i18n.changeLanguage(response.user.language)
 					return dispatch({
 						type: UserTypes.INIT_GET_USER,
 						payload: {
@@ -24,7 +25,7 @@ export const initGetUserAction =
 					throw new Error()
 				}
 			} catch (err) {
-				loginWithRedirect()
+				throw new Error()
 			}
 		}
 	}
