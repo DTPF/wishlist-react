@@ -1,17 +1,20 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import WishlistContext from 'context/wishlist/WishlistContext';
 import PostNewItem from './postNewItem';
 import WishlistItem from './wishListItem';
-import StatusBar from './statusBar/StatusBar';
 import Spinner from 'views/UI/spinner';
+import { useTranslation } from 'react-i18next';
 import { WishList } from 'interfaces/wishlist';
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { Badge, Select } from 'antd';
 import './wishlistComponent.scss';
 
 export default function WishlistComponent({ params }: any) {
   const { isLoading, currentWishlist, updateWishlist } = useContext(WishlistContext);
+  const navigate = useNavigate()
+  const { t: translate } = useTranslation();
 
   const completedItems =
     currentWishlist.wishlistItems.filter((item: WishList) => item.isCompleted === true)
@@ -46,20 +49,69 @@ export default function WishlistComponent({ params }: any) {
     updateWishlist(currentWishlist._id, { wishlistItems: orderedList })
   }
 
+  const [itemsLength, setItemsLength] = useState(0)
+  const filteredActive = currentWishlist.wishlistItems.filter((item: any) => item.isCompleted === false)
+  const filteredCompleted = currentWishlist.wishlistItems.filter((item: any) => item.isCompleted === true)
+
+  useEffect(() => {
+    if (params.isCompleted === 'active') {
+      setItemsLength(filteredActive.length)
+    } else if (params.isCompleted === 'completed') {
+      setItemsLength(filteredCompleted.length)
+    } else {
+      setItemsLength(currentWishlist.wishlistItems.length)
+    }
+    return () => {
+    }
+  }, [currentWishlist.wishlistItems, filteredActive, filteredCompleted, params])
+
+
   return (
     <DragDropContext onDragEnd={(result: any) => handleOnDragEng(result)}>
-      <StatusBar />
       <section className='wishlist-component'>
         <div className='wishlist-component__home-link'>
           <Link to={'/'}><FaArrowAltCircleLeft /></Link>
         </div>
-        <div className='wishlist-component__wishlist-title'>
-          <h2
-            style={{
-              color: currentWishlist.color,
-              backgroundColor: `rgba(${currentWishlist.backgroundColor}, 1)`
-            }}
-          >{currentWishlist.wishlistName}</h2>
+        <div className='wishlist-component__top-bar'>
+          <div className='wishlist-component__top-bar--wishlist-title'>
+            <h2
+              style={{
+                color: currentWishlist.color,
+                backgroundColor: `rgba(${currentWishlist.backgroundColor}, 1)`
+              }}
+            >{currentWishlist.wishlistName}</h2>
+          </div>
+          <div className='wishlist-component__top-bar--select-status'>
+            {currentWishlist.wishlistItems.length > 0 && (
+              <>
+                <Select
+                  defaultValue=""
+                  style={{ width: 120 }}
+                  onChange={(e) => {
+                    if (e === 'active') {
+                      setItemsLength(filteredActive.length)
+                    } else if (e === 'completed') {
+                      setItemsLength(filteredCompleted.length)
+                    } else {
+                      setItemsLength(currentWishlist.wishlistItems.length)
+                    }
+                    navigate(`/wishlist/${e}`)
+                  }}
+                  options={[
+                    { value: '', label: translate('selectStatusAll') },
+                    { value: 'active', label: translate('selectStatusActive') },
+                    { value: 'completed', label: translate('selectStatusComplete') },
+                  ]}
+                />
+                <Badge style={{
+                  position: 'absolute',
+                  top: 6,
+                  right: -40,
+                  backgroundColor: '#232F3E'
+                }} count={itemsLength} />
+              </>
+            )}
+          </div>
         </div>
         {isLoading ? (
           <div className='wishlist-component__spinner'>
@@ -68,7 +120,7 @@ export default function WishlistComponent({ params }: any) {
         ) : (
           <>
             <div className='wishlist-component__empty-list-msg'>
-              {getStatus().length === 0 && <div>Lista vacía...</div>}
+              {getStatus().length === 0 && <div>{translate('emptyMessage')}...</div>}
             </div>
             <Droppable droppableId='wishlist-cards' direction='vertical'>
               {(droppableProvided) => (
