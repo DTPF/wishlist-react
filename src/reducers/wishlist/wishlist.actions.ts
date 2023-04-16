@@ -5,7 +5,6 @@ import toast from 'react-hot-toast'
 export async function initWishlistsByUserIdAction(
 	dispatch: any,
 	isAuthenticated: boolean,
-	isLoadingAuth0: any,
 	token: any,
 	dbUser: any
 ) {
