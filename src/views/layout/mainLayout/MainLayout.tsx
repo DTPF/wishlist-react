@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react';
 import FooterWishlist from 'views/components/layout/footerWishlist'
 import HeaderWishlist from 'views/components/layout/headerWishlist'
+import Language from 'views/UI/language/Language';
 import { useTranslation } from 'react-i18next';
 import { ConfigProvider, Layout } from 'antd';
 import { LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import './mainLayout.scss'
-import { useAuth0 } from '@auth0/auth0-react';
-import Language from 'views/UI/language/Language';
-
-const { Header, Content, Footer, Sider } = Layout;
 
 export default function MainLayout() {
 	const { user, loginWithRedirect, logout }: any = useAuth0()
 	const [navbarCollapsed, setNavbarCollapsed] = useState(true)
 	const { t: translate } = useTranslation();
+	const { Header, Content, Footer, Sider } = Layout;
 
 	return (
 		<ConfigProvider
@@ -38,11 +37,11 @@ export default function MainLayout() {
 						<li><SettingOutlined /> {translate('settings')}</li>
 						{user ? (
 							<li
-							onClick={logout}
+								onClick={logout}
 							><LogoutOutlined /> {translate('logout')}</li>
 						) : (
 							<li
-							onClick={loginWithRedirect}
+								onClick={loginWithRedirect}
 							><LoginOutlined /> {translate('login')}</li>
 						)}
 					</ul>
@@ -64,7 +63,6 @@ export default function MainLayout() {
 					</Header>
 					<Content
 						onClick={() => setNavbarCollapsed(true)}
-						className='main-layout__container--content'
 					>
 						<Outlet />
 					</Content>
