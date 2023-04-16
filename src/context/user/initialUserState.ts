@@ -7,6 +7,7 @@ const initialUserState = {
 		name: '',
 		lastname: '',
 		language: '',
+		guess: false,
 		wishlistsInfo: {
 			currentWishlist: '',
 			wishlistsOrder: '',
