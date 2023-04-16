@@ -9,7 +9,7 @@ export async function initWishlistsByUserIdAction(
 	token: any,
 	dbUser: any
 ) {
-	if (isAuthenticated && !isLoadingAuth0 && dbUser._id) {
+	if (isAuthenticated && dbUser._id) {
 		try {
 			const response: any = await api.getWishlistsByUserIdApi(token, dbUser._id)
 
@@ -42,17 +42,15 @@ export async function initWishlistsByUserIdAction(
 						wishlistsInfo
 					}
 				})
-				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
-			} else {
-				return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 			}
+			return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 		} catch (err: any) {
 			return toast.error('Ha ocurrido un problema')
 		}
-	} else {
-		if (dbUser.guess) {
-			return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
-		}
+	}
+
+	if (dbUser.guess) {
+		return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 	}
 }
 
