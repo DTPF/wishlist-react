@@ -2,6 +2,8 @@ import { RouterProvider } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import WishlistProvider from 'context/wishlist/WishlistProvider';
 import UserProvider from 'context/user/UserProvider';
+import AppSettingsModalProvider from 'context/appSettingsModal/AppSettingsModalProvider';
+import ThemeProvider from 'context/theme/ThemeProvider';
 import router from './routes/router';
 import { isLocalhost } from 'utils/isLocalhost';
 import { Toaster } from 'react-hot-toast';
@@ -19,11 +21,15 @@ export default function App() {
     >
       <UserProvider>
         <WishlistProvider>
-          <Toaster />
-          <RouterProvider
-            router={router}
-            fallbackElement={<></>}
-          />
+          <ThemeProvider>
+            <AppSettingsModalProvider>
+              <Toaster />
+              <RouterProvider
+                router={router}
+                fallbackElement={<></>}
+              />
+            </AppSettingsModalProvider>
+          </ThemeProvider>
         </WishlistProvider>
       </UserProvider >
     </Auth0Provider>
