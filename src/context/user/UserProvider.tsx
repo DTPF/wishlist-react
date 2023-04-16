@@ -18,17 +18,15 @@ export default function UserProvider(props: Props) {
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
 	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
 	const { i18n } = useTranslation();
-	
+
 	useEffect(() => {
 		initGetUser()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isAuthenticated])
+	}, [isAuthenticated, isLoading])
 
 	const initGetUser = useCallback(async () => {
 		const token = await getIdTokenClaims()
-		if (!isLoading && isAuthenticated) {
-			initGetUserAction(dispatch, isAuthenticated, token, i18n);
-		}
+		initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
 	}, [getIdTokenClaims, isAuthenticated, isLoading, i18n]);
 
 	const updateUser = useCallback(async (data: any) => {

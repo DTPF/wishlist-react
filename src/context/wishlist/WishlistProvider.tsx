@@ -27,18 +27,18 @@ export default function WishlistProvider(props: Props) {
 	useEffect(() => {
 		initWishlistsByUserId()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dbUser._id])
+	}, [dbUser])
 
 	const initWishlistsByUserId = useCallback(async () => {
 		dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
 		const user: any = await getIdTokenClaims()
-		initWishlistsByUserIdAction(
-			dispatch,
-			isAuthenticated,
-			isLoadingAuth0,
-			user?.__raw,
-			dbUser
-		);
+			initWishlistsByUserIdAction(
+				dispatch,
+				isAuthenticated,
+				isLoadingAuth0,
+				user?.__raw,
+				dbUser
+			);
 	}, [getIdTokenClaims, isAuthenticated, isLoadingAuth0, dbUser]);
 
 	const postNewWishlist = useCallback(async (dbUserId: any, wishlistTitle: any) => {
@@ -77,7 +77,7 @@ export default function WishlistProvider(props: Props) {
 		updateWishlistAction(dispatch, isAuthenticated, wishlistState, wishlistId, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
-		const updateWishlistItem = useCallback(async (wishlistId: string, wishlistItemId: string, data: any) => {
+	const updateWishlistItem = useCallback(async (wishlistId: string, wishlistItemId: string, data: any) => {
 		const user: any = await getIdTokenClaims()
 		updateWishlistItemAction(dispatch, isAuthenticated, wishlistId, wishlistItemId, wishlistState, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);

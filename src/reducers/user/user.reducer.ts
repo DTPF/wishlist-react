@@ -16,6 +16,12 @@ export default function userReducer(state: any, action: any) {
 				dbUser: payload
 			}
 
+		case UserTypes.SET_GUESS:
+			return {
+				...state,
+				dbUser: { ...state.dbUser, guess: payload }
+			}
+
 		default:
 			return state;
 	}

@@ -6,9 +6,10 @@ export const initGetUserAction =
 		dispatch: any,
 		isAuthenticated: boolean,
 		auth0User: any,
-		i18n: any
+		i18n: any,
+		isLoading: boolean
 	) {
-		if (isAuthenticated && auth0User.sub) {
+		if (!isLoading && isAuthenticated && auth0User.sub) {
 			try {
 				const response = await initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
 
@@ -25,7 +26,14 @@ export const initGetUserAction =
 					throw new Error()
 				}
 			} catch (err) {
-				throw new Error()				
+				throw new Error()
+			}
+		} else {
+			if (!isLoading) {
+				return dispatch({
+					type: UserTypes.SET_GUESS,
+					payload: true
+				})
 			}
 		}
 	}

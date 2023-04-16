@@ -49,6 +49,10 @@ export async function initWishlistsByUserIdAction(
 		} catch (err: any) {
 			return toast.error('Ha ocurrido un problema')
 		}
+	} else {
+		if (dbUser.guess) {
+			return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
+		}
 	}
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
@@ -15,21 +15,10 @@ import './wishlistsComponent.scss'
 export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
-	const { isLoading: isLoadingAuth0, isAuthenticated } = useAuth0()
+	const { isLoading: isLoadingAuth0 } = useAuth0()
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
 	const { t: translate } = useTranslation();
-	const [showEmptyMessage, setShowEmptyMessage] = useState(false)
 	type updatedAt = (string | number | Date)
-
-	useEffect(() => {
-		let isMounted = true
-		if (!isLoadingAuth0) {
-			setTimeout(() => {
-				isMounted && setShowEmptyMessage(true)
-			}, 50);
-		}
-		return () => { isMounted = false }
-	}, [isLoadingAuth0])	
 
 	switch (wishlistsOrder) {
 		case 'updatedAt':
@@ -60,7 +49,7 @@ export default function WishlistsComponent() {
 
 	return (
 		<>
-			{(isLoadingAuth0 && isLoading && !isAuthenticated && !showEmptyMessage) ? (
+			{(isLoadingAuth0 && isLoading) ? (
 				<Space className='wishlists-component__skeleton'>
 					{[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
 						<Skeleton.Node key={item} active>
@@ -86,7 +75,7 @@ export default function WishlistsComponent() {
 					</div>
 
 					<div className='wishlists-component__items'>
-						{(wishlists.length === 0 && !isLoadingAuth0 && showEmptyMessage) ? (
+						{(wishlists.length === 0 && !isLoading) ? (
 							<Empty
 								image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
 								imageStyle={{ width: 400, height: 200 }}
