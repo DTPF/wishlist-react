@@ -6,8 +6,12 @@ const initialUserState = {
 		email: '',
 		name: '',
 		lastname: '',
-		language: '',
 		guess: false,
+		appInfo: {
+			colorPrimary: '',
+			colorPrimaryBg: '',
+			language: ''
+		},
 		wishlistsInfo: {
 			currentWishlist: '',
 			wishlistsOrder: '',
