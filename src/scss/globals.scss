@@ -1,0 +1,36 @@
+@import './variables';
+
+.input-primary {
+	border: 1px solid #b8b8b8;
+
+	&:hover {
+		border: 1px solid #545454;
+		box-shadow: $shadow-elevation-medium
+	}
+}
+
+.button-primary {
+	box-shadow: $shadow-elevation-medium;
+	border: 1px solid $background-primary-extra-light !important;
+
+	&:hover {
+		opacity: .9;
+		box-shadow: $shadow-elevation-high;
+		padding: -1px !important;
+	}
+}
+
+.button-secondary {
+	border: 1px solid $background-primary-extra-light !important;
+	color: #000 !important;
+	box-shadow: $shadow-elevation-medium;
+
+	&:hover {
+		opacity: .7;
+		box-shadow: $shadow-elevation-high
+	}
+}
+
+.ant-select-item-option-selected {
+	color: #fff !important;
+}
