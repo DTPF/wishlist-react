@@ -3,8 +3,7 @@
 .main-layout {
 	&__sider {
 		min-height: 100vh !important;
-		background-color: $background-primary !important;
-		z-index: 10 !important;
+		z-index: 100 !important;
 		position: sticky !important;
 		top: 0 !important;
 
@@ -27,8 +26,7 @@
 				}
 
 				&:hover {
-					color: #000;
-					background-color: #fff;
+					font-weight: 600;
 				}
 			}
 
