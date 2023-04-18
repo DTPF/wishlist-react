@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "context/user/UserContext";
 import { useTranslation } from "react-i18next";
 import './language.scss'
 
-const lngs = [
+const languages = [
   { code: "en", native: "🇬🇧" },
   { code: "es", native: "🇪🇸" },
 ];
@@ -12,11 +12,20 @@ const Language = () => {
   const { i18n } = useTranslation();
   const { dbUser, updateUser } = useContext(UserContext)
 
+  useEffect(() => {
+    let isMounted = true
+    isMounted && i18n.changeLanguage(dbUser.appInfo.language)
+    return () => { isMounted = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dbUser.appInfo.language])
+
   const handleTrans = (code: string) => {
     const userData = {
-      name: dbUser.name,
-      lastname: dbUser.lastname,
-      language: code
+      appInfo: {
+        appColorPrimary: dbUser.appInfo.colorPrimary,
+        appBgColor: dbUser.appInfo.colorPrimaryBg,
+        language: code
+      }
     }
     updateUser(userData)
     i18n.changeLanguage(code);
@@ -25,9 +34,17 @@ const Language = () => {
 
   return (
     <div className="language">
-      {lngs.map((lng, i) => {
+      {languages.map((lng) => {
         const { code, native } = lng;
-        return <div className={dbUser.language === code ? 'active' : ''} key={code} onClick={() => handleTrans(code)}>{native}</div>;
+        return (
+          <div
+            key={code}
+            className={dbUser.appInfo.language === code ? 'active' : ''}
+            onClick={() => handleTrans(code)}
+          >
+            {native}
+          </div>
+        )
       })}
     </div>
   )
