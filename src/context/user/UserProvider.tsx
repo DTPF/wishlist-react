@@ -33,9 +33,9 @@ export default function UserProvider(props: ChildrenProps) {
 	const changeLanguage = useCallback(async (data: any) => {
 		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
-			action.changeLanguageAction(dispatch, userState.dbUser._id, data, token);
+			action.changeLanguageAction(dispatch, data, token);
 		}
-	}, [getIdTokenClaims, isAuthenticated, userState, isLoading]);
+	}, [getIdTokenClaims, isAuthenticated, isLoading]);
 
 	const memoProvider = useMemo(
 		() => ({
