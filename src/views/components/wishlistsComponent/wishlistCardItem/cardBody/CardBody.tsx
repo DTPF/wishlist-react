@@ -20,7 +20,7 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 			<div
 				className='wishlist-card-body'
 				onClick={() => setShowPopover(false)}
-				style={{ backgroundColor: `rgba(${wishlistItem.backgroundColor}, 0.08)` }}
+				style={{ backgroundColor: `${wishlistItem.backgroundColor}0D` }}
 			>
 				{wishlistItem.wishlistItems.length > 0 && (
 					<span

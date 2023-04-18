@@ -89,7 +89,7 @@ export default function WishlistsComponent() {
 								}
 								className='wishlists-component__items--empty-msg'
 							>
-								<Button style={{ backgroundColor: colorPrimaryBg }} onClick={() => postNewWishlist(dbUser._id, null)} type="primary">
+								<Button style={{ backgroundColor: colorPrimaryBg }} onClick={() => postNewWishlist(null)} type="primary">
 									{translate('createWishlist')}
 								</Button>
 							</Empty>
@@ -111,7 +111,7 @@ export default function WishlistsComponent() {
 					</div>
 					<div className='wishlists-component__add-item-mobile'>
 						<FaPlusCircle onClick={() => {
-							postNewWishlist(dbUser._id, null)
+							postNewWishlist(null)
 							window.scrollTo({ top: 0, behavior: 'smooth' })
 						}}
 						/>

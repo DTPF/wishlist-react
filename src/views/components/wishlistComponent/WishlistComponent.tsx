@@ -80,7 +80,7 @@ export default function WishlistComponent({ params }: any) {
             <h2
               style={{
                 color: currentWishlist.color,
-                backgroundColor: `rgba(${currentWishlist.backgroundColor}, 1)`
+                backgroundColor: currentWishlist.backgroundColor
               }}
             >{currentWishlist.wishlistName}</h2>
           </div>

@@ -18,7 +18,7 @@ export default function CardHeader({ wishlistItem }: any) {
 	return (
 		<header
 			className='wishlist-card-header'
-			style={{ backgroundColor: `rgb(${wishlistItem.backgroundColor})`, color: wishlistItem.color }}>
+			style={{ backgroundColor: wishlistItem.backgroundColor, color: wishlistItem.color }}>
 			<span
 				ref={cardTitle}
 				key={wishlistItem._id}

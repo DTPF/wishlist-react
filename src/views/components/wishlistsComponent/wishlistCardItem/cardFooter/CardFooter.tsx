@@ -17,7 +17,7 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 	return (
 		<footer
 			className='wishlist-card-footer'
-			style={{ backgroundColor: `rgb(${wishlistItem.backgroundColor})`, color: wishlistItem.color }}
+			style={{ backgroundColor: wishlistItem.backgroundColor, color: wishlistItem.color }}
 		>
 			{showPopover && (
 				<span className='wishlist-card-footer__popover'>
