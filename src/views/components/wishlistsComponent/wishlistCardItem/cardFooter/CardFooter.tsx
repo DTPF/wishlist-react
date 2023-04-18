@@ -34,7 +34,7 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 				<HiDotsHorizontal />
 			</div>
 			<p onClick={() => setShowPopover(false)} className='wishlist-card-footer__last-modified'>
-				{translate('lastModified')} <Moment locale={dbUser.language} fromNow>{wishlistItem.updatedAt}</Moment>
+				{translate('lastModified')} <Moment locale={dbUser.appInfo.language} fromNow>{wishlistItem.updatedAt}</Moment>
 			</p>
 			<Link
 				className='wishlist-card-footer__go-to-list'
