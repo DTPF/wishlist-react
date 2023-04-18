@@ -10,7 +10,9 @@ const initialUserState = {
 		appInfo: {
 			colorPrimary: '',
 			colorPrimaryBg: '',
-			language: ''
+			language: '',
+			wishlistColor: '',
+			wishlistColorBg: ''
 		},
 		wishlistsInfo: {
 			currentWishlist: '',
@@ -20,6 +22,7 @@ const initialUserState = {
 	},
 	initGetUser: () => { },
 	updateUser: (data: any) => { },
+	changeLanguage: (data: any) => { },
 }
 
 export default initialUserState;
