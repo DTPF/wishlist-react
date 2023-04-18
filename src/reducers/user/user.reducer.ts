@@ -22,6 +22,12 @@ export default function userReducer(state: any, action: any) {
 				dbUser: { ...state.dbUser, guess: payload }
 			}
 
+		case UserTypes.CHANGE_LANGUAGE:
+			return {
+				...state,
+				dbUser: { ...state.dbUser, appInfo: { language: payload } }
+			}
+
 		default:
 			return state;
 	}
