@@ -4,6 +4,11 @@ const englishTranslation = {
   login: 'Login',
   titleProfilePopover: 'Profile settings',
 
+  // App settings
+  appSettingModalTitle: 'Application settings',
+  inputAppColor: 'Application color',
+  listColor: 'Default color list',
+
   // Profile form
   titleProfileModal: 'Profile settings',
   titlePopConfirm: 'Delete user account',

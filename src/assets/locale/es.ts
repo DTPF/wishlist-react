@@ -4,6 +4,11 @@ const spanishTranslation = {
   login: 'Identifícate',
   titleProfilePopover: 'Opciones de usuario',
 
+  // App settings
+  appSettingModalTitle: 'Ajustes de la aplicación',
+  inputAppColor: 'Color de la aplicación',
+  listColor: 'Color de las listas',
+
   // Profile form
   titleProfileModal: 'Configuración de',
   titlePopConfirm: 'Eliminar cuenta de usuario',
