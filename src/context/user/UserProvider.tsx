@@ -8,12 +8,9 @@ import UserContext from "./UserContext";
 import userReducer from "reducers/user/user.reducer";
 import initialUserState from "./initialUserState";
 import { useTranslation } from "react-i18next";
+import { ChildrenProps } from "interfaces/globals";
 
-type Props = {
-	children: React.ReactNode
-}
-
-export default function UserProvider(props: Props) {
+export default function UserProvider(props: ChildrenProps) {
 	const { children } = props;
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
 	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
