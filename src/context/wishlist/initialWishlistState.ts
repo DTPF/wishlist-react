@@ -17,7 +17,7 @@ const initialWishlistState = {
 	wishlists: [],
 	isLoading: false,
 	initWishlistsByUserId: () => { },
-	postNewWishlist: (dbUserId: any, wishlistTitle: any) => { },
+	postNewWishlist: (wishlistTitle: any) => { },
 	updateWishlist: (wishlistId: string, data: any) => { },
 	removeWishlist: (wishlistId: string) => { },
 	addNewWishlistItem: (data: any) => { },
