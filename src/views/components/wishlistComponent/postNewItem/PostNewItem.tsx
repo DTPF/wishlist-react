@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
+import ThemeContext from 'context/theme/ThemeContext'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { Button, Input, Space } from 'antd'
@@ -9,6 +10,8 @@ export default function PostNewItem() {
   const { addNewWishlistItem } = useContext(WishlistContext)
   const [inputs, setInputs] = useState({ title: '' })
   const { t: translate } = useTranslation();
+  const { currentThemeColor } = useContext(ThemeContext)
+  const { colorPrimary, colorPrimaryBg } = currentThemeColor
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
@@ -40,7 +43,7 @@ export default function PostNewItem() {
         />
         <Button
           onClick={(e) => handleSubmit(e)}
-          style={{ height: 43, fontWeight: 600 }}
+          style={{ backgroundColor: colorPrimaryBg, color: colorPrimary, height: 43, fontWeight: 600 }}
           type="primary"
         >
           {translate('postNoteButton')}

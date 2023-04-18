@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from 'react'
 import UserContext from 'context/user/UserContext'
+import ThemeContext from 'context/theme/ThemeContext';
 import UserForm from './userForm/UserForm'
 import { useTranslation } from "react-i18next";
 import { Modal, Tag, Button, Popconfirm } from 'antd'
+import 'scss/globals.scss'
 
 export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 	const { dbUser, updateUser } = useContext(UserContext)
 	const [confirmLoading, setConfirmLoading] = useState(false)
 	const { i18n, t: translate } = useTranslation();
+	const { currentThemeColor } = useContext(ThemeContext)
+	const { colorPrimary, colorPrimaryBg } = currentThemeColor
 	const [userData, setUserData] = useState({
 		name: '',
 		lastname: '',
@@ -19,7 +23,7 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 		isMounted && setUserData({
 			name: dbUser.name,
 			lastname: dbUser.lastname,
-			language: dbUser.language
+			language: dbUser.appInfo.language
 		})
 		return () => { isMounted = false }
 	}, [dbUser])
@@ -38,7 +42,7 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 		setUserData({
 			name: dbUser.name,
 			lastname: dbUser.lastname,
-			language: dbUser.language
+			language: dbUser.appInfo.language
 		})
 		setOpenModal(false)
 	}
@@ -67,7 +71,11 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 				>
 					<Button danger>{translate('deleteAccount')}</Button>
 				</Popconfirm>,
-				<Button key="back" onClick={handleCancel}>
+				<Button
+					key="back"
+					onClick={handleCancel}
+					className='button-secondary'
+				>
 					{translate('cancel')}
 				</Button>,
 				<Button
@@ -75,6 +83,8 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 					type="primary"
 					loading={confirmLoading}
 					onClick={handleOk}
+					className='button-primary'
+					style={{ backgroundColor: colorPrimaryBg, color: colorPrimary }}
 				>
 					{translate('save')}
 				</Button>,

@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
+import ThemeContext from 'context/theme/ThemeContext'
 import AddNewWishlist from './addNewWishlist'
 import WishlistCardItem from './wishlistCardItem'
 import FilterDropdown from './filterDropdown/FilterDropdown'
@@ -19,6 +20,8 @@ export default function WishlistsComponent() {
 	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
 	const { t: translate } = useTranslation();
 	type updatedAt = (string | number | Date)
+	const { currentThemeColor } = useContext(ThemeContext)
+	const { colorPrimaryBg } = currentThemeColor
 
 	switch (wishlistsOrder) {
 		case 'updatedAt':
@@ -86,7 +89,7 @@ export default function WishlistsComponent() {
 								}
 								className='wishlists-component__items--empty-msg'
 							>
-								<Button onClick={() => postNewWishlist(dbUser._id, null)} type="primary">
+								<Button style={{ backgroundColor: colorPrimaryBg }} onClick={() => postNewWishlist(dbUser._id, null)} type="primary">
 									{translate('createWishlist')}
 								</Button>
 							</Empty>

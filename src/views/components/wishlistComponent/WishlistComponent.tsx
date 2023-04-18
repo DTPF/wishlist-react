@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import WishlistContext from 'context/wishlist/WishlistContext';
+import ThemeContext from 'context/theme/ThemeContext';
 import PostNewItem from './postNewItem';
 import WishlistItem from './wishListItem';
 import Spinner from 'views/UI/spinner';
@@ -15,6 +16,8 @@ export default function WishlistComponent({ params }: any) {
   const { isLoading, currentWishlist, updateWishlist } = useContext(WishlistContext);
   const navigate = useNavigate()
   const { t: translate } = useTranslation();
+  const { currentThemeColor } = useContext(ThemeContext)
+	const { colorPrimary, colorPrimaryBg } = currentThemeColor
 
   const completedItems =
     currentWishlist.wishlistItems.filter((item: WishList) => item.isCompleted === true)
@@ -107,7 +110,8 @@ export default function WishlistComponent({ params }: any) {
                   position: 'absolute',
                   top: 6,
                   right: 7,
-                  backgroundColor: '#232F3E',
+                  color: colorPrimary,
+                  backgroundColor: colorPrimaryBg,
                 }} count={itemsLength} />
               </>
             )}
