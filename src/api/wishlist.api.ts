@@ -1,14 +1,14 @@
 import { basePath, apiVersion } from "./utils/config";
 import { WishList } from "interfaces/wishlist";
 
-export const getWishlistsByUserIdApi = async (token: string, userId: string): Promise<WishList> => {
+export const getWishlistsByUserIdApi = async (token: string): Promise<WishList> => {
 	const params = {
 		method: "GET",
 		headers: {
 			Authorization: `Bearer ${token}`
 		},
 	}
-	const response = await fetch(`${basePath}/${apiVersion}/get-wishlists-by-user-id/${userId}`, params)
+	const response = await fetch(`${basePath}/${apiVersion}/get-wishlists-by-user-id`, params)
 	const data = await response.json()
 	return data
 }
