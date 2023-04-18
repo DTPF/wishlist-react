@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-	initGetUserAction,
-	updateUserAction
-} from "reducers/user/user.actions";
+import * as action from "reducers/user/user.actions";
 import UserContext from "./UserContext";
 import userReducer from "reducers/user/user.reducer";
 import initialUserState from "./initialUserState";
@@ -23,13 +20,20 @@ export default function UserProvider(props: ChildrenProps) {
 
 	const initGetUser = useCallback(async () => {
 		const token = await getIdTokenClaims()
-		initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
+		action.initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
 	}, [getIdTokenClaims, isAuthenticated, isLoading, i18n]);
 
 	const updateUser = useCallback(async (data: any) => {
 		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
-			updateUserAction(dispatch, userState.dbUser._id, data, token);
+			action.updateUserAction(dispatch, userState.dbUser._id, data, token);
+		}
+	}, [getIdTokenClaims, isAuthenticated, userState, isLoading]);
+
+	const changeLanguage = useCallback(async (data: any) => {
+		const token = await getIdTokenClaims()
+		if (!isLoading && isAuthenticated) {
+			action.changeLanguageAction(dispatch, userState.dbUser._id, data, token);
 		}
 	}, [getIdTokenClaims, isAuthenticated, userState, isLoading]);
 
@@ -37,9 +41,10 @@ export default function UserProvider(props: ChildrenProps) {
 		() => ({
 			...userState,
 			initGetUser,
-			updateUser
+			updateUser,
+			changeLanguage
 		}),
-		[userState, initGetUser, updateUser]
+		[userState, initGetUser, updateUser, changeLanguage]
 	);
 
 	return (
