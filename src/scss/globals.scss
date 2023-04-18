@@ -1,10 +1,7 @@
 @import './variables';
 
 .input-primary {
-	border: 1px solid #b8b8b8;
-
 	&:hover {
-		border: 1px solid #545454;
 		box-shadow: $shadow-elevation-medium
 	}
 }
@@ -29,8 +26,4 @@
 		opacity: .7;
 		box-shadow: $shadow-elevation-high
 	}
-}
-
-.ant-select-item-option-selected {
-	color: #fff !important;
 }
