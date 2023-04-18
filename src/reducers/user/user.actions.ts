@@ -1,5 +1,5 @@
+import * as api from "api/user.api";
 import * as UserTypes from "reducers/user/user.types";
-import { initGetUserAPI, updateUserApi } from "api/user.api";
 
 export const initGetUserAction = async function (
 	dispatch: any,
@@ -20,7 +20,7 @@ export const initGetUserAction = async function (
 	}
 	if (!isLoading && isAuthenticated && auth0User.sub) {
 		try {
-			const response = await initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
+			const response = await api.initGetUserAPI(auth0User.__raw, { userId: auth0User.sub });
 			if (response.status === 200 || response.status === 201) {
 				initServices(response)
 				return dispatch({
@@ -53,12 +53,32 @@ export const updateUserAction = async function (
 	token: any
 ) {
 	try {
-		const response = await updateUserApi(userId, data, token.__raw);
+		const response = await api.updateUserApi(userId, data, token.__raw);
 
 		if (response.status === 200) {
 			return dispatch({
 				type: UserTypes.UPDATE_USER,
 				payload: response.user
+			});
+		} else {
+			throw new Error()
+		}
+	} catch (err) {
+		throw new Error()
+	}
+}
+
+export const changeLanguageAction = async function (
+	dispatch: any,
+	data: any,
+	token: any
+) {
+	try {
+		const response = await api.changeLanguageAPI(data, token.__raw);
+		if (response.status === 200) {
+			return dispatch({
+				type: UserTypes.CHANGE_LANGUAGE,
+				payload: data.language
 			});
 		} else {
 			throw new Error()
