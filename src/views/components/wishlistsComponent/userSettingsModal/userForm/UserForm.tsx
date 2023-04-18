@@ -1,8 +1,10 @@
 import { Form, Input, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
+import 'scss/globals.scss'
 
 export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 	const { t: translate } = useTranslation();
+
 	return (
 		<Form
 			labelCol={{ span: 5 }}
@@ -17,6 +19,7 @@ export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 					onChange={(e) => setUserData({ ...userData, name: e.target.value })}
 					placeholder={translate('nameInput') || ''}
 					value={userData.name}
+					className='input-primary'
 				/>
 			</Form.Item>
 
@@ -25,7 +28,9 @@ export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 					name='lastname'
 					onChange={(e) => setUserData({ ...userData, lastname: e.target.value })}
 					placeholder={translate('lastnameInput') || ''}
-					value={userData.lastname} />
+					value={userData.lastname}
+					className='input-primary'
+					/>
 			</Form.Item>
 
 			<Form.Item label={translate('languageInput')}>
@@ -36,6 +41,8 @@ export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 						{ value: 'en', label: translate('languageEnglish') },
 						{ value: 'es', label: translate('languageSpanish') },
 					]}
+					className='input-primary'
+					style={{ borderRadius: 8}}
 				/>
 			</Form.Item>
 		</Form>
