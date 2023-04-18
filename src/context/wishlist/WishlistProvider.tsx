@@ -11,7 +11,7 @@ type Props = { children: React.ReactNode }
 
 export default function WishlistProvider(props: Props) {
 	const { children } = props;
-	const { dbUser }: any = useContext(UserContext);
+	const { dbUser } = useContext(UserContext);
 	const [wishlistState, dispatch] = useReducer(wishlistReducer, initialWishlistState);
 	const { getIdTokenClaims, isAuthenticated } = useAuth0();
 
@@ -23,23 +23,28 @@ export default function WishlistProvider(props: Props) {
 	const initWishlistsByUserId = useCallback(async () => {
 		dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
 		const user: any = await getIdTokenClaims()
-			action.initWishlistsByUserIdAction(
-				dispatch,
-				isAuthenticated,
-				user?.__raw,
-				dbUser
-			);
+		action.initWishlistsByUserIdAction(
+			dispatch,
+			isAuthenticated,
+			user?.__raw,
+			dbUser
+		);
 	}, [getIdTokenClaims, isAuthenticated, dbUser]);
 
-	const postNewWishlist = useCallback(async (dbUserId: any, wishlistTitle: any) => {
+	const postNewWishlist = useCallback(async (wishlistTitle: any) => {
 		const data = {
-			userId: dbUserId,
 			wishlistName: wishlistTitle,
-			backgroundColor: localStorage.getItem('color')
+			backgroundColor: dbUser.appInfo.wishlistColorBg,
+			color: dbUser.appInfo.wishlistColor
 		}
 		const user: any = await getIdTokenClaims()
 		action.postWishlistAction(dispatch, data, isAuthenticated, user.__raw);
-	}, [getIdTokenClaims, isAuthenticated]);
+	}, [
+		getIdTokenClaims,
+		isAuthenticated,
+		dbUser.appInfo.wishlistColor,
+		dbUser.appInfo.wishlistColorBg
+	]);
 
 	const addNewWishlistItem = useCallback(async (item: any) => {
 		const user: any = await getIdTokenClaims()
