@@ -8,9 +8,9 @@ export async function initWishlistsByUserIdAction(
 	token: any,
 	dbUser: any
 ) {
-	if (isAuthenticated && dbUser._id) {
+	if (isAuthenticated) {
 		try {
-			const response: any = await api.getWishlistsByUserIdApi(token, dbUser._id)
+			const response: any = await api.getWishlistsByUserIdApi(token)
 
 			if (response.status === 200) {
 				let totalWishlistsNotes = 0
