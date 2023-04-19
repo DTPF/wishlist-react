@@ -12,14 +12,15 @@ export default function wishlistReducer(state: any, action: any) {
 				wishlistsInfo: payload.wishlistsInfo
 			}
 
-		case WishlistTypes.ADD_WISHLIST:
+		case WishlistTypes.POST_WISHLIST:
 			return {
 				...state,
-				wishlists: [...state.wishlists, payload],
+				wishlists: [...state.wishlists, payload.wishlist],
 				wishlistsInfo: {
 					...state.wishlistsInfo,
 					totalWishlists: ++state.wishlistsInfo.totalWishlists,
-					lastModified: Date.now()
+					lastModified: Date.now(),
+					colorsUsed: payload.colorsUsed
 				}
 			}
 
