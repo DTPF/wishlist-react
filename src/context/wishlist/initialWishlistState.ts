@@ -12,11 +12,11 @@ const initialWishlistState = {
 	wishlistsInfo: {
 		totalWishlists: 0,
 		totalWishlistsNotes: 0,
-		lastModified: ''
+		lastModified: '',
+		colorsUsed: []
 	},
 	wishlists: [],
 	isLoading: false,
-	initWishlistsByUserId: () => { },
 	postNewWishlist: (wishlistTitle: any) => { },
 	updateWishlist: (wishlistId: string, data: any) => { },
 	removeWishlist: (wishlistId: string) => { },
