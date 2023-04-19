@@ -6,30 +6,27 @@ import wishlistReducer from "reducers/wishlist/wishlist.reducer";
 import initialWishlistState from "./initialWishlistState";
 import * as action from "reducers/wishlist/wishlist.actions";
 import * as WishlistTypes from "reducers/wishlist/wishlist.types";
+import { ChildrenProps } from "interfaces/globals";
 
-type Props = { children: React.ReactNode }
-
-export default function WishlistProvider(props: Props) {
+export default function WishlistProvider(props: ChildrenProps) {
 	const { children } = props;
 	const { dbUser } = useContext(UserContext);
 	const [wishlistState, dispatch] = useReducer(wishlistReducer, initialWishlistState);
 	const { getIdTokenClaims, isAuthenticated } = useAuth0();
 
 	useEffect(() => {
+		const initWishlistsByUserId = async () => {
+			dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
+			const user = await getIdTokenClaims()
+			action.initWishlistsByUserIdAction(
+				dispatch,
+				isAuthenticated,
+				user?.__raw,
+				dbUser
+			);
+		}
 		initWishlistsByUserId()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dbUser])
-
-	const initWishlistsByUserId = useCallback(async () => {
-		dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: true })
-		const user: any = await getIdTokenClaims()
-		action.initWishlistsByUserIdAction(
-			dispatch,
-			isAuthenticated,
-			user?.__raw,
-			dbUser
-		);
-	}, [getIdTokenClaims, isAuthenticated, dbUser]);
+	}, [dbUser, getIdTokenClaims, isAuthenticated])
 
 	const postNewWishlist = useCallback(async (wishlistTitle: any) => {
 		const data = {
@@ -38,12 +35,13 @@ export default function WishlistProvider(props: Props) {
 			color: dbUser.appInfo.wishlistColor
 		}
 		const user: any = await getIdTokenClaims()
-		action.postWishlistAction(dispatch, data, isAuthenticated, user.__raw);
+		action.postWishlistAction(dispatch, data, isAuthenticated, user.__raw, wishlistState.wishlistsInfo.colorsUsed);
 	}, [
 		getIdTokenClaims,
 		isAuthenticated,
 		dbUser.appInfo.wishlistColor,
-		dbUser.appInfo.wishlistColorBg
+		dbUser.appInfo.wishlistColorBg,
+		wishlistState.wishlistsInfo.colorsUsed
 	]);
 
 	const addNewWishlistItem = useCallback(async (item: any) => {
@@ -79,7 +77,6 @@ export default function WishlistProvider(props: Props) {
 
 	const memoizedProvider = useMemo(() => ({
 		...wishlistState,
-		initWishlistsByUserId,
 		postNewWishlist,
 		addNewWishlistItem,
 		removeWishlistItem,
@@ -89,7 +86,6 @@ export default function WishlistProvider(props: Props) {
 		updateWishlistItem
 	}), [
 		wishlistState,
-		initWishlistsByUserId,
 		addNewWishlistItem,
 		postNewWishlist,
 		removeWishlist,
