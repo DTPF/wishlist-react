@@ -20,7 +20,6 @@ const initialUserState = {
 			wishlistsDirection: ''
 		},
 	},
-	initGetUser: () => { },
 	updateUser: (data: any) => { },
 	changeLanguage: (data: any) => { },
 }
