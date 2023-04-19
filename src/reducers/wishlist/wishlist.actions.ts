@@ -1,12 +1,20 @@
 import * as api from "api/wishlist.api"
 import * as WishlistTypes from "reducers/wishlist/wishlist.types"
 import toast from 'react-hot-toast'
+import { DbUser } from "interfaces/user"
+type WishlistItem = {
+	_id: string
+	wishlistItems: string | any[]
+	updatedAt: string | number
+	backgroundColor: string
+	position: Number
+}
 
 export async function initWishlistsByUserIdAction(
 	dispatch: any,
 	isAuthenticated: boolean,
 	token: any,
-	dbUser: any
+	dbUser: DbUser
 ) {
 	if (isAuthenticated) {
 		try {
@@ -14,24 +22,29 @@ export async function initWishlistsByUserIdAction(
 
 			if (response.status === 200) {
 				let totalWishlistsNotes = 0
-				let lastModified = "2023-04-05T12:25:50.606Z"
-				response.wishlists.forEach((item: any) => {
+				let lastModified: string | number = "2023-04-05T12:25:50.606Z"
+				let colorsUsed: any[] = []
+
+				response.wishlists.forEach((item: WishlistItem) => {
 					totalWishlistsNotes += item.wishlistItems.length
 					if (item.updatedAt > lastModified) lastModified = item.updatedAt
+					if (!colorsUsed.includes(item.backgroundColor)) {
+						colorsUsed.push(item.backgroundColor)
+					}					
 				})
 
 				const wishlistsInfo = {
 					totalWishlists: response.wishlists.length,
 					totalWishlistsNotes,
-					lastModified
+					lastModified,
+					colorsUsed
 				}
 
+				// Set current wishlist
 				const findCurrentWishlist =
-					response.wishlists.find((item: any) => item._id === dbUser.wishlistsInfo.currentWishlist)
+					response.wishlists.find((item: WishlistItem) => item._id === dbUser.wishlistsInfo.currentWishlist)
 				const currentWishlist =
 					findCurrentWishlist ? findCurrentWishlist : response.wishlists[0]
-
-				currentWishlist.wishlistItems.sort((a: any, b: any) => a.position - b.position)
 
 				dispatch({
 					type: WishlistTypes.INIT_WISHLIST_BY_USER_ID,
@@ -43,7 +56,7 @@ export async function initWishlistsByUserIdAction(
 				})
 			}
 			return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
-		} catch (err: any) {
+		} catch (err) {
 			return toast.error('Ha ocurrido un problema')
 		}
 	}
@@ -55,20 +68,26 @@ export async function initWishlistsByUserIdAction(
 
 export async function postWishlistAction(
 	dispatch: any,
-	data: object,
+	data: any,
 	isAuthenticated: boolean,
-	token: any
+	token: any,
+	colorsUsedArray: any[]
 ) {
 	if (isAuthenticated) {
 		try {
 			const response: any = await api.postNewWishlistApi(data, token)
 
+			if (!colorsUsedArray.includes(data.backgroundColor)) {
+				colorsUsedArray.push(data.backgroundColor)
+			}			
 			if (response.status === 200) {
-				localStorage.removeItem('color')
 				toast.success(response.message)
 				return dispatch({
-					type: WishlistTypes.ADD_WISHLIST,
-					payload: response.wishlist
+					type: WishlistTypes.POST_WISHLIST,
+					payload: {
+						wishlist: response.wishlist,
+						colorsUsed: colorsUsedArray
+					}
 				})
 			} else {
 				toast.error(response.message)
@@ -95,7 +114,7 @@ export async function addWishlistItemAction(
 				newWishlistItems.push(response.newWishlistItem)
 
 				let wishlists = wishlistState.wishlists
-				const findIndex = wishlists.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+				const findIndex = wishlists.findIndex((item: WishlistItem) => item._id === wishlistState.currentWishlist._id)
 				wishlists[findIndex] = response.wishlistStored
 
 				toast.success(response.message)
@@ -117,7 +136,7 @@ export async function addWishlistItemAction(
 		newWishlistItems.push(item)
 
 		let newWishlist = wishlistState.wishlists
-		const findIndex = newWishlist.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+		const findIndex = newWishlist.findIndex((item: WishlistItem) => item._id === wishlistState.currentWishlist._id)
 		newWishlist[findIndex] = newWishlistItems
 
 		const wishlistTemporary = [{
@@ -148,11 +167,11 @@ export async function removeWishlistItemAction(
 			const response: any = await api.removeWishlistItemApi(wishlistId, wishlistItemId, token)
 
 			let wishlists = wishlistState.wishlists
-			const findIndex = wishlists.findIndex((item: any) => item._id === wishlistState.currentWishlist._id)
+			const findIndex = wishlists.findIndex((item: WishlistItem) => item._id === wishlistState.currentWishlist._id)
 			wishlists[findIndex] = response.wishlist
 
 			let orderedList: any = []
-			response.wishlist.wishlistItems.forEach((item: any, index: any) => {
+			response.wishlist.wishlistItems.forEach((item: WishlistItem, index: number) => {
 				item.position = index
 				orderedList.push(item)
 			});
@@ -181,7 +200,7 @@ export async function setCurrentWishlistAction(
 	wishlist: any,
 	isAuthenticated: boolean,
 	token: any,
-	dbUser: any
+	dbUser: DbUser
 ) {
 	try {
 		if (isAuthenticated) {
@@ -211,11 +230,11 @@ export async function removeWishlistAction(
 ) {
 	try {
 		if (isAuthenticated) {
-			const response: any = await api.removeWishlistAPI(wishlistId, token)
+			const response: any = await api.removeWishlistAPI(wishlistId, token)			
 
 			if (response.status === 200) {
 				const filteredWishlist =
-					wishlistState.wishlists.filter((item: any) => item._id !== response.wishlistItemIdDeleted)
+					wishlistState.wishlists.filter((item: WishlistItem) => item._id !== response.wishlistItemIdDeleted)
 
 				toast.success(`${response.message}`)
 				return dispatch({
@@ -248,7 +267,7 @@ export async function updateWishlistAction(
 
 			if (response.status === 200) {
 				let wishlists = wishlistState.wishlists
-				const findIndex = wishlists.findIndex((item: any) => item._id === response.wishlist._id)
+				const findIndex = wishlists.findIndex((item: WishlistItem) => item._id === response.wishlist._id)
 				wishlists[findIndex] = response.wishlist
 
 				return dispatch({
@@ -271,10 +290,10 @@ export async function updateWishlistItemAction(
 	dispatch: any,
 	isAuthenticated: boolean,
 	wishlistId: string,
-	wishlistItemId: any,
-	wishlistState: any,
+	wishlistItemId: string,
+	wishlistState: { wishlists: any },
 	token: any,
-	data: any
+	data: object
 ) {
 	try {
 		if (isAuthenticated) {
@@ -282,7 +301,7 @@ export async function updateWishlistItemAction(
 
 			if (response.status === 200) {
 				let wishlists = wishlistState.wishlists
-				const findIndex = wishlists.findIndex((item: any) => item._id === response.wishlist._id)
+				const findIndex = wishlists.findIndex((item: WishlistItem) => item._id === response.wishlist._id)
 				wishlists[findIndex] = response.wishlist
 
 				return dispatch({
