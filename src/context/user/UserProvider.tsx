@@ -14,37 +14,34 @@ export default function UserProvider(props: ChildrenProps) {
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
+		const initGetUser = async () => {
+			const token = await getIdTokenClaims()
+			action.initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
+		}
 		initGetUser()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isAuthenticated, isLoading])
-
-	const initGetUser = useCallback(async () => {
-		const token = await getIdTokenClaims()
-		action.initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
-	}, [getIdTokenClaims, isAuthenticated, isLoading, i18n]);
+	}, [isAuthenticated, isLoading, i18n, getIdTokenClaims])
 
 	const updateUser = useCallback(async (data: any) => {
-		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
+			const token = await getIdTokenClaims()
 			action.updateUserAction(dispatch, userState.dbUser._id, data, token);
 		}
-	}, [getIdTokenClaims, isAuthenticated, userState, isLoading]);
+	}, [isAuthenticated, userState, isLoading, getIdTokenClaims]);
 
 	const changeLanguage = useCallback(async (data: any) => {
-		const token = await getIdTokenClaims()
 		if (!isLoading && isAuthenticated) {
+			const token = await getIdTokenClaims()
 			action.changeLanguageAction(dispatch, data, token);
 		}
-	}, [getIdTokenClaims, isAuthenticated, isLoading]);
+	}, [isAuthenticated, isLoading, getIdTokenClaims]);
 
 	const memoProvider = useMemo(
 		() => ({
 			...userState,
-			initGetUser,
 			updateUser,
 			changeLanguage
 		}),
-		[userState, initGetUser, updateUser, changeLanguage]
+		[userState, updateUser, changeLanguage]
 	);
 
 	return (
