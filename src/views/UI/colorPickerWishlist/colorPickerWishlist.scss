@@ -1,0 +1,47 @@
+@import 'src/scss/variables';
+
+.color-picker-wishlist-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 150px;
+	background-color: #fff;
+	padding: 10px 10px;
+
+	&__input {
+		width: 100% !important;
+
+		input {
+			-webkit-appearance: none !important;
+			-moz-appearance: none !important;
+			appearance: none !important;
+			width: 100% !important;
+			height: 80px !important;
+			border-radius: 50% !important;
+			box-shadow: $shadow-elevation-medium;
+			cursor: pointer;
+		}
+	}
+
+	&__colors-used {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 10px;
+		padding: 20px 0;
+		padding-bottom: 10px;
+
+		button {
+			width: 30px;
+			height: 30px;
+			border: 0;
+			border-radius: 6px;
+			box-shadow: $shadow-elevation-medium;
+			cursor: pointer;
+
+			&:hover {
+				box-shadow: $shadow-elevation-high;
+			}
+		}
+	}
+}
