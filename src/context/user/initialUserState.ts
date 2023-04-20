@@ -22,6 +22,8 @@ const initialUserState = {
 	},
 	updateUser: (data: any) => { },
 	changeLanguage: (data: any) => { },
+	updateWishlistColor: (color: any) => { },
+	updateAppColor: (color: any) => { }
 }
 
 export default initialUserState;

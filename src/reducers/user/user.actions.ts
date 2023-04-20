@@ -87,3 +87,51 @@ export const changeLanguageAction = async function (
 		throw new Error()
 	}
 }
+
+export const updateAppColorAction = async function (
+	dispatch: any,
+	data: any,
+	token: any
+) {
+	try {
+		const response = await api.updateAppColorAPI(data, token.__raw);
+
+		if (response.status === 200) {			
+			return dispatch({
+				type: UserTypes.UPDATE_APP_COLOR,
+				payload: {
+					colorPrimary: data.colorPrimary,
+					colorPrimaryBg: data.colorPrimaryBg,
+				}
+			});
+		} else {
+			throw new Error()
+		}
+	} catch (err) {
+		throw new Error()
+	}
+}
+
+export const updateWishlistColorAction = async function (
+	dispatch: any,
+	data: any,
+	token: any
+) {
+	try {
+		const response = await api.updateWishlistColorAPI(data, token.__raw);
+		
+		if (response.status === 200) {			
+			return dispatch({
+				type: UserTypes.CHANGE_WISHLIST_COLOR,
+				payload: {
+					wishlistColor: data.wishlistColor,
+					wishlistColorBg: data.wishlistColorBg
+				}
+			});
+		} else {
+			throw new Error()
+		}
+	} catch (err) {
+		throw new Error()
+	}
+}

@@ -19,7 +19,8 @@ export default function UserProvider(props: ChildrenProps) {
 			action.initGetUserAction(dispatch, isAuthenticated, token, i18n, isLoading);
 		}
 		initGetUser()
-	}, [isAuthenticated, isLoading, i18n, getIdTokenClaims])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isAuthenticated, isLoading, getIdTokenClaims])
 
 	const updateUser = useCallback(async (data: any) => {
 		if (!isLoading && isAuthenticated) {
@@ -35,13 +36,35 @@ export default function UserProvider(props: ChildrenProps) {
 		}
 	}, [isAuthenticated, isLoading, getIdTokenClaims]);
 
+	const updateAppColor = useCallback(async (data: any) => {
+		if (!isLoading) {
+			const token = await getIdTokenClaims()
+			action.updateAppColorAction(dispatch, data, token);
+		}
+	}, [isLoading, getIdTokenClaims]);
+
+	const updateWishlistColor = useCallback(async (data: any) => {
+		if (!isLoading) {
+			const token = await getIdTokenClaims()
+			action.updateWishlistColorAction(dispatch, data, token);
+		}
+	}, [isLoading, getIdTokenClaims]);
+
 	const memoProvider = useMemo(
 		() => ({
 			...userState,
 			updateUser,
-			changeLanguage
+			changeLanguage,
+			updateAppColor,
+			updateWishlistColor
 		}),
-		[userState, updateUser, changeLanguage]
+		[
+			userState,
+			updateUser,
+			changeLanguage,
+			updateWishlistColor,
+			updateAppColor
+		]
 	);
 
 	return (
