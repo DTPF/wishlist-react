@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UpdateCurrentThemeContextType, initialThemeState } from "./initialThemeState";
-const ThemeContext = createContext<UpdateCurrentThemeContextType>(initialThemeState);
+import { UpdateCurrentThemeContextType, initialThemeContext } from "./initialThemeState";
+const ThemeContext = createContext<UpdateCurrentThemeContextType>(initialThemeContext);
 
 export default ThemeContext;
