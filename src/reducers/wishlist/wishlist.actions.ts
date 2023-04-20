@@ -7,7 +7,7 @@ type WishlistItem = {
 	wishlistItems: string | any[]
 	updatedAt: string | number
 	backgroundColor: string
-	position: Number
+	position: number
 }
 
 export async function initWishlistsByUserIdAction(
