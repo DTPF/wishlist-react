@@ -1,5 +1,5 @@
 //Function to obtain the opposite color
-export default function invertHexColor(hex: string, bw: boolean) {
+export default function invertHexColor(hex: string) {
 	if (hex.indexOf('#') === 0) {
 		hex = hex.slice(1);
 	}
@@ -14,7 +14,7 @@ export default function invertHexColor(hex: string, bw: boolean) {
 		g: any = parseInt(hex.slice(2, 4), 16),
 		b: any = parseInt(hex.slice(4, 6), 16);
 	
-	if ((r * 0.299 + g * 0.587 + b * 0.114) > 156) {
+	if ((r * 0.299 + g * 0.587 + b * 0.114) > 165) {
 		return '#232F3E'
 	} else {
 		return '#FFFFFF'
