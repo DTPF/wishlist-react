@@ -36,6 +36,8 @@ const englishTranslation = {
   filterOrder: 'Sort:',
   filterOrderAsc: 'Ascendent',
   filterOrderDesc: 'Descendent',
+    // CreateWishlistComponent
+  inputPlaceholderCreateWL: 'Add a new list',
 
   // Wishlist - WishlistPage
   htmlDescriptionWishlist: 'Dalist notes page',
