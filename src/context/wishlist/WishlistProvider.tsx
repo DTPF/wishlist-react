@@ -26,7 +26,8 @@ export default function WishlistProvider(props: ChildrenProps) {
 			);
 		}
 		initWishlistsByUserId()
-	}, [dbUser, getIdTokenClaims, isAuthenticated])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getIdTokenClaims, isAuthenticated])
 
 	const postNewWishlist = useCallback(async (wishlistTitle: any) => {
 		const data = {
