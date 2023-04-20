@@ -1,26 +1,27 @@
+import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 // Layouts
-import MainLayout from "views/layout/mainLayout";
+const MainLayout = lazy(() => import('views/layout/mainLayout'))
 // Pages
-import WishlistPage from '../views/pages/wishlistPage/WishlistPage';
-import HomePage from "views/pages/homePage";
+const WishlistPage = lazy(() => import('../views/pages/wishlistPage/WishlistPage'))
+const HomePage = lazy(() => import('views/pages/homePage'))
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <Suspense fallback={<></>}><MainLayout /></Suspense>,
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <Suspense fallback={<></>}><HomePage /></Suspense>,
       },
       {
         path: "/wishlist",
-        element: <WishlistPage />,
+        element: <Suspense fallback={<></>}><WishlistPage /></Suspense>,
         children: [
           {
             path: ":isCompleted",
-            element: <WishlistPage />,
+            element: <Suspense fallback={<></>}><WishlistPage /></Suspense>,
           },
         ]
       },
