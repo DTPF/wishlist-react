@@ -1,13 +1,12 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
-import ColorSelect from 'views/UI/colorSelect'
+import { useTranslation } from 'react-i18next'
 import Moment from 'react-moment'
 import { IoEnterOutline, IoTrash } from 'react-icons/io5'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import './cardFooter.scss'
-import { useTranslation } from 'react-i18next'
-import UserContext from 'context/user/UserContext'
 
 export default function CardFooter({ wishlistItem, showPopover, setShowPopover }: any) {
 	const { setCurrentWishlist, removeWishlist } = useContext(WishlistContext)
@@ -21,9 +20,6 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 		>
 			{showPopover && (
 				<span className='wishlist-card-footer__popover'>
-					<div className='wishlist-card-footer__popover--color-select'>
-						<ColorSelect wishlistItem={wishlistItem} />
-					</div>
 					<div onClick={() => removeWishlist(wishlistItem._id)} className='wishlist-card-footer__popover--remove-list'>
 						<IoTrash /> <span>{translate('deleteList')}</span>
 					</div>
