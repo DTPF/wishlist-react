@@ -43,7 +43,7 @@ export default function PostNewItem() {
         />
         <Button
           onClick={(e) => handleSubmit(e)}
-          style={{ backgroundColor: colorPrimaryBg, color: colorPrimary, height: 43, fontWeight: 600 }}
+          style={{ backgroundColor: colorPrimaryBg, color: colorPrimary, height: 'auto', fontWeight: 600 }}
           type="primary"
         >
           {translate('postNoteButton')}

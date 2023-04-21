@@ -8,20 +8,11 @@ import './filterDropdown.scss'
 
 export default function FilterDropdown() {
 	const { dbUser, updateUser } = useContext(UserContext)
-	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
+	const { wishlistsOrder } = dbUser.wishlistsInfo
 	const { t: translate } = useTranslation();
 
 	const handleUpdateOrder = (type: string) => {
 		const wishlistsInfo = { ...dbUser.wishlistsInfo, wishlistsOrder: type }
-		updateUser({ wishlistsInfo })
-	}
-
-	const handleUpdateDirection = () => {
-		const direction = () => {
-			if (wishlistsDirection === 'desc') return 'asc'
-			return 'desc'
-		}
-		const wishlistsInfo = { ...dbUser.wishlistsInfo, wishlistsDirection: direction() }
 		updateUser({ wishlistsInfo })
 	}
 
@@ -55,18 +46,7 @@ export default function FilterDropdown() {
 					{translate('filterCreatedAt')}
 				</div>
 			),
-		},
-		{
-			key: '4',
-			label: (
-				<div
-					className='filter-dropdown-order'
-					onClick={() => handleUpdateDirection()}
-				>
-					{translate('filterOrder')} <small>{wishlistsDirection === 'desc' ? translate('filterOrderDesc') : translate('filterOrderAsc')}</small>
-				</div>
-			),
-		},
+		}
 	]
 
 	return (

@@ -27,7 +27,7 @@ export default function WishlistProvider(props: ChildrenProps) {
 		}
 		initWishlistsByUserId()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getIdTokenClaims, isAuthenticated])
+	}, [getIdTokenClaims, isAuthenticated, dbUser.guess])
 
 	const postNewWishlist = useCallback(async (wishlistTitle: any) => {
 		const data = {
@@ -36,12 +36,11 @@ export default function WishlistProvider(props: ChildrenProps) {
 			color: dbUser.appInfo.wishlistColor
 		}
 		const user: any = await getIdTokenClaims()
-		action.postWishlistAction(dispatch, data, isAuthenticated, user.__raw, wishlistState.wishlistsInfo.colorsUsed);
+		action.postWishlistAction(dispatch, data, isAuthenticated, user, wishlistState.wishlistsInfo.colorsUsed, dbUser);
 	}, [
 		getIdTokenClaims,
 		isAuthenticated,
-		dbUser.appInfo.wishlistColor,
-		dbUser.appInfo.wishlistColorBg,
+		dbUser,
 		wishlistState.wishlistsInfo.colorsUsed
 	]);
 

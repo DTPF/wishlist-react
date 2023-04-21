@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd';
+import { Form, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 import 'scss/globals.scss'
 
@@ -31,19 +31,6 @@ export default function WishlistsSettingsForm({ userData, setUserData }: any) {
 					value={userData.lastname}
 					className='input-primary'
 					/>
-			</Form.Item>
-
-			<Form.Item label={translate('languageInput')}>
-				<Select
-					value={userData.language}
-					onChange={(e) => setUserData({ ...userData, language: e })}
-					options={[
-						{ value: 'en', label: translate('languageEnglish') },
-						{ value: 'es', label: translate('languageSpanish') },
-					]}
-					className='input-primary'
-					style={{ borderRadius: 8}}
-				/>
 			</Form.Item>
 		</Form>
 	);

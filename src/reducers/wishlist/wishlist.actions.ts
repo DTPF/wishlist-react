@@ -30,7 +30,7 @@ export async function initWishlistsByUserIdAction(
 					if (item.updatedAt > lastModified) lastModified = item.updatedAt
 					if (!colorsUsed.includes(item.backgroundColor)) {
 						colorsUsed.push(item.backgroundColor)
-					}					
+					}
 				})
 
 				const wishlistsInfo = {
@@ -60,7 +60,6 @@ export async function initWishlistsByUserIdAction(
 			return toast.error('Ha ocurrido un problema')
 		}
 	}
-
 	if (dbUser.guess) {
 		return dispatch({ type: WishlistTypes.SET_IS_LOADING, payload: false })
 	}
@@ -71,15 +70,15 @@ export async function postWishlistAction(
 	data: any,
 	isAuthenticated: boolean,
 	token: any,
-	colorsUsedArray: any[]
+	colorsUsedArray: any[],
+	dbUser: any
 ) {
 	if (isAuthenticated) {
 		try {
-			const response: any = await api.postNewWishlistApi(data, token)
-
+			const response: any = await api.postNewWishlistApi(data, token.__raw)
 			if (!colorsUsedArray.includes(data.backgroundColor)) {
 				colorsUsedArray.push(data.backgroundColor)
-			}			
+			}
 			if (response.status === 200) {
 				toast.success(response.message)
 				return dispatch({
@@ -95,6 +94,11 @@ export async function postWishlistAction(
 		} catch (error) {
 			return toast.error('No se ha podido crear')
 		}
+	} else {
+		return dispatch({
+			type: WishlistTypes.POST_WISHLIST_GUEST,
+			payload: dbUser.appInfo
+		})
 	}
 }
 
@@ -230,7 +234,7 @@ export async function removeWishlistAction(
 ) {
 	try {
 		if (isAuthenticated) {
-			const response: any = await api.removeWishlistAPI(wishlistId, token)			
+			const response: any = await api.removeWishlistAPI(wishlistId, token)
 
 			if (response.status === 200) {
 				const filteredWishlist =

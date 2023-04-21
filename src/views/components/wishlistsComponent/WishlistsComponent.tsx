@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
@@ -9,50 +9,45 @@ import CreateWishlist from '../createWishlist/CreateWishlist'
 import Spinner from 'views/UI/spinner'
 import { useTranslation } from 'react-i18next'
 import { Button, Empty, Skeleton, Space } from 'antd'
-import { AppstoreOutlined } from '@ant-design/icons'
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons'
 import './wishlistsComponent.scss'
 
 export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
-	const { dbUser } = useContext(UserContext)
+	const { dbUser, changeWishlistsDirection } = useContext(UserContext)
 	const { isLoading: isLoadingAuth0 } = useAuth0()
 	const { t: translate } = useTranslation();
 	const { currentThemeColor } = useContext(ThemeContext)
 	const { colorPrimary, colorPrimaryBg } = currentThemeColor
 	type updatedAt = (string | number | Date)
+	const { wishlistsDirection } = dbUser.wishlistsInfo
 
-	useEffect(() => {
-		switch (dbUser.wishlistsInfo.wishlistsOrder) {
-			case 'updatedAt':
-				wishlists.sort(function (a: { updatedAt: updatedAt }, b: { updatedAt: updatedAt }) {
-					const c: any = new Date(a.updatedAt)
-					const d: any = new Date(b.updatedAt)
-					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
-					return c - d
-				})
-				break
+	switch (dbUser.wishlistsInfo.wishlistsOrder) {
+		case 'updatedAt':
+			wishlists.sort(function (a: { updatedAt: updatedAt }, b: { updatedAt: updatedAt }) {
+				const c: any = new Date(a.updatedAt)
+				const d: any = new Date(b.updatedAt)
+				if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
+				return c - d
+			})
+			break
 
-			case 'createdAt':
-				wishlists.sort(function (a: { createdAt: updatedAt }, b: { createdAt: updatedAt }) {
-					const c: any = new Date(a.createdAt)
-					const d: any = new Date(b.createdAt)
-					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
-					return c - d
-				})
-				break
+		case 'createdAt':
+			wishlists.sort(function (a: { createdAt: updatedAt }, b: { createdAt: updatedAt }) {
+				const c: any = new Date(a.createdAt)
+				const d: any = new Date(b.createdAt)
+				if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
+				return c - d
+			})
+			break
 
-			case 'name':
-				wishlists.sort((a: { wishlistName: string }, b: { wishlistName: string }) => {
-					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return b.wishlistName.localeCompare(a.wishlistName)
-					return a.wishlistName.localeCompare(b.wishlistName)
-				})
-				break
-		}
-	}, [
-		wishlists,
-		dbUser.wishlistsInfo.wishlistsDirection,
-		dbUser.wishlistsInfo.wishlistsOrder
-	])
+		case 'name':
+			wishlists.sort((a: { wishlistName: string }, b: { wishlistName: string }) => {
+				if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return b.wishlistName.localeCompare(a.wishlistName)
+				return a.wishlistName.localeCompare(b.wishlistName)
+			})
+			break
+	}
 
 	return (
 		<>
@@ -74,7 +69,11 @@ export default function WishlistsComponent() {
 						</div>
 						<CreateWishlist />
 						<div className='wishlists-component__filters--right-side'>
-							<AppstoreOutlined />
+							{wishlistsDirection === 'desc' ? (
+								<ArrowDownOutlined onClick={() => changeWishlistsDirection({ wishlistsDirection: 'asc' })} />
+							) : (
+								<ArrowUpOutlined onClick={() => changeWishlistsDirection({ wishlistsDirection: 'desc' })} />
+							)}
 						</div>
 					</div>
 
