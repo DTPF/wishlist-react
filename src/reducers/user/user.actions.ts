@@ -99,7 +99,7 @@ export const updateAppColorAction = async function (
 		if (response.status === 200) {
 			return dispatch({
 				type: UserTypes.UPDATE_APP_COLOR,
-				payload: { colorPrimary, colorPrimaryBg	}
+				payload: { colorPrimary, colorPrimaryBg }
 			});
 		} else {
 			throw new Error()
@@ -114,13 +114,41 @@ export const updateWishlistColorAction = async function (
 	data: any,
 	token: any
 ) {
+	const { wishlistColor, wishlistColorBg } = data
+	if (token) {
+		try {
+			const response = await api.updateWishlistColorAPI(data, token.__raw);
+			if (response.status === 200) {
+				return dispatch({
+					type: UserTypes.CHANGE_WISHLIST_COLOR,
+					payload: { wishlistColor, wishlistColorBg }
+				});
+			} else {
+				throw new Error()
+			}
+		} catch (err) {
+			throw new Error()
+		}
+	} else {
+		return dispatch({
+			type: UserTypes.CHANGE_WISHLIST_COLOR,
+			payload: { wishlistColor, wishlistColorBg }
+		});
+	}
+}
+
+export const changeWishlistsDirectionAction = async function (
+	dispatch: any,
+	data: any,
+	token: any
+) {
 	try {
-		const { wishlistColor, wishlistColorBg } = data
-		const response = await api.updateWishlistColorAPI(data, token.__raw);
+		const response = await api.changeWishlistsDirectionApi(data, token.__raw);
+
 		if (response.status === 200) {
 			return dispatch({
-				type: UserTypes.CHANGE_WISHLIST_COLOR,
-				payload: { wishlistColor,	wishlistColorBg	}
+				type: UserTypes.CHANGE_WISHLISTS_DIRECTION,
+				payload: data.wishlistsDirection
 			});
 		} else {
 			throw new Error()

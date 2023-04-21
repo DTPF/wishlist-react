@@ -60,6 +60,18 @@ export default function userReducer(state: any, action: any) {
 				}
 			}
 
+		case UserTypes.CHANGE_WISHLISTS_DIRECTION:
+			return {
+				...state,
+				dbUser: {
+					...state.dbUser,
+					wishlistsInfo: {
+						...state.dbUser.wishlistsInfo,
+						wishlistsDirection: payload
+					}
+				}
+			}
+
 		default:
 			return state;
 	}

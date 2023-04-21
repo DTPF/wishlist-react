@@ -8,11 +8,11 @@ const initialUserState = {
 		lastname: '',
 		guess: false,
 		appInfo: {
-			colorPrimary: '',
-			colorPrimaryBg: '',
-			language: '',
-			wishlistColor: '',
-			wishlistColorBg: ''
+			colorPrimary: '#fff',
+			colorPrimaryBg: '#232F3E',
+			language: 'en',
+			wishlistColor: '#fff',
+			wishlistColorBg: '#697C8C'
 		},
 		wishlistsInfo: {
 			currentWishlist: '',
@@ -23,7 +23,8 @@ const initialUserState = {
 	updateUser: (data: any) => { },
 	changeLanguage: (data: any) => { },
 	updateWishlistColor: (color: any) => { },
-	updateAppColor: (color: any) => { }
+	updateAppColor: (color: any) => { },
+	changeWishlistsDirection: (wishlistsDirection: any) => { },
 }
 
 export default initialUserState;

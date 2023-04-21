@@ -49,20 +49,29 @@ export default function UserProvider(props: ChildrenProps) {
 		}
 	}, [isLoading, getIdTokenClaims]);
 
+		const changeWishlistsDirection = useCallback(async (data: any) => {
+		if (!isLoading) {
+			const token = await getIdTokenClaims()
+			action.changeWishlistsDirectionAction(dispatch, data, token);
+		}
+	}, [isLoading, getIdTokenClaims]);
+
 	const memoProvider = useMemo(
 		() => ({
 			...userState,
 			updateUser,
 			changeLanguage,
 			updateAppColor,
-			updateWishlistColor
+			updateWishlistColor,
+			changeWishlistsDirection
 		}),
 		[
 			userState,
 			updateUser,
 			changeLanguage,
 			updateWishlistColor,
-			updateAppColor
+			updateAppColor,
+			changeWishlistsDirection
 		]
 	);
 
