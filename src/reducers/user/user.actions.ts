@@ -94,15 +94,12 @@ export const updateAppColorAction = async function (
 	token: any
 ) {
 	try {
+		const { colorPrimary, colorPrimaryBg } = data
 		const response = await api.updateAppColorAPI(data, token.__raw);
-
-		if (response.status === 200) {			
+		if (response.status === 200) {
 			return dispatch({
 				type: UserTypes.UPDATE_APP_COLOR,
-				payload: {
-					colorPrimary: data.colorPrimary,
-					colorPrimaryBg: data.colorPrimaryBg,
-				}
+				payload: { colorPrimary, colorPrimaryBg	}
 			});
 		} else {
 			throw new Error()
@@ -118,15 +115,12 @@ export const updateWishlistColorAction = async function (
 	token: any
 ) {
 	try {
+		const { wishlistColor, wishlistColorBg } = data
 		const response = await api.updateWishlistColorAPI(data, token.__raw);
-		
-		if (response.status === 200) {			
+		if (response.status === 200) {
 			return dispatch({
 				type: UserTypes.CHANGE_WISHLIST_COLOR,
-				payload: {
-					wishlistColor: data.wishlistColor,
-					wishlistColorBg: data.wishlistColorBg
-				}
+				payload: { wishlistColor,	wishlistColorBg	}
 			});
 		} else {
 			throw new Error()
