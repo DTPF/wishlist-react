@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react';
-import { Layout, Switch } from 'antd';
+import { Layout, List, Modal } from 'antd';
 import ThemeContext from 'context/theme/ThemeContext';
 import AppSettingsModalContext from 'context/appSettingsModal/AppSettingsModalContext';
 import FooterWishlist from 'views/components/layout/footerWishlist'
@@ -11,8 +11,6 @@ import ApplicationSettings from 'views/components/applicationSettings/Applicatio
 import { useTranslation } from 'react-i18next';
 import { LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons';
 import './mainLayout.scss'
-const moonImage = require('assets/images/moon.png')
-const sunImage = require('assets/images/sun.png')
 
 export default function MainLayout() {
 	const [navbarCollapsed, setNavbarCollapsed] = useState(true)
@@ -21,6 +19,7 @@ export default function MainLayout() {
 	return (
 		<Layout className='main-layout'>
 			<ApplicationSettings />
+			<GuestModal />
 			<SiderNavBar
 				navbarCollapsed={navbarCollapsed}
 				setNavbarCollapsed={setNavbarCollapsed}
@@ -46,6 +45,60 @@ export default function MainLayout() {
 	)
 }
 
+function GuestModal() {
+	const [showGuestModal, setShowGuestModal] = useState(false)
+	const { isAuthenticated, loginWithRedirect } = useAuth0();
+	const { t: translate } = useTranslation()
+
+	useEffect(() => {
+		let isMounted = true
+		if (!isAuthenticated) {
+			setTimeout(() => {
+				isMounted && setShowGuestModal(true)
+			}, 5000);
+		}
+		return () => { isMounted = false }
+	}, [isAuthenticated])
+
+	useEffect(() => {
+		let isMounted = true
+		const interval = setInterval(function () {
+			if (!isAuthenticated) {
+				isMounted && setShowGuestModal(true)
+			}
+		}, 60000)
+		return () => {
+			isMounted = false
+			clearInterval(interval)
+		}
+	}, [isAuthenticated])
+
+	const data = [
+		translate('guestModaldatalist1'),
+		translate('guestModaldatalist2'),
+		translate('guestModaldatalist3'),
+		translate('guestModaldatalist4')
+	];
+
+	return (
+		<Modal
+			title={translate('guestModalTitle')}
+			centered
+			open={showGuestModal}
+			onOk={() => loginWithRedirect()}
+			onCancel={() => setShowGuestModal(false)}
+			okText={translate('guestModalOnOk')}
+			cancelText={translate('guestModalOnCancel')}
+		>
+			<List
+				size="small"
+				dataSource={data}
+				renderItem={(item) => <List.Item>・{item}</List.Item>}
+			/>
+		</Modal>
+	)
+}
+
 function SiderNavBar({ navbarCollapsed, setNavbarCollapsed }: any) {
 	const { user, loginWithRedirect, logout }: any = useAuth0()
 	const { currentThemeColor } = useContext(ThemeContext)
@@ -53,7 +106,6 @@ function SiderNavBar({ navbarCollapsed, setNavbarCollapsed }: any) {
 	const { t: translate } = useTranslation();
 	const { Sider } = Layout;
 	const { setOpenSettingsModal }: any = useContext(AppSettingsModalContext)
-
 	return (
 		<Sider
 			trigger={null}
@@ -67,29 +119,6 @@ function SiderNavBar({ navbarCollapsed, setNavbarCollapsed }: any) {
 				<div className='main-layout__sider--menu__top'>
 					<div className='main-layout__sider--menu__top--language'>
 						<Language />
-					</div>
-					<div className='main-layout__sider--menu__top--theme'>
-						<Switch
-							checkedChildren={
-								<img
-									src={moonImage}
-									className='main-layout__sider--menu__top--theme__moon'
-									alt='Light Theme'
-									width='23'
-									height='23'
-								/>
-							}
-							unCheckedChildren={
-								<img
-									src={sunImage}
-									className='main-layout__sider--menu__top--theme__sun'
-									alt='Light Theme'
-									width='22'
-									height='22'
-								/>
-							}
-							defaultChecked={false}
-						/>
 					</div>
 				</div>
 				<li onClick={() => {
