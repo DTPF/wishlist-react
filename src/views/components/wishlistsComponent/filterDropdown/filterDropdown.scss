@@ -3,9 +3,11 @@
 }
 
 .ant-dropdown-menu {
+	width: 160px;
+	padding: 10px 0 !important;
+
 	li {
 		&:last-child {
-			border-top: 1px solid rgb(214, 214, 214);
 			border-radius: 0 !important;
 			padding: 3px 12px !important;
 		}

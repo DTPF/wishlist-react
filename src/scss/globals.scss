@@ -27,3 +27,8 @@
 		box-shadow: $shadow-elevation-high
 	}
 }
+
+.ant-popconfirm-inner-content {
+	padding: 5px 15px !important;
+	background-color: #fff !important;
+}
