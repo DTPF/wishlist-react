@@ -1,15 +1,14 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import UserContext from 'context/user/UserContext'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import ThemeContext from 'context/theme/ThemeContext'
-import AddNewWishlist from './addNewWishlist'
 import WishlistCardItem from './wishlistCardItem'
 import FilterDropdown from './filterDropdown/FilterDropdown'
+import CreateWishlist from '../createWishlist/CreateWishlist'
 import Spinner from 'views/UI/spinner'
 import { useTranslation } from 'react-i18next'
 import { Button, Empty, Skeleton, Space } from 'antd'
-import { FaPlusCircle } from 'react-icons/fa'
 import { AppstoreOutlined } from '@ant-design/icons'
 import './wishlistsComponent.scss'
 
@@ -17,38 +16,43 @@ export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const { isLoading: isLoadingAuth0 } = useAuth0()
-	const { wishlistsOrder, wishlistsDirection } = dbUser.wishlistsInfo
 	const { t: translate } = useTranslation();
-	type updatedAt = (string | number | Date)
 	const { currentThemeColor } = useContext(ThemeContext)
-	const { colorPrimaryBg } = currentThemeColor
+	const { colorPrimary, colorPrimaryBg } = currentThemeColor
+	type updatedAt = (string | number | Date)
 
-	switch (wishlistsOrder) {
-		case 'updatedAt':
-			wishlists.sort(function (a: { updatedAt: updatedAt }, b: { updatedAt: updatedAt }) {
-				const c: any = new Date(a.updatedAt)
-				const d: any = new Date(b.updatedAt)
-				if (wishlistsDirection === 'desc') return d - c
-				return c - d
-			})
-			break
+	useEffect(() => {
+		switch (dbUser.wishlistsInfo.wishlistsOrder) {
+			case 'updatedAt':
+				wishlists.sort(function (a: { updatedAt: updatedAt }, b: { updatedAt: updatedAt }) {
+					const c: any = new Date(a.updatedAt)
+					const d: any = new Date(b.updatedAt)
+					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
+					return c - d
+				})
+				break
 
-		case 'createdAt':
-			wishlists.sort(function (a: { createdAt: updatedAt }, b: { createdAt: updatedAt }) {
-				const c: any = new Date(a.createdAt)
-				const d: any = new Date(b.createdAt)
-				if (wishlistsDirection === 'desc') return d - c
-				return c - d
-			})
-			break
+			case 'createdAt':
+				wishlists.sort(function (a: { createdAt: updatedAt }, b: { createdAt: updatedAt }) {
+					const c: any = new Date(a.createdAt)
+					const d: any = new Date(b.createdAt)
+					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return d - c
+					return c - d
+				})
+				break
 
-		case 'name':
-			wishlists.sort((a: { wishlistName: string }, b: { wishlistName: string }) => {
-				if (wishlistsDirection === 'desc') return b.wishlistName.localeCompare(a.wishlistName)
-				return a.wishlistName.localeCompare(b.wishlistName)
-			})
-			break
-	}
+			case 'name':
+				wishlists.sort((a: { wishlistName: string }, b: { wishlistName: string }) => {
+					if (dbUser.wishlistsInfo.wishlistsDirection === 'desc') return b.wishlistName.localeCompare(a.wishlistName)
+					return a.wishlistName.localeCompare(b.wishlistName)
+				})
+				break
+		}
+	}, [
+		wishlists,
+		dbUser.wishlistsInfo.wishlistsDirection,
+		dbUser.wishlistsInfo.wishlistsOrder
+	])
 
 	return (
 		<>
@@ -63,18 +67,15 @@ export default function WishlistsComponent() {
 			) : (
 				<section className='wishlists-component'>
 					<div className='wishlists-component__filters'>
-						{wishlists.length > 0 && (
-							<>
-								<div className='wishlists-component__filters--left-side'>
-									<div className='wishlists-component__filters--left-side__select'>
-										<FilterDropdown />
-									</div>
-								</div>
-								<div className='wishlists-component__filters--right-side'>
-									<AppstoreOutlined />
-								</div>
-							</>
-						)}
+						<div className='wishlists-component__filters--left-side'>
+							<div className='wishlists-component__filters--left-side__select'>
+								<FilterDropdown />
+							</div>
+						</div>
+						<CreateWishlist />
+						<div className='wishlists-component__filters--right-side'>
+							<AppstoreOutlined />
+						</div>
 					</div>
 
 					<div className='wishlists-component__items'>
@@ -89,7 +90,14 @@ export default function WishlistsComponent() {
 								}
 								className='wishlists-component__items--empty-msg'
 							>
-								<Button style={{ backgroundColor: colorPrimaryBg }} onClick={() => postNewWishlist(null)} type="primary">
+								<Button
+									className='button-primary'
+									style={{
+										color: colorPrimary,
+										backgroundColor: colorPrimaryBg
+									}}
+									onClick={() => postNewWishlist(null)} type="primary"
+								>
 									{translate('createWishlist')}
 								</Button>
 							</Empty>
@@ -101,20 +109,8 @@ export default function WishlistsComponent() {
 										wishlistItem={item}
 									/>
 								))}
-								{wishlists.length > 0 && (
-									<div className='wishlists-component__items--add-item-desktop'>
-										<AddNewWishlist />
-									</div>
-								)}
 							</>
 						)}
-					</div>
-					<div className='wishlists-component__add-item-mobile'>
-						<FaPlusCircle onClick={() => {
-							postNewWishlist(null)
-							window.scrollTo({ top: 0, behavior: 'smooth' })
-						}}
-						/>
 					</div>
 				</section>
 			)}
