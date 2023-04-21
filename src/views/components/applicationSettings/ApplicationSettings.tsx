@@ -1,50 +1,32 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChromePicker } from 'react-color'
-import { Button, Col, Divider, Modal, Popover, Row } from 'antd'
+import { Button, Col, Modal, Popover, Row } from 'antd'
 import UserContext from 'context/user/UserContext'
 import ThemeContext from 'context/theme/ThemeContext'
 import AppSettingsModalContext from 'context/appSettingsModal/AppSettingsModalContext'
-import invertHexColor from 'utils/invertHexColor'
+import ColorPickerApp from 'views/UI/colorPickerApp'
 import 'scss/globals.scss'
 import './applicationSettings.scss'
 
 export default function ApplicationSettings() {
 	const { t: translate } = useTranslation()
 	const { openSettingsModal, setOpenSettingsModal }: any = useContext(AppSettingsModalContext)
-	const { dbUser, updateUser } = useContext(UserContext)
-	const { currentThemeColor, setThemeColorAction } = useContext(ThemeContext)
+	const { dbUser, updateAppColor } = useContext(UserContext)
+	const { currentThemeColor, setAppThemeColorAction } = useContext(ThemeContext)
 	const { colorPrimary, colorPrimaryBg } = currentThemeColor
-	const [wishlistTheme, setWishlistTheme] = useState({
-		color: dbUser.appInfo.wishlistColor,
-		backgroundColor: dbUser.appInfo.wishlistColorBg
-	})
 
-	useEffect(() => {
-		setWishlistTheme({
-			color: dbUser.appInfo.wishlistColor,
-			backgroundColor: dbUser.appInfo.wishlistColorBg
-		})
-		return () => { }
-	}, [dbUser.appInfo.wishlistColor, dbUser.appInfo.wishlistColorBg])
-
-	const handleOk = () => {
+	const handleChangeAppColor = () => {
 		const userData = {
-			appInfo: {
-				colorPrimary: currentThemeColor.colorPrimary,
-				colorPrimaryBg: currentThemeColor.colorPrimaryBg,
-				language: dbUser.appInfo.language,
-				wishlistColor: wishlistTheme.color,
-				wishlistColorBg: wishlistTheme.backgroundColor
-			}
+			colorPrimary: currentThemeColor.colorPrimary,
+			colorPrimaryBg: currentThemeColor.colorPrimaryBg,
 		}
-		updateUser(userData)
+		updateAppColor(userData)
 		localStorage.setItem('theme-color', currentThemeColor.colorPrimaryBg)
 		setOpenSettingsModal(false)
 	}
 
 	const handleCancel = () => {
-		setThemeColorAction(currentThemeColor.colorPrimary, currentThemeColor.colorPrimaryBg)
+		setAppThemeColorAction(dbUser.appInfo.colorPrimaryBg)
 		setOpenSettingsModal(false)
 	}
 
@@ -53,7 +35,7 @@ export default function ApplicationSettings() {
 			title={translate('appSettingModalTitle')}
 			style={{ textAlign: 'center' }}
 			open={openSettingsModal}
-			onOk={handleOk}
+			onOk={handleChangeAppColor}
 			onCancel={handleCancel}
 			footer={[
 				<Button
@@ -68,33 +50,23 @@ export default function ApplicationSettings() {
 					key="save"
 					type="primary"
 					loading={false}
-					onClick={() => handleOk()}
+					onClick={handleChangeAppColor}
 					style={{ backgroundColor: colorPrimaryBg, color: colorPrimary }}
 					className='button-primary'
-
 				>
 					{translate('save')}
 				</Button>
 			]}
 		>
-			<AppSettingsForm wishlistTheme={wishlistTheme} setWishlistTheme={setWishlistTheme} />
+			<AppSettingsForm />
 		</Modal>
 	)
 }
 
-function AppSettingsForm({ wishlistTheme, setWishlistTheme }: any) {
+function AppSettingsForm() {
 	const { t: translate } = useTranslation()
-	const { currentThemeColor, setThemeColorAction } = useContext(ThemeContext)
-
-	const handleAppColor = (e: any) => {
-		const invertColor = invertHexColor(e.hex, true)
-		setThemeColorAction(invertColor, e.hex)
-	}
-
-	const handleListColor = (e: any) => {
-		const invertColor = invertHexColor(e.hex, true)
-		setWishlistTheme({ color: invertColor, backgroundColor: e.hex	})
-	}
+	const { dbUser } = useContext(UserContext)
+	const { colorPrimary, colorPrimaryBg } = dbUser.appInfo
 
 	return (
 		<Row style={{ padding: 30 }}>
@@ -102,46 +74,11 @@ function AppSettingsForm({ wishlistTheme, setWishlistTheme }: any) {
 				span={24}
 				style={{ display: 'flex', justifyContent: 'center' }}
 			>
-				<Popover
-					className='app-settings-app-color-popover'
-					content={
-						<ChromePicker
-							color={currentThemeColor.colorPrimaryBg}
-							onChange={(e: any) => handleAppColor(e)}
-						/>
-					}
-					trigger="click"
-				>
+				<Popover placement="bottom" content={<ColorPickerApp />} trigger="click">
 					<Button
-						style={{ color: currentThemeColor.colorPrimary, backgroundColor: currentThemeColor.colorPrimaryBg }}
-						type="primary"
-					>
+						className='button-primary'
+						style={{ color: colorPrimary, backgroundColor: colorPrimaryBg }}>
 						{translate('inputAppColor')}
-					</Button>
-				</Popover>
-			</Col>
-
-			<Divider />
-
-			<Col
-				span={24}
-				style={{ display: 'flex', justifyContent: 'center' }}
-			>
-				<Popover
-					className='app-settings-app-color-popover'
-					content={
-						<ChromePicker
-							color={wishlistTheme.backgroundColor}
-							onChange={(e: any) => handleListColor(e)}
-						/>
-					}
-					trigger="click"
-				>
-					<Button
-						style={{ color: wishlistTheme.color, backgroundColor: wishlistTheme.backgroundColor }}
-						type="primary"
-					>
-						{translate('listColor')}
 					</Button>
 				</Popover>
 			</Col>
