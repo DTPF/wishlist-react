@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { ChildrenProps } from "interfaces/globals";
 
 export default function UserProvider(props: ChildrenProps) {
-	const { children } = props;
 	const [userState, dispatch] = useReducer(userReducer, initialUserState);
 	const { getIdTokenClaims, isAuthenticated, isLoading } = useAuth0();
 	const { i18n } = useTranslation();
@@ -69,7 +68,7 @@ export default function UserProvider(props: ChildrenProps) {
 
 	return (
 		<UserContext.Provider value={memoProvider}>
-			{children}
+			{props.children}
 		</UserContext.Provider>
 	)
 }
