@@ -69,3 +69,17 @@ export const updateAppColorAPI = async (data: object, token: string): Promise<an
 	const result = await response.json()
 	return result
 }
+
+export const changeWishlistsDirectionApi = async (data: object, token: string): Promise<any> => {
+	const params = {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	}
+	const response = await fetch(`${basePath}/${apiVersion}/change-wishlists-direction`, params)
+	const result = await response.json()
+	return result
+}
