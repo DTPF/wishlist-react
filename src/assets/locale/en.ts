@@ -28,6 +28,7 @@ const englishTranslation = {
   // Cards
   completedItems: 'completed',
   deleteList: 'Delete list',
+  deleteListMessage: 'Are you sure you want to delete the list?',
   lastModified: 'Edited',
   // Filters
   filterUpdatedAt: 'Last update',
@@ -51,6 +52,15 @@ const englishTranslation = {
   lists: 'Lists',
   notes: 'Notes',
   dateLabel: 'Updated:',
+
+    // Guest
+  guestModalTitle: 'Login to have all the functionalities',
+  guestModalOnOk: 'Login or register',
+  guestModalOnCancel: 'Continue browsing',
+  guestModaldatalist1: 'Create customized lists',
+  guestModaldatalist2: 'Create tasks',
+  guestModaldatalist3: 'Saved in the cloud',
+  guestModaldatalist4: 'Receive the latest news',
 
   // Shared
   settings: 'Settings',

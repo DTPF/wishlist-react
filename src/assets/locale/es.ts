@@ -28,6 +28,7 @@ const spanishTranslation = {
   // Cards
   completedItems: 'completado',
   deleteList: 'Eliminar lista',
+  deleteListMessage: '¿Seguro que quieres eliminar la lista?',
   lastModified: 'Editado:',
   // Filters
   filterUpdatedAt: 'Última actualización',
@@ -45,12 +46,21 @@ const spanishTranslation = {
   selectStatusActive: 'Activo',
   selectStatusComplete: 'Completado',
   postNotePlaceholder: 'Introduce el título de la lista',
-  postNoteButton: 'Guadar',
+  postNoteButton: 'Guardar',
 
   // Footer
   lists: 'Listas',
   notes: 'Notas',
   dateLabel: 'Actualizado:',
+
+  // Guest
+  guestModalTitle: 'Indentifícate para tener todas las funcionalidades',
+  guestModalOnOk: 'Login o registro',
+  guestModalOnCancel: 'Seguir navegando',
+  guestModaldatalist1: 'Crea listas personalizadas',
+  guestModaldatalist2: 'Crea tareas',
+  guestModaldatalist3: 'Guardado en la nube',
+  guestModaldatalist4: 'Recibe la últimas novedades',
 
   // Shared
   settings: 'Ajustes',
