@@ -1,6 +1,3 @@
-import invertHexColor from "utils/invertHexColor";
-const themeLS = localStorage.getItem('theme-color')
-
 export interface InitialThemeContextType {
 	colorPrimary: string
 	colorPrimaryBg: string,
@@ -26,8 +23,8 @@ export const initialThemeContext = {
 }
 
 export const initialThemeState = {
-	colorPrimary: themeLS ? invertHexColor(themeLS) : '#fff',
-	colorPrimaryBg: themeLS ? themeLS : '#232F3E',
+	colorPrimary: '',
+	colorPrimaryBg: '',
 	wishlistColor: '',
 	wishlistColorBg: ''
 }
