@@ -24,6 +24,26 @@ export default function wishlistReducer(state: any, action: any) {
 				}
 			}
 
+		case WishlistTypes.POST_WISHLIST_GUEST:
+			return {
+				...state,
+				wishlists: [...state.wishlists, {
+					backgroundColor: payload.wishlistColorBg,
+					color: payload.wishlistColor,
+					createdAt: "2023-04-21T16:36:06.524Z",
+					position: 9,
+					updatedAt: "2023-04-21T16:36:06.524Z",
+					userId: "google-oauth2|106493243126372949504",
+					wishlistItems: [],
+					wishlistName: "Nueva lista 📝"
+				}],
+				wishlistsInfo: {
+					...state.wishlistsInfo,
+					totalWishlists: ++state.wishlistsInfo.totalWishlists,
+					lastModified: Date.now(),
+				}
+			}
+
 		case WishlistTypes.REMOVE_WISHLIST:
 			return {
 				...state,
