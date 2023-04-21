@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import WishlistContext from 'context/wishlist/WishlistContext';
-import { FiTrash2 } from 'react-icons/fi';
-import { MdOutlineDragIndicator } from 'react-icons/md';
+import { DeleteOutlined, DragOutlined } from '@ant-design/icons';
 import './wishlistItem.scss'
 
 export default function WishlistItem({ wishlistItem }: any) {
@@ -19,10 +18,10 @@ export default function WishlistItem({ wishlistItem }: any) {
   return (
     <article
       className={`wishlist-item ${wishlistItem.isCompleted ? 'wishlist-item-checked' : ''}`}
-      style={{ backgroundColor: `rgba(${currentWishlist.backgroundColor}, 0.15)` }}
+      style={{ backgroundColor: `${currentWishlist.backgroundColor}14` }}
     >
       <div className='wishlist-item__title'>
-        <MdOutlineDragIndicator />
+        <DragOutlined />
         <input
           value={titleInput}
           onChange={(e) => setTiltleInput(e.target.value)}
@@ -34,7 +33,7 @@ export default function WishlistItem({ wishlistItem }: any) {
           className='wishlist-item__check-delete--trash'
           onClick={() => removeWishlistItem(wishlistItem)}
         >
-          <FiTrash2 />
+          <DeleteOutlined />
         </span>
         <div className='wishlist-item__check-delete--checkbox-container'>
           <label className='wishlist-item__check-delete--checkbox-container__label'>

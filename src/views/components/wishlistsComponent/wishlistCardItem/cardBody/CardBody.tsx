@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import WishlistContext from 'context/wishlist/WishlistContext'
-import { BsCheckCircle, BsCheckCircleFill } from 'react-icons/bs'
-import './cardBody.scss'
 import { useTranslation } from 'react-i18next'
+import WishlistContext from 'context/wishlist/WishlistContext'
+import { CheckOutlined } from '@ant-design/icons'
+import './cardBody.scss'
 
 export default function CardBody({ wishlistItem, setShowPopover }: any) {
 	const { setCurrentWishlist } = useContext(WishlistContext)
@@ -37,7 +37,7 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 					wishlistItem.wishlistItems.map((item: any) => (
 						<article key={item.id} className='wishlist-card-body__item'>
 							<div style={{ backgroundColor: item.isCompleted && `rgba(${wishlistItem.backgroundColor}, 0.1)` }}>
-								{item.isCompleted ? <BsCheckCircleFill /> : <BsCheckCircle style={{ color: '#383838' }} />}
+								{item.isCompleted ? <CheckOutlined /> : '' }
 								<span style={{ color: item.isCompleted ? '#656565' : '#383838' }}>{item.title}</span>
 							</div>
 						</article>

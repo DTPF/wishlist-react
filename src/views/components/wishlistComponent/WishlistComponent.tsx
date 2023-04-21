@@ -8,8 +8,8 @@ import WishlistItem from './wishListItem';
 import Spinner from 'views/UI/spinner';
 import { useTranslation } from 'react-i18next';
 import { WishList } from 'interfaces/wishlist';
-import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { Badge, Select } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import './wishlistComponent.scss';
 
 export default function WishlistComponent({ params }: any) {
@@ -73,7 +73,7 @@ export default function WishlistComponent({ params }: any) {
     <DragDropContext onDragEnd={(result: any) => handleOnDragEng(result)}>
       <section className='wishlist-component'>
         <div className='wishlist-component__home-link'>
-          <Link to={'/'}><FaArrowAltCircleLeft /></Link>
+          <Link to={'/'}><ArrowLeftOutlined /></Link>
         </div>
         <div className='wishlist-component__top-bar'>
           <div className='wishlist-component__top-bar--wishlist-title'>
