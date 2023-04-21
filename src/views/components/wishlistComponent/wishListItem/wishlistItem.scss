@@ -20,18 +20,17 @@
     width: 100%;
 
     svg {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       width: 50px;
       height: 60px;
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding-top: 22px;
+      padding-bottom: 22px;
     }
 
     input {
       color: #525252;
       background-color: transparent;
       font-size: 1.10rem;
-      font-weight: 400;
       width: 95%;
       border: 0;
       font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
@@ -106,7 +105,6 @@
       @include fadeIn(400ms);
     }
   }
-
 }
 
 .wishlist-item-checked {
