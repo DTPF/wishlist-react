@@ -1,21 +1,29 @@
-`#react` `#typescript` `#tsx` `#sass` `#wishlist` `#master-in-software-development`
-# Wishlist React - MSD22
+`#react` `#typescript` `#ant-design` `#sass` `#auth0` `#servicesWorkers` `#wishlist` `#master-in-software-development`
+
+# Dalist - Wishlist
 This is a wishlist project built with React and TypeScript.
 
 ### Features
- - Dynamic wishlist
+ - Authentication and authorization using Auth0
+ - Dynamic wishlists
  - Add and remove wishlists and items
  - Save the list to MongoDB database
+ - Customization of the application and of the lists
+ - Service Workers services
 
 ### Installation
- 1. Clone the repository to your local machine: `$ git clone https://github.com/DTPF/wishlist-react.git`
- 2. Install the dependencies: `$ npm install`
+```bash
+$ git clone https://github.com/DTPF/wishlist-react.git
+$ cd wishlist-react
+$ npm install
+```
 
 ### Usage
- 1. Run the application on your local machine: `$ npm start`
+ 1. Run the application on your local machine: `$ npm run dev`
  2. Open your browser and go to http://localhost:3000
- 3. Add or remove items from the wishlist
- 4. Close the application and reopen it to see that the list is saved in localStorage
+ 3. Log in to enjoy all the features.
+ 4. Add or remove items from the wishlist
+ 5. Customize the application a create lists
 
 ### Contribution
 This is an open-source project, and contributions are welcome. If you would like to contribute to this project, please follow these steps:
