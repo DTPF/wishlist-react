@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react'
 import WishlistContext from 'context/wishlist/WishlistContext'
 import './cardHeader.scss'
 
-export default function CardHeader({ wishlistItem }: any) {
+export default function CardHeader({ wishlistItem, listStyle }: any) {
 	const { updateWishlist } = useContext(WishlistContext)
 	const cardTitle: any = useRef(null);
 
@@ -18,12 +18,12 @@ export default function CardHeader({ wishlistItem }: any) {
 	return (
 		<header
 			className='wishlist-card-header'
-			style={{ backgroundColor: wishlistItem.backgroundColor, color: wishlistItem.color }}>
+			style={{ backgroundColor: listStyle.backgroundColor, color: listStyle.color }}>
 			<span
 				ref={cardTitle}
 				key={wishlistItem._id}
 				className="wishlist-card-header__textarea"
-				style={{ color: wishlistItem.color }}
+				style={{ color: listStyle.color }}
 				role="textbox"
 				contentEditable
 				suppressContentEditableWarning={true}

@@ -5,7 +5,7 @@ import WishlistContext from 'context/wishlist/WishlistContext'
 import { CheckOutlined } from '@ant-design/icons'
 import './cardBody.scss'
 
-export default function CardBody({ wishlistItem, setShowPopover }: any) {
+export default function CardBody({ wishlistItem, listStyle }: any) {
 	const { setCurrentWishlist } = useContext(WishlistContext)
 	const { t: translate } = useTranslation();
 	const wishlistItemsCompleted =
@@ -19,13 +19,12 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 		>
 			<div
 				className='wishlist-card-body'
-				onClick={() => setShowPopover(false)}
-				style={{ backgroundColor: `${wishlistItem.backgroundColor}0D` }}
+				style={{ backgroundColor: `${listStyle.backgroundColor}14` }}
 			>
 				{wishlistItem.wishlistItems.length > 0 && (
 					<span
 						className='wishlist-card-body__items-completed'
-						style={{ backgroundColor: `rgba(${wishlistItem.backgroundColor}, 0.3)` }}
+						style={{ backgroundColor: `${listStyle.backgroundColor}33` }}
 					>
 						{wishlistItemsCompleted.length}/
 						{wishlistItem.wishlistItems.length} {translate('completedItems')}
@@ -36,7 +35,7 @@ export default function CardBody({ wishlistItem, setShowPopover }: any) {
 				) : (
 					wishlistItem.wishlistItems.map((item: any) => (
 						<article key={item.id} className='wishlist-card-body__item'>
-							<div style={{ backgroundColor: item.isCompleted && `rgba(${wishlistItem.backgroundColor}, 0.1)` }}>
+							<div style={{ backgroundColor: item.isCompleted && `rgba(${listStyle.backgroundColor}, 0.1)` }}>
 								{item.isCompleted ? <CheckOutlined /> : '' }
 								<span style={{ color: item.isCompleted ? '#656565' : '#383838' }}>{item.title}</span>
 							</div>

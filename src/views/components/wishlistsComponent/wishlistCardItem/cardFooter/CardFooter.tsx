@@ -5,18 +5,35 @@ import { useTranslation } from 'react-i18next'
 import Moment from 'react-moment'
 import { BgColorsOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Popconfirm, Popover } from 'antd'
-import './cardFooter.scss'
 import { ChromePicker } from 'react-color'
+import invertHexColor from 'utils/invertHexColor'
+import './cardFooter.scss'
 
-export default function CardFooter({ wishlistItem, showPopover, setShowPopover }: any) {
-	const { removeWishlist } = useContext(WishlistContext)
+export default function CardFooter({ wishlistItem, listStyle, setListStyle }: any) {
+	const { removeWishlist, changeWishlistColor } = useContext(WishlistContext)
 	const { dbUser } = useContext(UserContext)
 	const { t: translate } = useTranslation();
+
+	const handleOnChange = (e: any) => {
+		const invertColor = invertHexColor(e.hex)
+		setListStyle({
+			color: invertColor,
+			backgroundColor: e.hex
+		})
+	}
+
+	const handleOnChangeComplete = (e: any) => {
+		const invertColor = invertHexColor(e.hex)
+		changeWishlistColor(
+			wishlistItem._id,
+			{ color: invertColor, backgroundColor: e.hex }
+		)
+	}
 
 	return (
 		<footer
 			className='wishlist-card-footer'
-			style={{ backgroundColor: wishlistItem.backgroundColor, color: wishlistItem.color }}
+			style={{ backgroundColor: listStyle.backgroundColor, color: listStyle.color }}
 		>
 			<Popconfirm
 				title={translate('deleteList')}
@@ -32,8 +49,18 @@ export default function CardFooter({ wishlistItem, showPopover, setShowPopover }
 			<p className='wishlist-card-footer__last-modified'>
 				{translate('lastModified')} <Moment locale={dbUser.appInfo.language} fromNow>{wishlistItem.updatedAt}</Moment>
 			</p>
-			<Popover content={<ChromePicker />} placement="bottom">
-				<BgColorsOutlined style={{ fontSize: '1.1rem' }} />
+			<Popover
+				content={
+					<ChromePicker
+						color={listStyle.backgroundColor}
+						onChange={(e) => handleOnChange(e)}
+						onChangeComplete={(e) => handleOnChangeComplete(e)}
+					/>
+				}
+				placement="bottom"
+				trigger='click'
+			>
+				<BgColorsOutlined style={{ fontSize: '1rem' }} />
 			</Popover>
 		</footer>
 	)
