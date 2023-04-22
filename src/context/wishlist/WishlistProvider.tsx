@@ -26,7 +26,7 @@ export default function WishlistProvider(props: ChildrenProps) {
 			);
 		}
 		initWishlistsByUserId()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [getIdTokenClaims, isAuthenticated, dbUser.guess])
 
 	const postNewWishlist = useCallback(async (wishlistTitle: any) => {
@@ -75,6 +75,11 @@ export default function WishlistProvider(props: ChildrenProps) {
 		action.updateWishlistItemAction(dispatch, isAuthenticated, wishlistId, wishlistItemId, wishlistState, user.__raw, data);
 	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
 
+	const changeWishlistColor = useCallback(async (wishlistId: string, data: any) => {
+		const user: any = await getIdTokenClaims()
+		action.changeWishlistColorAction(isAuthenticated, wishlistId, user.__raw, data, wishlistState);
+	}, [getIdTokenClaims, isAuthenticated, wishlistState]);
+
 	const memoizedProvider = useMemo(() => ({
 		...wishlistState,
 		postNewWishlist,
@@ -83,7 +88,8 @@ export default function WishlistProvider(props: ChildrenProps) {
 		setCurrentWishlist,
 		removeWishlist,
 		updateWishlist,
-		updateWishlistItem
+		updateWishlistItem,
+		changeWishlistColor
 	}), [
 		wishlistState,
 		addNewWishlistItem,
@@ -92,7 +98,8 @@ export default function WishlistProvider(props: ChildrenProps) {
 		removeWishlistItem,
 		setCurrentWishlist,
 		updateWishlist,
-		updateWishlistItem
+		updateWishlistItem,
+		changeWishlistColor
 	])
 
 	return (

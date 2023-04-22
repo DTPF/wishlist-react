@@ -323,3 +323,25 @@ export async function updateWishlistItemAction(
 		return toast.error('No se ha podido actualizar')
 	}
 }
+
+export async function changeWishlistColorAction(
+	isAuthenticated: boolean,
+	wishlistId: string,
+	token: any,
+	data: any,
+	wishlistState: any
+) {
+	try {
+		if (isAuthenticated) {
+			const response: any = await api.changeWishlistColorApi(wishlistId, data, token)
+			const itemIndex = wishlistState.wishlists.findIndex((item: any) => item._id === wishlistId)
+			wishlistState.wishlists[itemIndex].color = data.color
+			wishlistState.wishlists[itemIndex].backgroundColor = data.backgroundColor
+			if (response.status !== 200) {
+				throw new Error('changeWishlistColorAction request failed')
+			}
+		}
+	} catch (err) {
+		return toast.error('No se ha podido actualizar')
+	}
+}

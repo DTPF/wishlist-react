@@ -24,6 +24,7 @@ const initialWishlistState = {
 	updateWishlistItem: (wishlistId: string, wishlistItemId: string, data: any) => { },
 	removeWishlistItem: (data: any) => { },
 	setCurrentWishlist: (data: any) => { },
+	changeWishlistColor: (wishlistId: string, data: any) => { },
 	setIsLoading: (isLoading: boolean) => { }
 }
 
