@@ -24,7 +24,7 @@ $ npm install
  2. Open your browser and go to http://localhost:3000
  3. Log in to enjoy all the features.
  4. Add or remove items from the wishlist
- 5. Customize the application a create lists
+ 5. Customize the application and create lists
 
 ### Contribution
 This is an open-source project, and contributions are welcome. If you would like to contribute to this project, please follow these steps:
