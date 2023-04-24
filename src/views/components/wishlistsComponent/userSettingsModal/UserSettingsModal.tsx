@@ -47,9 +47,9 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 		setOpenModal(false)
 	}
 
-	const handleDeleteAccount = () => {
-		console.log('Cuenta eliminada');
-	}
+	// const handleDeleteAccount = () => {
+	// 	console.log('Cuenta eliminada');
+	// }
 
 	const title = <div>{translate('titleProfileModal')} <Tag color="geekblue">{dbUser.email}</Tag></div>
 
@@ -61,16 +61,17 @@ export default function UserSettingsModal({ openModal, setOpenModal }: any) {
 			onCancel={handleCancel}
 			cancelText='Cancelar'
 			footer={[
-				<Popconfirm
-					key="delete-account"
-					title={translate('titlePopConfirm')}
-					description={translate('contentPopConfirm')}
-					onConfirm={handleDeleteAccount}
-					okText={translate('delete')}
-					cancelText={translate('cancel')}
-				>
-					<Button danger>{translate('deleteAccount')}</Button>
-				</Popconfirm>,
+				// <Popconfirm
+				// 	key="delete-account"
+				// 	title={translate('titlePopConfirm')}
+				// 	description={translate('contentPopConfirm')}
+				// 	onConfirm={handleDeleteAccount}
+				// 	okText={translate('delete')}
+				// 	cancelText={translate('cancel')}
+				// 	style={{ backgroundColor: '#fff' }}
+				// >
+				// 	<Button danger>{translate('deleteAccount')}</Button>
+				// </Popconfirm>,
 				<Button
 					key="back"
 					onClick={handleCancel}
