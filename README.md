@@ -19,6 +19,7 @@ $ npm install
 ```
 
 ### Usage
+ 1. Rename the .env.example file to <b>.env</b> and configure this file based on your computer and <b>Auth0</b> credendials
  1. Run the application on your local machine: `$ npm run dev`
  2. Open your browser and go to http://localhost:3000
  3. Log in to enjoy all the features.
@@ -36,8 +37,5 @@ This is an open-source project, and contributions are welcome. If you would like
 
 #### Credits
 This project was created by [David T. Pizarro Frick]. If you find any issues or have any suggestions, feel free to create an issue.
-
-#### License
-This project is licensed under the MIT License.
 
 [David T. Pizarro Frick]: <https://www.linkedin.com/in/david-tomas-pizarro-frick/>
