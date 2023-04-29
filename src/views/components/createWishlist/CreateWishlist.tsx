@@ -7,11 +7,13 @@ import ChromePickerWishlist from 'views/UI/colorPickerWishlist'
 import { useTranslation } from 'react-i18next'
 import { BgColorsOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import './createWishlist.scss'
+import { useAuth0 } from '@auth0/auth0-react'
 const { Search } = Input
 
 export default function CreateWishlist() {
 	const { dbUser } = useContext(UserContext)
 	const { postNewWishlist } = useContext(WishlistContext)
+	const { isAuthenticated, loginWithRedirect } = useAuth0()
 	const [inputValue, setInputValue] = useState('')
 	const { t: translate } = useTranslation()
 	const { currentThemeColor } = useContext(ThemeContext)
@@ -44,8 +46,12 @@ export default function CreateWishlist() {
 				value={inputValue}
 				onChange={(e) => setInputValue(e.target.value)}
 				onSearch={(e) => {
-					postNewWishlist(e)
-					setInputValue('')
+					if (isAuthenticated) {
+						postNewWishlist(e)
+						setInputValue('')
+					} else {
+						loginWithRedirect()
+					}
 				}}
 			/>
 		</section>

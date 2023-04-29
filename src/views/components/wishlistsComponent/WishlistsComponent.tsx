@@ -15,7 +15,7 @@ import './wishlistsComponent.scss'
 export default function WishlistsComponent() {
 	const { wishlists, isLoading, postNewWishlist } = useContext(WishlistContext)
 	const { dbUser, changeWishlistsDirection } = useContext(UserContext)
-	const { isLoading: isLoadingAuth0 } = useAuth0()
+	const { isLoading: isLoadingAuth0, isAuthenticated, loginWithRedirect } = useAuth0()
 	const { t: translate } = useTranslation();
 	const { currentThemeColor } = useContext(ThemeContext)
 	const { colorPrimary, colorPrimaryBg } = currentThemeColor
@@ -95,7 +95,13 @@ export default function WishlistsComponent() {
 										color: colorPrimary,
 										backgroundColor: colorPrimaryBg
 									}}
-									onClick={() => postNewWishlist(null)} type="primary"
+									onClick={() => {
+										if (isAuthenticated) {
+											postNewWishlist(null)
+										} else {
+											loginWithRedirect()
+										}
+									}} type="primary"
 								>
 									{translate('createWishlist')}
 								</Button>
